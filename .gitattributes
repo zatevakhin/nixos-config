@@ -1,0 +1,2 @@
+hosts/default/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+hosts/default/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
