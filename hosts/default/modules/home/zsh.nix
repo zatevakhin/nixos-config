@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   programs.zsh = {
+    # https://mynixos.com/search?q=programs.zsh
+
     enable = true;
+    syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
@@ -26,9 +29,6 @@
     zplug = {
       enable = true;
       plugins = [
-        {name = "zsh-users/zsh-autosuggestions";}
-        {name = "zsh-users/zsh-syntax-highlighting";}
-        {name = "zsh-users/zsh-completions";}
         {name = "tcnksm/docker-alias";}
         {name = "wfxr/forgit";}
       ];
