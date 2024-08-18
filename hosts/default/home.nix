@@ -9,6 +9,7 @@
     ./modules/home/git.nix
     ./modules/home/zsh.nix
     ./modules/home/starship.nix
+    ./modules/home/tmux.nix
     ./modules/home/tilix.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
