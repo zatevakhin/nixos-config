@@ -11,6 +11,7 @@
     ./modules/home/starship.nix
     ./modules/home/tilix.nix
     ./modules/home/flameshot.nix
+    ./modules/home/copyq.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
