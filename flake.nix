@@ -23,6 +23,10 @@
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    };
   };
 
   outputs = {
@@ -51,6 +55,7 @@
         inputs.sops-nix.nixosModules.sops
         inputs.disko.nixosModules.disko
         inputs.home-manager.nixosModules.default
+        inputs.nix-flatpak.nixosModules.nix-flatpak
       ];
     };
   };

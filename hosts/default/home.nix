@@ -24,6 +24,10 @@
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
 
+  home.sessionVariables = {
+    XDG_DATA_DIRS = "$XDG_DATA_DIRS/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+  };
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.

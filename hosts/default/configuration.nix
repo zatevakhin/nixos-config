@@ -10,10 +10,12 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Separated modules
     ./modules/nixos/nix.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/docker.nix
+    ./modules/nixos/flatpak.nix
   ];
 
   sops.defaultSopsFormat = "yaml";
