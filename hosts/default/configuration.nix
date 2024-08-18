@@ -10,6 +10,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./modules/nixos/nix.nix
   ];
 
   sops.defaultSopsFormat = "yaml";
@@ -24,11 +25,6 @@
 
   networking.nftables.enable = false;
   networking.firewall.enable = false;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = ["root" username];
-
-  programs.nix-ld.enable = true;
 
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
