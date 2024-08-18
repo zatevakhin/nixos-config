@@ -13,6 +13,7 @@
     ./modules/nixos/nix.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
+    ./modules/nixos/docker.nix
   ];
 
   sops.defaultSopsFormat = "yaml";
@@ -22,8 +23,6 @@
   sops.secrets."user/password/hashed" = {};
 
   nixpkgs.overlays = [];
-
-  hardware.nvidia-container-toolkit.enable = lib.mkForce true;
 
   networking.nftables.enable = false;
   networking.firewall.enable = false;
@@ -109,8 +108,6 @@
     direnv
     devenv
     alejandra
-    docker-compose
-    docker-buildx
     lshw
     unixtools.xxd
     mc
@@ -182,11 +179,6 @@
       KbdInteractiveAuthentication = false;
     };
   };
-
-  virtualisation.docker.enable = true;
-  virtualisation.docker.enableNvidia = true;
-  virtualisation.docker.storageDriver = "btrfs";
-  virtualisation.containerd.enable = lib.mkForce false;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
