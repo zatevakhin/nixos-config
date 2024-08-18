@@ -8,6 +8,12 @@
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza";
       cat = "${pkgs.bat}/bin/bat";
+      gcs = "${pkgs.git}/bin/git commit -S";
+      gcu = "${pkgs.git}/bin/git commit";
+      gp = "${pkgs.git}/bin/git push";
+      gl = "${pkgs.git}/bin/git pull";
+      gs = "${pkgs.git}/bin/git status --short";
+      gsl = "${pkgs.git}/bin/git status";
     };
 
     history.size = 10000;
