@@ -60,7 +60,6 @@
     description = "Ivan Zatevakhin";
     extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd"];
     packages = with pkgs; [
-      bat
     ];
   };
 
