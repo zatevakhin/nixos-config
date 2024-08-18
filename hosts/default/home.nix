@@ -17,6 +17,8 @@
     ./modules/home/tilix.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
+    ./modules/home/dconf.nix
+    ./modules/home/associations.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
