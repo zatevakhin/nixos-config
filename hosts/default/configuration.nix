@@ -11,7 +11,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Separated modules
-    ./modules/nixos/nix.nix
+    ./modules/nixos/base.nix
+    ./modules/nixos/desktop.nix
+    ./modules/nixos/development.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/docker.nix
@@ -70,50 +72,8 @@
     };
   };
 
-  environment.shells = with pkgs; [zsh];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Add Cuda Support
-  # nixpkgs.config.cudaSupport = true;
-
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    # GUI
-    vscode
-    tilix
-    flameshot
-    youtube-music
-    keepassxc
-    obs-studio
-    # Theming
-    papirus-icon-theme
-    # CLI
-    git
-    rage
-    git-agecrypt
-    sops
-    ollama
-    wget
-    curl
-    sqlite
-    tldr
-    manix
-    ripgrep
-    jq
-    eza
-    file
-    htop
-    direnv
-    devenv
-    alejandra
-    lshw
-    unixtools.xxd
-    mc
-    neovim
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];
@@ -182,78 +142,10 @@
     };
   };
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.supportedLocales = ["en_US.UTF-8/UTF-8"];
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
   # <desktop>
-  system.fsPackages = [pkgs.bindfs];
-  fileSystems = let
-    mkRoSymBind = path: {
-      device = path;
-      fsType = "fuse.bindfs";
-      options = ["ro" "resolve-symlinks" "x-gvfs-hide"];
-    };
-    aggregatedIcons = pkgs.buildEnv {
-      name = "system-icons";
-      paths = with pkgs; [
-        #libsForQt5.breeze-qt5  # for plasma
-        gnome.gnome-themes-extra
-      ];
-      pathsToLink = ["/share/icons"];
-    };
-    aggregatedFonts = pkgs.buildEnv {
-      name = "system-fonts";
-      paths = config.fonts.packages;
-      pathsToLink = ["/share/fonts"];
-    };
-  in {
-    "/usr/share/icons" = mkRoSymBind "${aggregatedIcons}/share/icons";
-    "/usr/local/share/fonts" = mkRoSymBind "${aggregatedFonts}/share/fonts";
-  };
-
-  fonts = {
-    fontDir.enable = true;
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      fira-code
-      fira-code-symbols
-      nerdfonts
-      fira-code-nerdfont
-      source-han-sans
-      source-han-mono
-      source-han-serif
-      source-han-code-jp
-    ];
-  };
-
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
-
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = username;
-  services.xserver.displayManager.gdm.wayland = false;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.tumbler.enable = true;
 
   qt = {
     enable = true;

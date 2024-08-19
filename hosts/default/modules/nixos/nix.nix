@@ -31,4 +31,8 @@
     clean.enable = true;
     clean.extraArgs = "--keep-since 7d --keep 3";
   };
+
+  environment.systemPackages = with pkgs; [
+    alejandra
+  ];
 }
