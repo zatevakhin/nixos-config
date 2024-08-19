@@ -59,6 +59,13 @@
         "tiling-assistant@leleat-on-github"
       ];
 
+      favorite-apps = [
+        "org.mozilla.firefox.desktop"
+        "org.gnome.Nautilus.desktop"
+        "code.desktop"
+        "io.github.tdesktop_x64.TDesktop.desktop"
+      ];
+
       "keybindings/show-screenshot-ui" = [];
     };
 

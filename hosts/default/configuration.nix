@@ -17,6 +17,7 @@
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/docker.nix
+    ./modules/nixos/qemu.nix
     ./modules/nixos/flatpak.nix
   ];
 
@@ -49,9 +50,6 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
@@ -93,44 +91,7 @@
   environment.sessionVariables = {
   };
 
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
   hardware.bluetooth.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-
-  hardware.pulseaudio.enable = false;
-
-  security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-
-    alsa.enable = true;
-    alsa.support32Bit = true;
-
-    pulse.enable = true;
-
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-  };
 
   services.openssh = {
     enable = true;
@@ -142,17 +103,9 @@
     };
   };
 
-  # <desktop>
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = username;
-
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
-  # </desktop>
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
