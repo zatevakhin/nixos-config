@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   lib,
   username,
@@ -27,7 +28,9 @@
 
   sops.secrets."user/password/hashed" = {};
 
-  nixpkgs.overlays = [];
+  nixpkgs.overlays = [
+    (self: super: {devenv = pkgs-unstable.devenv;})
+  ];
 
   networking.nftables.enable = false;
   networking.firewall.enable = false;
