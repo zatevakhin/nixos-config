@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     disko = {
       url = "github:nix-community/disko";
@@ -32,6 +33,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     ...
   } @ inputs: let
     username = "ivan";
@@ -41,11 +43,17 @@
       system = "${system}";
       config.allowUnfree = true;
     };
+
+    pkgs-unstable = import nixpkgs-unstable {
+      system = "${system}";
+      config.allowUnfree = true;
+    };
   in {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
         inherit username;
+        inherit pkgs-unstable;
         hostname = "baseship";
       };
 
