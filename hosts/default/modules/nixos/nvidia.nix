@@ -14,6 +14,10 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.full
+  ];
+
   hardware.nvidia = {
     # Modesetting is required.
     modesetting.enable = true;
