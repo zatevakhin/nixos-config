@@ -8,6 +8,7 @@
     ./opengl.nix
     ./fonts.nix
     ./audio.nix
+    ./bluetooth.nix
   ];
 
   environment.systemPackages = with pkgs; [

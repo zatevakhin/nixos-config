@@ -91,8 +91,6 @@
   environment.sessionVariables = {
   };
 
-  hardware.bluetooth.enable = true;
-
   services.openssh = {
     enable = true;
 
