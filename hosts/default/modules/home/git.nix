@@ -18,5 +18,14 @@ in {
 
     userName = "Ivan Zatevakhin";
     userEmail = me.personal.email;
+    includes = [
+      {
+        condition = "gitdir:/projects/work/";
+
+        contents.user.name = me.work.name;
+        contents.user.email = me.work.email;
+        contents.user.signingkey = "~/.ssh/${me.work.key}";
+      }
+    ];
   };
 }
