@@ -18,6 +18,7 @@
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
     ./modules/home/dconf.nix
+    ./modules/home/extensions.nix
     ./modules/home/associations.nix
   ];
 

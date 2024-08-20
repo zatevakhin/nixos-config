@@ -51,13 +51,6 @@
 
     "org/gnome/shell" = {
       last-selected-power-profile = "performance";
-      disable-user-extensions = false;
-      enabled-extensions = [
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "blur-my-shell@aunetx"
-        "quake-mode@repsac-by.github.com"
-        "tiling-assistant@leleat-on-github"
-      ];
 
       favorite-apps = [
         "org.mozilla.firefox.desktop"
