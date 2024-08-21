@@ -1,0 +1,5 @@
+keys:
+  - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
+creation_rules:
+  - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
+    age: *default_ssh
