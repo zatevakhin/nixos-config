@@ -1,5 +1,11 @@
 keys:
   - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
+  - &nuke_ssh age16punxsfd7h3atyanu53hlhrtakx8rmpqhc7q3udsxqncsvl08dqsksuevc
 creation_rules:
   - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
     age: *default_ssh
+  - path_regex: hosts/nuke/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *nuke_ssh

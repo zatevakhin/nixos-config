@@ -66,5 +66,19 @@
         inputs.nix-flatpak.nixosModules.nix-flatpak
       ];
     };
+
+    nixosConfigurations.nuke = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        username = "zatevakhin";
+        hostname = "nuke";
+      };
+
+      modules = [
+        ./hosts/nuke/configuration.nix
+
+        inputs.sops-nix.nixosModules.sops
+      ];
+    };
   };
 }
