@@ -14,6 +14,7 @@
     # Separated modules
     ./modules/nixos/base.nix
     ./modules/nixos/desktop.nix
+    ./modules/nixos/syncthing.nix
     ./modules/nixos/development.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
