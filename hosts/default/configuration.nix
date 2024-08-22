@@ -45,6 +45,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # NOTE: Using this kernel because still dependent on the Nvidia 535.179 driver.
   boot.kernelPackages = pkgs.linuxPackages_6_6;
 
   networking.hostName = hostname; # Define your hostname.
