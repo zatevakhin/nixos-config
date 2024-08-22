@@ -67,19 +67,7 @@ in {
   programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
-  environment.systemPackages = with pkgs; [
-    wget
-    curl
-    sqlite
-    ripgrep
-    tldr
-    bat
-    eza
-    jq
-    mc
-    lshw
-    htop
-  ];
+  environment.systemPackages = with pkgs; [];
 
   nixpkgs.config.permittedInsecurePackages = [];
 
