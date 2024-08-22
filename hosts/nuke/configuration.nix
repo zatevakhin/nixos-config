@@ -14,6 +14,7 @@ in {
     ./hardware-configuration.nix
 
     ../../modules/nixos/base.nix
+    ../../modules/nixos/docker.nix
   ];
 
   sops.defaultSopsFormat = "yaml";
@@ -67,9 +68,6 @@ in {
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    docker
-    docker-compose
-    docker-buildx
     wget
     curl
     sqlite
@@ -87,10 +85,12 @@ in {
 
   environment.sessionVariables = {};
 
-  virtualisation.docker.enable = true;
+  # <docker>
   virtualisation.docker.enableNvidia = lib.mkForce false;
   virtualisation.docker.storageDriver = lib.mkForce null;
   virtualisation.docker.daemon.settings = lib.mkForce {};
+  hardware.nvidia-container-toolkit.enable = lib.mkForce false;
+  # </docker>
 
   services.locate.enable = true;
   services.locate.interval = "daily";

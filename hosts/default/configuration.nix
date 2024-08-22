@@ -18,7 +18,7 @@
     ./modules/nixos/development.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
-    ./modules/nixos/docker.nix
+    ../../modules/nixos/docker.nix
     ./modules/nixos/qemu.nix
     ./modules/nixos/flatpak.nix
   ];
