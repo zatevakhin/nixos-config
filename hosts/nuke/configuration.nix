@@ -12,6 +12,8 @@ in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
+    ../../modules/nixos/base.nix
   ];
 
   sops.defaultSopsFormat = "yaml";
@@ -22,7 +24,6 @@ in {
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
@@ -81,12 +82,6 @@ in {
     lshw
     htop
   ];
-
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-  };
 
   nixpkgs.config.permittedInsecurePackages = [];
 

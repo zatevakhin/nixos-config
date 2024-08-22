@@ -12,7 +12,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Separated modules
-    ./modules/nixos/base.nix
+    ../../modules/nixos/base.nix
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
     ./modules/nixos/development.nix

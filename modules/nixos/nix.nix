@@ -1,10 +1,11 @@
 {pkgs, ...}: {
   nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-    };
+    # NOTE: Use one (programs.nh.clean.enable or nix.gc.automatic) to avoid conflict.
+    # gc = {
+    #   automatic = true;
+    #   dates = "weekly";
+    #   options = "--delete-older-than 14d";
+    # };
 
     optimise = {
       automatic = true;
@@ -30,6 +31,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 7d --keep 3";
+    clean.dates = "weekly";
   };
 
   environment.systemPackages = with pkgs; [
