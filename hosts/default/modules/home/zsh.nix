@@ -49,4 +49,6 @@
   };
 
   programs.fzf.enable = true;
+
+  programs.fastfetch.enable = true;
 }
