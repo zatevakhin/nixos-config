@@ -20,6 +20,7 @@ in {
     # TODO: configure `traefik` service in nix instead of docker.
     ./containers/traefik
     ./containers/pihole
+    ./containers/jellyfin
     # </containers>
   ];
 
@@ -91,6 +92,8 @@ in {
 
   services.openssh = {
     enable = true;
+
+    openFirewall = true;
 
     settings = {
       PermitRootLogin = "yes";

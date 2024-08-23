@@ -5,6 +5,10 @@
   ...
 }: {
   systemd.services.traefik-compose = {
+    environment = {
+      TRAEFIK_CONFIG = ./traefik.yml;
+    };
+
     script = ''
       network_name="proxy"
       subnet="10.0.1.0/24"

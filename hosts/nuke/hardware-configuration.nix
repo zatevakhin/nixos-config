@@ -20,13 +20,13 @@ in {
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/${devices.fs.boot.uuid}";
+    device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
     fsType = "btrfs";
     options = ["rw" "noatime" "commit=60" "space_cache=v2" "compress=zstd" "subvol=root"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/${devices.fs.open.storage.uuid}";
+    device = "/dev/disk/by-uuid/${devices.fs.boot.uuid}";
     fsType = "vfat";
   };
 

@@ -4,6 +4,8 @@ services:
     image: ghcr.io/wg-easy/wg-easy:latest
     container_name: wg-easy
     environment:
+      - WG_HOST
+      - PASSWORD
       - LANG=en
       - UI_TRAFFIC_STATS=true
       - WG_DEFAULT_DNS=10.0.1.3
@@ -42,6 +44,7 @@ services:
       - "53:53/udp"
     environment:
       TZ: 'Europe/Lisbon'
+      WEBPASSWORD:
 
     # Volumes store your data between container upgrades
     volumes:
