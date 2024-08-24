@@ -46,6 +46,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # NOTE: Using `aarch64` emulation to build packages for Raspberry PIs
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
+
   # NOTE: Using this kernel because still dependent on the Nvidia 535.179 driver.
   boot.kernelPackages = pkgs.linuxPackages_6_6;
 
