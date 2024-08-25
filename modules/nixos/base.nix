@@ -50,6 +50,7 @@
     lsof
     ntfs3g
     nfs-utils
+    btrfs-progs
 
     # monitoring
     htop
