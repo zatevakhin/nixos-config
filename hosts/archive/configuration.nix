@@ -59,17 +59,9 @@ in {
     me.ssh.authorized.baseship
   ];
 
-  environment.shells = with pkgs; [zsh];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     btrfs-progs
-    curl
-    htop
-    mc
-    neovim
   ];
 
   # <docker>
