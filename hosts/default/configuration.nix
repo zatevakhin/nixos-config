@@ -33,6 +33,11 @@
   sops.secrets."user/password/hashed" = {};
   # </sops>
 
+  # <docker>
+  virtualisation.docker.storageDriver = "btrfs";
+  hardware.nvidia-container-toolkit.enable = lib.mkForce true;
+  # </docker>
+
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
   ];

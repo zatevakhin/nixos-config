@@ -76,13 +76,6 @@ in {
 
   environment.sessionVariables = {};
 
-  # <docker>
-  virtualisation.docker.enableNvidia = lib.mkForce false;
-  virtualisation.docker.storageDriver = lib.mkForce null;
-  virtualisation.docker.daemon.settings = lib.mkForce {};
-  hardware.nvidia-container-toolkit.enable = lib.mkForce false;
-  # </docker>
-
   # <openssh>
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   # </openssh>
