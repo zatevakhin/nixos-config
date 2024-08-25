@@ -15,6 +15,7 @@ in {
 
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
+    ../../modules/nixos/openssh.nix
 
     # <containers>
     # TODO: configure `traefik` service in nix instead of docker.
@@ -24,11 +25,13 @@ in {
     # </containers>
   ];
 
+  # <sops>
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
   sops.secrets."user/password/hashed" = {};
+  # </sops>
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
@@ -64,7 +67,6 @@ in {
     packages = with pkgs; [];
   };
 
-  # services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   users.users.root.openssh.authorizedKeys.keys = [
     me.ssh.authorized.baseship
   ];
@@ -87,20 +89,12 @@ in {
   hardware.nvidia-container-toolkit.enable = lib.mkForce false;
   # </docker>
 
+  # <openssh>
+  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  # </openssh>
+
   services.locate.enable = true;
   services.locate.interval = "daily";
-
-  services.openssh = {
-    enable = true;
-
-    openFirewall = true;
-
-    settings = {
-      PermitRootLogin = "yes";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
 
   boot.initrd.kernelModules = [];
 

@@ -11,24 +11,27 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # Separated modules
+    # Shared modules
     ../../modules/nixos/base.nix
+    ../../modules/nixos/openssh.nix
+    ../../modules/nixos/docker.nix
+    ../../modules/nixos/laptop.nix
+    # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
     ./modules/nixos/development.nix
     ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
-    ../../modules/nixos/docker.nix
-    ../../modules/nixos/laptop.nix
     ./modules/nixos/qemu.nix
     ./modules/nixos/flatpak.nix
   ];
 
+  # <sops>
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key" "/home/${username}/.ssh/id_ed25519"];
-
   sops.secrets."user/password/hashed" = {};
+  # </sops>
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
@@ -100,16 +103,6 @@
   };
 
   environment.sessionVariables = {
-  };
-
-  services.openssh = {
-    enable = true;
-
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
   };
 
   # Enable automatic login for the user.

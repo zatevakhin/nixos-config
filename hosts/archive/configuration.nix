@@ -17,6 +17,7 @@ in {
 
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
+    ../../modules/nixos/openssh.nix
   ];
 
   # <sops>
@@ -25,17 +26,6 @@ in {
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   sops.secrets."user/password/hashed" = {};
   # </sops>
-
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-
-    settings = {
-      PermitRootLogin = "yes";
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
 
   networking.hostName = hostname;
 
@@ -69,6 +59,10 @@ in {
   virtualisation.docker.daemon.settings = lib.mkForce {};
   hardware.nvidia-container-toolkit.enable = lib.mkForce false;
   # </docker>
+
+  # <openssh>
+  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  # </openssh>
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
