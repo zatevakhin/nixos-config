@@ -32,5 +32,6 @@
     "org.signal.Signal"
     "im.riot.Riot"
     "io.github.gamingdoom.Datcord"
+    "dev.toastbits.spmp"
   ];
 }
