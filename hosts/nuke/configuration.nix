@@ -33,8 +33,6 @@ in {
   sops.secrets."user/password/hashed" = {};
   # </sops>
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
@@ -70,10 +68,6 @@ in {
   users.users.root.openssh.authorizedKeys.keys = [
     me.ssh.authorized.baseship
   ];
-
-  environment.shells = with pkgs; [zsh];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [];
