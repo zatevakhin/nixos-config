@@ -80,5 +80,19 @@
         inputs.sops-nix.nixosModules.sops
       ];
     };
+
+    nixosConfigurations.archive = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        username = "zatevakhin";
+        hostname = "archive";
+      };
+
+      modules = [
+        ./hosts/archive/configuration.nix
+
+        inputs.sops-nix.nixosModules.sops
+      ];
+    };
   };
 }

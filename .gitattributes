@@ -4,3 +4,7 @@ hosts/default/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/nuke/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/nuke/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+
+hosts/archive/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/archive/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+hosts/archive/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
