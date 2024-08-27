@@ -36,6 +36,7 @@
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
+  virtualisation.docker.enableNvidia = lib.mkForce true;
   # </docker>
 
   nixpkgs.overlays = [
