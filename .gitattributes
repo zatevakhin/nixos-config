@@ -1,6 +1,7 @@
 hosts/default/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/default/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/default/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/default/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/nuke/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/nuke/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt

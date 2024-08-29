@@ -7,7 +7,9 @@
   username,
   hostname,
   ...
-}: {
+}: let
+  wg = import ./secrets/wg.nix;
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -38,6 +40,27 @@
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
   virtualisation.docker.enableNvidia = lib.mkForce true;
   # </docker>
+
+  # <wireguard>
+  networking.wg-quick.interfaces = {
+    wg0 = {
+      address = ["192.168.5.8/32"];
+      dns = ["192.168.128.254"] ++ wg.work.search;
+      autostart = false;
+      listenPort = 51820;
+      privateKey = wg.work.private_key;
+
+      peers = [
+        {
+          publicKey = wg.work.public_key;
+          allowedIPs = ["192.168.128.0/23" "192.168.150.0/24" "192.168.5.0/24" "192.168.151.0/24"];
+          endpoint = wg.work.endpoint;
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
+  # </wireguard>
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
