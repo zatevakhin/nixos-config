@@ -18,6 +18,9 @@ in {
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
+    # <containers>
+    ./containers/traefik
+    # </containers>
   ];
 
   # <sops>
