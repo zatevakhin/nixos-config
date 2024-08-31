@@ -1,9 +1,13 @@
 {username, ...}: let
   cfg = import ../../secrets/syncthing.nix;
 in {
+  networking.firewall.allowedTCPPorts = [8384];
+
   services = {
     syncthing = {
       enable = true;
+      openDefaultPorts = true;
+
       cert = "/mnt/storage/syncthing/.config/creds/cert.pem";
       user = username;
       key = "/mnt/storage/syncthing/.config/creds/key.pem";
@@ -22,6 +26,10 @@ in {
           theme = "black";
           user = cfg.gui.user;
           password = cfg.gui.password;
+        };
+
+        options = {
+          crashReportingEnabled = false;
         };
 
         devices = {
