@@ -20,6 +20,7 @@ in {
     ../../modules/nixos/openssh.nix
     # <containers>
     ./containers/traefik
+    ./containers/qbittorrent
     # </containers>
   ];
 

@@ -1,0 +1,63 @@
+---
+services:
+  qbittorrent-nox:
+    image: qbittorrentofficial/qbittorrent-nox:latest
+    restart: unless-stopped
+    container_name: qbittorrent
+    read_only: true
+    tmpfs:
+      - /tmp
+    stop_grace_period: 30m
+    environment:
+      - QBT_EULA=accept
+      - QBT_WEBUI_PORT=8080
+    volumes:
+      - qbittorrent-config:/config
+      - "/mnt/storage/downloads:/downloads"
+    network_mode: service:protonwire
+    depends_on:
+      - protonwire
+
+  protonwire:
+    container_name: protonwire
+    image: ghcr.io/tprasadtp/protonwire:latest
+    restart: unless-stopped
+    environment:
+      # Quote this value as server name can contain '#'.
+      PROTONVPN_SERVER: "UA#42"
+      # Set this to 1 to show debug logs for issue forms.
+      DEBUG: "0"
+      # Set this to 0 to disable kill-switch.
+      KILL_SWITCH: "1"
+    # NET_ADMIN capability is mandatory!
+    cap_add:
+      - NET_ADMIN
+    # sysctl net.ipv4.conf.all.rp_filter is mandatory!
+    # net.ipv6.conf.all.disable_ipv6 disables IPv6 as protonVPN does not support IPv6.
+    # 'net.*' sysctls are not required on application containers,
+    # as they share network stack with protonwire container.
+    sysctls:
+      net.ipv4.conf.all.rp_filter: 2
+      net.ipv6.conf.all.disable_ipv6: 1
+    volumes:
+      - type: tmpfs
+        target: /tmp
+      - type: bind
+        source: "${PROTON_VPN_PRIVATE_KEY_PATH}"
+        target: "/etc/protonwire/private-key"
+        read_only: true
+    labels:
+      - traefik.http.routers.qb.rule=Host(`qb.homeworld.lan`)
+      - traefik.http.services.qb.loadbalancer.server.port=8080
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.3
+
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  qbittorrent-config: {}
+
