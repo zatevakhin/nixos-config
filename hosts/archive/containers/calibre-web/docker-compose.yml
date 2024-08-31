@@ -1,0 +1,27 @@
+---
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - calibre-web-config:/config
+      - "/mnt/storage/books:/books"
+    restart: unless-stopped
+    labels:
+      - traefik.http.routers.calibre-web.rule=Host(`books.homeworld.lan`)
+      - traefik.http.services.calibre-web.loadbalancer.server.port=8083
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.5
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  calibre-web-config: {}
+
