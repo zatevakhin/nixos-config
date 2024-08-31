@@ -21,6 +21,7 @@ in {
     # <containers>
     ./containers/traefik
     ./containers/qbittorrent
+    ./containers/paperless-ngx
     # </containers>
   ];
 
