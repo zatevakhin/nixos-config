@@ -20,6 +20,7 @@ in {
     ../../modules/nixos/openssh.nix
     # <containers>
     ./containers/traefik
+    ./containers/forgejo
     ./containers/qbittorrent
     ./containers/calibre-web
     ./containers/paperless-ngx
@@ -30,7 +31,7 @@ in {
   # <sops>
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
-  sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+  sops.age.sshKeyPaths = ["/etc/sshgs/ssh_host_ed25519_key"];
   sops.secrets."user/password/hashed" = {};
   # </sops>
 

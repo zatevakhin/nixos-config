@@ -1,0 +1,26 @@
+---
+services:
+  server:
+    image: codeberg.org/forgejo/forgejo:7
+    container_name: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    volumes:
+      - forgejo-data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - traefik.http.routers.forgejo.rule=Host(`forgejo.homeworld.lan`)
+      - traefik.http.services.forgejo.loadbalancer.server.port=3000
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.7
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  forgejo-data: {}
