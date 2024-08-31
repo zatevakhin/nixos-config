@@ -1,0 +1,25 @@
+---
+services:
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:latest
+    volumes:
+      - data:/etc/linkding/data
+    labels:
+      - traefik.http.routers.linkding.rule=Host(`linkding.homeworld.lan`)
+      - traefik.http.services.linkding.loadbalancer.server.port=9090
+    restart: unless-stopped
+    environment:
+      - LD_SUPERUSER_NAME
+      - LD_SUPERUSER_PASSWORD
+
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.8
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  data:
