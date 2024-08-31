@@ -21,8 +21,8 @@ in {
   };
 
   environment.etc.crypttab.text = ''
-    ${devices.fs.luks.archive-a.name} UUID=${devices.fs.luks.archive-a.name} /root/btrfs-${devices.fs.luks.archive-a.name}.keyfile luks
-    ${devices.fs.luks.archive-b.name} UUID=${devices.fs.luks.archive-b.name} /root/btrfs-${devices.fs.luks.archive-b.name}.keyfile luks
+    ${devices.fs.luks.archive-a.name} UUID=${devices.fs.luks.archive-a.uuid} /root/btrfs-${devices.fs.luks.archive-a.uuid}.keyfile luks
+    ${devices.fs.luks.archive-b.name} UUID=${devices.fs.luks.archive-b.uuid} /root/btrfs-${devices.fs.luks.archive-b.uuid}.keyfile luks
   '';
 
   boot.initrd.kernelModules = [];
