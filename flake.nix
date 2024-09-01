@@ -111,5 +111,12 @@
         inputs.sops-nix.nixosModules.sops
       ];
     };
+
+    homeConfigurations = {
+      "root@cm3588" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-linux;
+        modules = [./hosts/cm3588/home.nix];
+      };
+    };
   };
 }
