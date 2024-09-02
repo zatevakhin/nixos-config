@@ -116,6 +116,9 @@ in {
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     xorg.xhost # required for docker x11 passthrough
+    # Logitech Mouse & Keyboard
+    solaar
+    logitech-udev-rules
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];
