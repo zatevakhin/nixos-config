@@ -115,6 +115,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
+    xorg.xhost # required for docker x11 passthrough
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];
