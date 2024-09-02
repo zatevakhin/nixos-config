@@ -100,7 +100,7 @@ in {
     hashedPasswordFile = config.sops.secrets."user/password/hashed".path;
     isNormalUser = true;
     description = "Ivan Zatevakhin";
-    extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd"];
+    extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd" "dialout"];
     packages = with pkgs; [
     ];
   };
