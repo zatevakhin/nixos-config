@@ -121,6 +121,9 @@ in {
     logitech-udev-rules
   ];
 
+  # TODO: Move with required packages to separate config.
+  hardware.logitech.wireless.enable = true;
+
   nixpkgs.config.permittedInsecurePackages = [];
 
   # Some programs need SUID wrappers, can be configured further or are
