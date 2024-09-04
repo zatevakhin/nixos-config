@@ -31,7 +31,8 @@
     "md.obsidian.Obsidian"
     "org.signal.Signal"
     "im.riot.Riot"
+    "in.cinny.Cinny"
     "io.github.gamingdoom.Datcord"
-    # "dev.toastbits.spmp"
+    "com.github.tchx84.Flatseal"
   ];
 }
