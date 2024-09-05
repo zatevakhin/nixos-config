@@ -18,6 +18,7 @@ in {
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/laptop.nix
+    ../../modules/nixos/logitech.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
@@ -116,13 +117,7 @@ in {
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     xorg.xhost # required for docker x11 passthrough
-    # Logitech Mouse & Keyboard
-    solaar
-    logitech-udev-rules
   ];
-
-  # TODO: Move with required packages to separate config.
-  hardware.logitech.wireless.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [];
 
