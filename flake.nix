@@ -67,6 +67,24 @@
       ];
     };
 
+    nixosConfigurations.falke = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        inherit username;
+        inherit pkgs-unstable;
+        hostname = "falke";
+      };
+
+      modules = [
+        ./hosts/falke/configuration.nix
+
+        inputs.sops-nix.nixosModules.sops
+        inputs.home-manager.nixosModules.default
+        inputs.nix-flatpak.nixosModules.nix-flatpak
+        inputs.nixvim.nixosModules.nixvim
+      ];
+    };
+
     nixosConfigurations.raider = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;

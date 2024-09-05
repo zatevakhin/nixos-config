@@ -3,6 +3,7 @@ keys:
   - &nuke_ssh age16punxsfd7h3atyanu53hlhrtakx8rmpqhc7q3udsxqncsvl08dqsksuevc
   - &archive_ssh age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
   - &raider_ssh age1jjfwcarnlzcnp2g4ufmyt5x9hq2yma72vflqy5py06eyh87ppqlqgcmjmy
+  - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
 creation_rules:
   - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
     age: *default_ssh
@@ -21,3 +22,8 @@ creation_rules:
     - age:
       - *default_ssh
       - *raider_ssh
+  - path_regex: hosts/falke/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *falke_machine
