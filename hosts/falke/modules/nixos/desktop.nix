@@ -4,9 +4,9 @@
   ...
 }: {
   imports = [
-    ../../../../modules/nixos/xserver.nix
-    ./opengl.nix
     ./fonts.nix
+    ../../../../modules/nixos/xserver.nix
+    ../../../../modules/nixos/opengl.nix
     ../../../../modules/nixos/audio.nix
     ../../../../modules/nixos/bluetooth.nix
   ];
