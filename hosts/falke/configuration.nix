@@ -19,10 +19,10 @@ in {
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/logitech.nix
+    ../../modules/nixos/gaming.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix
-    ./modules/nixos/gaming.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/qemu.nix
     ./modules/nixos/flatpak.nix
