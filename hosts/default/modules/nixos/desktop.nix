@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./xserver.nix
+    ../../../../modules/nixos/xserver.nix
     ./opengl.nix
     ./fonts.nix
     ../../../../modules/nixos/audio.nix
