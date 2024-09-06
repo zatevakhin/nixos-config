@@ -8,7 +8,7 @@
     ./opengl.nix
     ./fonts.nix
     ../../../../modules/nixos/audio.nix
-    ./bluetooth.nix
+    ../../../../modules/nixos/bluetooth.nix
   ];
 
   environment.systemPackages = with pkgs; [
