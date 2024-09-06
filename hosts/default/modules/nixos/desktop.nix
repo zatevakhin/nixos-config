@@ -7,7 +7,7 @@
     ./xserver.nix
     ./opengl.nix
     ./fonts.nix
-    ./audio.nix
+    ../../../../modules/nixos/audio.nix
     ./bluetooth.nix
   ];
 
