@@ -18,7 +18,6 @@ in {
     ../../modules/nixos/base.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
-    ../../modules/nixos/laptop.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix
@@ -63,15 +62,16 @@ in {
   # </wireguard>
 
   # <ollama>
-  # services.ollama = {
-  #   enable = true;
-  #   listenAddress = "0.0.0.0:11434";
-  #   acceleration = "cuda";
-  # };
+  services.ollama = {
+    enable = true;
+    listenAddress = "0.0.0.0:11434";
+    acceleration = "cuda";
+  };
   # </ollama>
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
+    (self: super: {ollama = pkgs-unstable.ollama;})
   ];
 
   networking.nftables.enable = false;
@@ -131,9 +131,6 @@ in {
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     xorg.xhost # required for docker x11 passthrough
-    # Logitech Mouse & Keyboard
-    solaar
-    logitech-udev-rules
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];
