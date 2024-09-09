@@ -67,9 +67,6 @@ in {
     (self: super: {devenv = pkgs-unstable.devenv;})
   ];
 
-  networking.nftables.enable = false;
-  networking.firewall.enable = false;
-
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
@@ -87,10 +84,14 @@ in {
   # NOTE: Using this kernel because still dependent on the Nvidia 535.179 driver.
   boot.kernelPackages = pkgs.linuxPackages_6_6;
 
+  # <networking>
   networking.hostName = hostname; # Define your hostname.
 
-  # Enable networking
   networking.networkmanager.enable = true;
+
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [8080];
+  # </networking>
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
