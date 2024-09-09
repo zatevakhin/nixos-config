@@ -77,6 +77,14 @@
               description = "Self-hosted audiobook and podcast server.";
             };
           }
+          {
+            "Cinny Web" = {
+              icon = "cinny.svg";
+              href = "http://cinny.homeworld.lan/";
+              siteMonitor = "http://cinny.homeworld.lan/";
+              description = "Self-hosted web client for Matrix.";
+            };
+          }
         ];
       }
       {
