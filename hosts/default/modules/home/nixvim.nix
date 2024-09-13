@@ -43,5 +43,14 @@
       enable = true;
       settings.current_line_blame = true;
     };
+
+    plugins.toggleterm = {
+      enable = true;
+
+      settings = {
+        size = 15;
+        open_mapping = "[[<leader>tt]]";
+      };
+    };
   };
 }
