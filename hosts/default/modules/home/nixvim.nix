@@ -30,6 +30,25 @@
       };
     };
 
+    keymaps = [
+      {
+        action = "<cmd>Neotree toggle<CR>";
+        key = "<C-b>";
+        mode = "n";
+        options = {
+          desc = "Toggle Tree View.";
+        };
+      }
+      {
+        action = "<cmd>Neotree focus<CR>";
+        key = "<leader>ft";
+        mode = "n";
+        options = {
+          desc = "Focus on Neotree.";
+        };
+      }
+    ];
+
     plugins.lualine.enable = true;
 
     colorschemes.catppuccin = {
@@ -50,6 +69,23 @@
       settings = {
         size = 15;
         open_mapping = "[[<leader>tt]]";
+      };
+    };
+
+    plugins.neo-tree = {
+      enable = true;
+      enableGitStatus = true;
+      enableModifiedMarkers = true;
+      enableRefreshOnWrite = true;
+
+      filesystem.filteredItems.hideDotfiles = false;
+
+      window = {
+        width = 35;
+
+        popup = {
+          position = "50%";
+        };
       };
     };
   };
