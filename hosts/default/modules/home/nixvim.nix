@@ -88,5 +88,68 @@
         };
       };
     };
+
+    # <cmp>
+    plugins.cmp.enable = true;
+    plugins.cmp-nvim-lsp.enable = true;
+    plugins.cmp-path.enable = true;
+    plugins.cmp-buffer.enable = true;
+    plugins.cmp-treesitter.enable = true;
+
+    plugins.cmp_luasnip.enable = true;
+    plugins.cmp.settings.mapping = {
+      "<CR>" = "cmp.mapping.confirm({ select = true })";
+      "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+      "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+    };
+
+    plugins.cmp.settings.sources = [
+      {name = "nvim_lsp";}
+      {name = "luasnip";}
+      {name = "path";}
+      {name = "buffer";}
+    ];
+
+    plugins.cmp.settings.snippet = {
+      expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+    };
+    # </cmp>
+
+    # <lsp>
+    plugins.lsp-status.enable = true;
+    plugins.lsp.enable = true;
+    plugins.lsp.keymaps.lspBuf = {
+      K = "hover";
+      gD = "references";
+      gd = "definition";
+      gi = "implementation";
+      gt = "type_definition";
+    };
+    plugins.lsp.servers.typos-lsp.enable = true;
+    plugins.lsp.servers.bashls.enable = true;
+    plugins.lsp.servers.jsonls.enable = true;
+    plugins.lsp.servers.yamlls.enable = true;
+    plugins.lsp.servers.pyright.enable = true;
+    plugins.lsp.servers.ruff-lsp.enable = true;
+    plugins.lsp.servers.nixd.enable = true;
+    plugins.lsp.servers.dockerls.enable = true;
+    plugins.lsp.servers.rust-analyzer.enable = true;
+    plugins.lsp.servers.rust-analyzer.installCargo = true;
+    plugins.lsp.servers.rust-analyzer.installRustc = true;
+    # </lsp>
+
+    # <treesitter>
+    plugins.treesitter = {
+      enable = true;
+      ensureInstalled = ["c" "python" "rust"];
+    };
+
+    plugins.treesitter.incrementalSelection.enable = true;
+    plugins.treesitter-context.enable = true;
+    plugins.treesitter-refactor.enable = true;
+    plugins.treesitter-refactor.navigation.enable = true;
+    plugins.treesitter-refactor.smartRename.enable = true;
+    plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    # </treesitter>
   };
 }
