@@ -25,6 +25,7 @@ in {
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
     ./modules/nixos/development.nix
+    ./modules/nixos/nixvim.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
   ];

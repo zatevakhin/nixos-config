@@ -21,8 +21,8 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-flatpak = {
@@ -60,6 +60,7 @@
       modules = [
         ./hosts/default/configuration.nix
 
+        inputs.nixvim.nixosModules.nixvim
         inputs.sops-nix.nixosModules.sops
         inputs.disko.nixosModules.disko
         inputs.home-manager.nixosModules.default

@@ -1,7 +1,9 @@
-{...}: {
+{pkgs-unstable, ...}: {
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
+
+    package = pkgs-unstable.neovim-unwrapped;
 
     opts = {
       list = true;
@@ -24,6 +26,8 @@
       updatetime = 300;
       swapfile = false;
       undofile = true;
+      fixeol = true;
+      endofline = true;
       clipboard = {
         register = "unnamedplus";
         providers.xclip.enable = true;
@@ -31,6 +35,22 @@
     };
 
     keymaps = [
+      {
+        action = "<cmd>vsplit<CR>";
+        key = "<leader>vv";
+        mode = "n";
+        options = {
+          desc = "Split vertically";
+        };
+      }
+      {
+        action = "<cmd>split<CR>";
+        key = "<leader>ss";
+        mode = "n";
+        options = {
+          desc = "Split horizontally";
+        };
+      }
       {
         action = "<cmd>Neotree toggle<CR>";
         key = "<C-b>";
@@ -47,20 +67,60 @@
           desc = "Focus on Neotree.";
         };
       }
+      {
+        action = "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>";
+        key = "<leader>wl";
+        mode = "n";
+        options = {
+          desc = "List Git Worktrees";
+        };
+      }
+      {
+        action = "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>";
+        key = "<leader>wc";
+        mode = "n";
+        options = {
+          desc = "Create Git Worktree";
+        };
+      }
     ];
 
+    plugins.which-key.enable = true;
     plugins.lualine.enable = true;
+    plugins.bufferline.enable = true;
+    plugins.direnv.enable = true;
+    plugins.barbecue.enable = true;
+    plugins.git-worktree.enable = true;
+    plugins.git-worktree.enableTelescope = true;
 
-    colorschemes.catppuccin = {
+    plugins.telescope = {
       enable = true;
-      settings = {
-        flavour = "mocha";
+
+      keymaps = {
+        "<C-f>" = "find_files";
+        "<leader>ff" = "find_files";
+        "<leader>fb" = "buffers";
+        "<leader>fg" = "live_grep";
       };
     };
+
+    plugins.noice.enable = true;
+    plugins.noice.notify.enabled = true;
+    plugins.noice.popupmenu.enabled = true;
+
+    plugins.helm.enable = true;
+    plugins.trouble.enable = true;
+    plugins.comment.enable = true;
+
+    colorschemes.kanagawa.enable = true;
 
     plugins.gitsigns = {
       enable = true;
       settings.current_line_blame = true;
+    };
+
+    plugins.neogit = {
+      enable = true;
     };
 
     plugins.toggleterm = {
@@ -86,6 +146,26 @@
         popup = {
           position = "50%";
         };
+      };
+
+      sources = [
+        "filesystem"
+        "buffers"
+        "git_status"
+        "netman.ui.neo-tree"
+      ];
+    };
+    plugins.netman.enable = true;
+    plugins.netman.neoTreeIntegration = true;
+
+    plugins.trim = {
+      enable = true;
+      settings = {
+        highlight = false;
+        trim_trailing = true;
+        trim_on_write = true;
+        trim_first_line = true;
+        trim_last_line = false;
       };
     };
 
@@ -116,7 +196,24 @@
     # </cmp>
 
     # <lsp>
+    plugins.lsp-lines.enable = true;
     plugins.lsp-status.enable = true;
+
+    plugins.lsp-format.enable = true;
+    plugins.none-ls.enable = true;
+    plugins.none-ls.sources.formatting.alejandra.enable = true;
+
+    # plugins.conform-nvim = {
+    #   enable = true;
+    #   settings = {
+    #     format_on_save = {
+    #       lsp_fallback = true;
+    #       async = false;
+    #       timeout_ms = 500;
+    #     };
+    #   };
+    # };
+
     plugins.lsp.enable = true;
     plugins.lsp.keymaps.lspBuf = {
       K = "hover";
@@ -126,22 +223,22 @@
       gt = "type_definition";
     };
     plugins.lsp.servers.typos-lsp.enable = true;
-    plugins.lsp.servers.bashls.enable = true;
+    #plugins.lsp.servers.bashls.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
     plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
     plugins.lsp.servers.ruff-lsp.enable = true;
-    plugins.lsp.servers.nixd.enable = true;
+    plugins.lsp.servers.nil-ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.rust-analyzer.enable = true;
-    plugins.lsp.servers.rust-analyzer.installCargo = true;
-    plugins.lsp.servers.rust-analyzer.installRustc = true;
+    #plugins.lsp.servers.rust-analyzer.installCargo = true;
+    #plugins.lsp.servers.rust-analyzer.installRustc = true;
     # </lsp>
 
     # <treesitter>
     plugins.treesitter = {
       enable = true;
-      ensureInstalled = ["c" "python" "rust"];
+      ensureInstalled = ["c" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
     };
 
     plugins.treesitter.incrementalSelection.enable = true;
