@@ -136,7 +136,19 @@
       enable = true;
       enableGitStatus = true;
       enableModifiedMarkers = true;
-      enableRefreshOnWrite = true;
+      closeIfLastWindow = true;
+      gitStatusAsync = true;
+      extraOptions = {
+        use_libuv_file_watcher = true;
+      };
+
+      gitStatusAsyncOptions = {
+        batchDelay = 10;
+      };
+      sourceSelector = {
+        statusline = true;
+        winbar = true;
+      };
 
       filesystem.filteredItems.hideDotfiles = false;
 
@@ -147,14 +159,8 @@
           position = "50%";
         };
       };
-
-      sources = [
-        "filesystem"
-        "buffers"
-        "git_status"
-        "netman.ui.neo-tree"
-      ];
     };
+
     plugins.netman.enable = true;
     plugins.netman.neoTreeIntegration = true;
 
