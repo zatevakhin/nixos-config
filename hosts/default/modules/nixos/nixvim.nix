@@ -121,6 +121,21 @@
 
     plugins.neogit = {
       enable = true;
+      settings = {
+        kind = "floating";
+        commit_editor = {
+          kind = "floating";
+        };
+        commit_popup = {
+          kind = "floating";
+        };
+        popup = {
+          kind = "floating";
+        };
+        preview_buffer = {
+          kind = "floating";
+        };
+      };
     };
 
     plugins.toggleterm = {
