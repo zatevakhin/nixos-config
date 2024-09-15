@@ -105,6 +105,7 @@ in {
     description = "Ivan Zatevakhin";
     extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd" "dialout"];
     packages = with pkgs; [
+      atlauncher # yes! today we playing Minecraft!
     ];
   };
 
