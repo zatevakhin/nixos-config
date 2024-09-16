@@ -60,6 +60,14 @@
         };
       }
       {
+        action = "<cmd>Neogit<CR>";
+        key = "<C-g>";
+        mode = "n";
+        options = {
+          desc = "Toggle Neogit View.";
+        };
+      }
+      {
         action = "<cmd>Neotree focus<CR>";
         key = "<leader>ft";
         mode = "n";
@@ -92,6 +100,12 @@
     plugins.barbecue.enable = true;
     plugins.git-worktree.enable = true;
     plugins.git-worktree.enableTelescope = true;
+    plugins.todo-comments.enable = true;
+
+    plugins.precognition.enable = true;
+    plugins.precognition.package = pkgs-unstable.vimPlugins.precognition-nvim;
+    plugins.project-nvim.enable = true;
+    plugins.project-nvim.enableTelescope = true;
 
     plugins.telescope = {
       enable = true;
@@ -224,17 +238,6 @@
     plugins.none-ls.enable = true;
     plugins.none-ls.sources.formatting.alejandra.enable = true;
 
-    # plugins.conform-nvim = {
-    #   enable = true;
-    #   settings = {
-    #     format_on_save = {
-    #       lsp_fallback = true;
-    #       async = false;
-    #       timeout_ms = 500;
-    #     };
-    #   };
-    # };
-
     plugins.lsp.enable = true;
     plugins.lsp.keymaps.lspBuf = {
       K = "hover";
@@ -244,7 +247,6 @@
       gt = "type_definition";
     };
     plugins.lsp.servers.typos-lsp.enable = true;
-    #plugins.lsp.servers.bashls.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
     plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
@@ -252,8 +254,6 @@
     plugins.lsp.servers.nil-ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.rust-analyzer.enable = true;
-    #plugins.lsp.servers.rust-analyzer.installCargo = true;
-    #plugins.lsp.servers.rust-analyzer.installRustc = true;
     # </lsp>
 
     # <treesitter>
