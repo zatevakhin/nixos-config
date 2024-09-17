@@ -253,6 +253,7 @@
     plugins.lsp.servers.ruff-lsp.enable = true;
     plugins.lsp.servers.nil-ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
+    plugins.lsp.servers.docker-compose-language-service.enable = true;
     plugins.lsp.servers.rust-analyzer.enable = true;
     # </lsp>
 
