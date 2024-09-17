@@ -101,7 +101,6 @@
     plugins.git-worktree.enable = true;
     plugins.git-worktree.enableTelescope = true;
     plugins.todo-comments.enable = true;
-
     plugins.precognition.enable = true;
     plugins.precognition.package = pkgs-unstable.vimPlugins.precognition-nvim;
     plugins.project-nvim.enable = true;
@@ -248,6 +247,7 @@
     };
     plugins.lsp.servers.typos-lsp.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
+    plugins.lsp.servers.helm-ls.enable = true;
     plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
     plugins.lsp.servers.ruff-lsp.enable = true;
