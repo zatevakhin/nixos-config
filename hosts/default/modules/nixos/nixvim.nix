@@ -238,6 +238,7 @@
     plugins.none-ls.sources.formatting.alejandra.enable = true;
 
     plugins.lsp.enable = true;
+    plugins.lsp.package = pkgs-unstable.vimPlugins.nvim-lspconfig;
     plugins.lsp.keymaps.lspBuf = {
       K = "hover";
       gD = "references";
@@ -265,6 +266,7 @@
 
     plugins.treesitter.incrementalSelection.enable = true;
     plugins.treesitter-context.enable = true;
+    plugins.treesitter-context.package = pkgs-unstable.vimPlugins.nvim-treesitter-context;
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
