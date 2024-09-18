@@ -67,8 +67,8 @@
       }
       {
         action = "<cmd>Neotree focus<CR>";
-        key = "<leader>ft";
-        mode = "n";
+        key = "<C-f>";
+        mode = ["n" "v" "i"];
         options = {
           desc = "Focus on Neotree.";
         };
