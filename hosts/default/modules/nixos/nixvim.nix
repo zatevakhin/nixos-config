@@ -66,6 +66,14 @@
         };
       }
       {
+        action = "<cmd>Telescope projects<CR>";
+        key = "<C-p>";
+        mode = ["n" "v" "i"];
+        options = {
+          desc = "Show project select list.";
+        };
+      }
+      {
         action = "<cmd>Neotree focus<CR>";
         key = "<C-f>";
         mode = ["n" "v" "i"];
