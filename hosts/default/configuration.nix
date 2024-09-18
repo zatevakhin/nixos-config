@@ -66,6 +66,9 @@ in {
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
+    (self: super: {neovim = pkgs-unstable.neovim;})
+    (self: super: {neovim-unwrapped = pkgs-unstable.neovim-unwrapped;})
+    (self: super: {vimPlugins = pkgs-unstable.vimPlugins;})
   ];
 
   programs.nix-ld.libraries = with pkgs; [

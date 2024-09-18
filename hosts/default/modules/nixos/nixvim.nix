@@ -1,9 +1,7 @@
-{pkgs-unstable, ...}: {
+{...}: {
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
-
-    package = pkgs-unstable.neovim-unwrapped;
 
     opts = {
       list = true;
@@ -102,7 +100,6 @@
     plugins.git-worktree.enableTelescope = true;
     plugins.todo-comments.enable = true;
     plugins.precognition.enable = true;
-    plugins.precognition.package = pkgs-unstable.vimPlugins.precognition-nvim;
     plugins.project-nvim.enable = true;
     plugins.project-nvim.enableTelescope = true;
 
@@ -238,7 +235,6 @@
     plugins.none-ls.sources.formatting.alejandra.enable = true;
 
     plugins.lsp.enable = true;
-    plugins.lsp.package = pkgs-unstable.vimPlugins.nvim-lspconfig;
     plugins.lsp.keymaps.lspBuf = {
       K = "hover";
       gD = "references";
@@ -266,7 +262,6 @@
 
     plugins.treesitter.incrementalSelection.enable = true;
     plugins.treesitter-context.enable = true;
-    plugins.treesitter-context.package = pkgs-unstable.vimPlugins.nvim-treesitter-context;
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
