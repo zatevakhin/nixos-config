@@ -61,6 +61,25 @@ in {
         }
       ];
     };
+
+    wg1 = {
+      address = ["10.8.0.8/24"];
+      dns = ["10.0.1.3"] ++ wg.home.search;
+      autostart = false;
+      listenPort = 51820;
+      privateKey = wg.home.private_key;
+
+      peers = [
+        {
+          publicKey = wg.home.public_key;
+          presharedKey = wg.home.preshared_key;
+          # allowedIPs = [ "10.8.0.0/24" "10.8.1.0/24" "129.168.1.1/24" ];
+          allowedIPs = ["0.0.0.0/0" "::/0"];
+          endpoint = wg.home.endpoint;
+          persistentKeepalive = 25;
+        }
+      ];
+    };
   };
   # </wireguard>
 
