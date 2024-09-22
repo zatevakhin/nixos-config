@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
@@ -98,6 +98,38 @@
         };
       }
     ];
+
+    extraPlugins = [
+      pkgs.vimPlugins.avante-nvim
+      # pkgs.vimPlugins.render-markdown-nvim
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "render-markdown-nvim";
+        src = pkgs.fetchFromGitHub {
+          owner = "MeanderingProgrammer";
+          repo = "render-markdown.nvim";
+          rev = "v7.1.0";
+          hash = "sha256-r8bcMK6y8fRY0lHjZeGsLm395UxZDQuDy4RVf3Pe94g=";
+        };
+      })
+    ];
+
+    extraConfigLua = ''
+      require('avante_lib').load()
+      require('avante').setup({
+        provider = "openai",
+        openai = {
+          endpoint = "http://falke.lan:11434/v1/",
+          model = "llama3.1:8b",
+          temperature = 0,
+          max_tokens = 4096,
+          ["local"] = true,
+        }
+      })
+
+      require('render-markdown').setup({
+        file_types = { "markdown", "Avante" },
+      })
+    '';
 
     plugins.which-key.enable = true;
     plugins.lualine.enable = true;
