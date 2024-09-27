@@ -4,6 +4,7 @@
     direnv
     micromamba
     rustup
+    rerun
     gcc
     clang
     pkg-config
