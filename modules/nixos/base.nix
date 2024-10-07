@@ -59,7 +59,10 @@
 
     # processes
     killall
+
+    # filemanagers
     mc
+    yazi
   ];
 
   # Default shell
