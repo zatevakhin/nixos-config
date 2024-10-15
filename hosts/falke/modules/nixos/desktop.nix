@@ -14,7 +14,6 @@
   environment.systemPackages = with pkgs; [
     # Basic applications
     mpv
-    tilix
     youtube-music
     keepassxc
     obs-studio
