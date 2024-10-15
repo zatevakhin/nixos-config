@@ -28,6 +28,11 @@
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     };
+
+    stylix = {
+      url = "github:danth/stylix/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -65,6 +70,7 @@
         inputs.disko.nixosModules.disko
         inputs.home-manager.nixosModules.default
         inputs.nix-flatpak.nixosModules.nix-flatpak
+        inputs.stylix.nixosModules.stylix
       ];
     };
 

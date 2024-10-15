@@ -32,6 +32,26 @@ in {
     ./modules/nixos/wayland.nix
   ];
 
+  # <stylix>
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    polarity = "dark";
+
+    image = builtins.fetchurl {
+      url = "https://w.wallhaven.cc/full/ex/wallhaven-ex136k.jpg";
+      sha256 = "00z10ykrh826vj0ch4vm62wbvy6q53jj752b2241cv62j4zxv56j";
+    };
+
+    targets = {
+      console.enable = true;
+      gnome.enable = true;
+    };
+  };
+
+  # TODO: Add fonts
+  # <stylix>
+
   # <sops>
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
