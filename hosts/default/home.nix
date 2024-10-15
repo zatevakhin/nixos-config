@@ -11,11 +11,11 @@
     ./modules/home/zsh.nix
     ./modules/home/starship.nix
     ./modules/home/tmux.nix
-    #./modules/home/tilix.nix
+    # ./modules/home/tilix.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
     ./modules/home/dconf.nix
-    ./modules/home/wezterm.nix
+    ./modules/home/kitty.nix
     ./modules/home/extensions.nix
     ./modules/home/associations.nix
   ];
