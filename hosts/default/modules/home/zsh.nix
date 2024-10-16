@@ -16,6 +16,8 @@
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza";
       cat = "${pkgs.bat}/bin/bat";
+      # TODO: Move to `kitty.nix`.
+      icat = "${pkgs.kitty}/bin/kitty icat";
 
       gcs = "${pkgs.git}/bin/git commit -S";
       gcu = "${pkgs.git}/bin/git commit";
