@@ -163,6 +163,7 @@
     plugins.helm.enable = true;
     plugins.trouble.enable = true;
     plugins.comment.enable = true;
+    plugins.image.enable = true;
 
     colorschemes.kanagawa.enable = true;
 
