@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
+{...}: {
   services.flatpak.enable = true;
   services.flatpak.update.onActivation = true;
   services.flatpak.uninstallUnmanaged = true;

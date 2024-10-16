@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   dconf.settings = {
     "org/gnome/desktop/background" = {
       picture-options = "zoom";
