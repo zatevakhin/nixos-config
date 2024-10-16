@@ -28,7 +28,9 @@
       endofline = true;
       clipboard = {
         register = "unnamedplus";
-        providers.xclip.enable = true;
+        providers.wl-copy.enable = true;
+        # TODO: Add flag for x11 based systems.
+        # providers.xclip.enable = true;
       };
     };
 
