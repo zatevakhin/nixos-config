@@ -5,6 +5,7 @@
       enable_audio_bell = false;
       dynamic_background_opacity = true;
       cursor_shape = "block";
+      allow_remote_control = "yes";
     };
     extraConfig = ''
       # vim:ft=kitty
