@@ -17,7 +17,7 @@
     rage
     sops
 
-    # utilites
+    # utilities
     sudo
     file
     man-pages
@@ -53,6 +53,7 @@
     btrfs-progs
 
     # monitoring
+    fastfetch
     htop
     iotop
     iftop
