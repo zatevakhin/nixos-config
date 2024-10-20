@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  username,
   ...
 }: {
   services.xserver.displayManager.gdm.wayland = lib.mkForce true;
@@ -20,4 +21,7 @@
       boot.kernelParams = lib.mkForce (lib.filter (param: param != "module_blacklist=i915") config.boot.kernelParams);
     };
   };
+
+  programs.ydotool.enable = true;
+  users.users.${username}.extraGroups = ["ydotool"];
 }
