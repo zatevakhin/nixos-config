@@ -137,11 +137,25 @@
       ];
     };
 
-    homeConfigurations = {
-      "root@cm3588" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux;
-        modules = [./hosts/cm3588/home.nix];
+    # NOTE: Install should be performed using commands below.
+    # 1. Ensure that all tools are present.
+    # >> nix shell -- nixpkgs#{coreutils-full,dosfstools,f2fs-tools,fscrypt-experimental,gptfdisk,nixos-install-tools,util-linux,neovim}
+    # 2. Install on a chosen device.
+    # >> nix run 'github:nix-community/disko#disko-install' -- --flake .#mnhr --disk main /dev/mmcblk0
+    #
+    nixosConfigurations.mnhr = nixpkgs-unstable.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        username = "zatevakhin";
+        hostname = "mnhr";
       };
+
+      modules = [
+        ./hosts/mnhr/configuration.nix
+
+        inputs.disko.nixosModules.disko
+        inputs.sops-nix.nixosModules.sops
+      ];
     };
   };
 }

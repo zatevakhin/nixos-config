@@ -17,3 +17,5 @@
 "hosts/archive/secrets/syncthing.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 
 "hosts/raider/secrets/user.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
+
+"hosts/mnhr/secrets/ssh.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]

@@ -4,6 +4,7 @@ keys:
   - &archive_ssh age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
   - &raider_ssh age1jjfwcarnlzcnp2g4ufmyt5x9hq2yma72vflqy5py06eyh87ppqlqgcmjmy
   - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
+  - &mnhr_machine age1ustkwg4dht8hydkev74cdvp765aundsggutq66ndm5nmckuddqnqlcrv7v
 creation_rules:
   - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
     age: *default_ssh
@@ -27,3 +28,8 @@ creation_rules:
     - age:
       - *default_ssh
       - *falke_machine
+  - path_regex: hosts/mnhr/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *mnhr_machine
