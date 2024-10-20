@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   boot.initrd.kernelModules = ["nvidia"];
 
   services.xserver.videoDrivers = ["nvidia"];
@@ -36,18 +40,17 @@
 
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
+    nvidiaSettings = false;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-    # NOTE: Used to fix issues with vulkan and missing `libnvidia-gpucomp.so` in docker.
-    # package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs {
-    #   src = pkgs.fetchurl {
-    #     url = "https://download.nvidia.com/XFree86/Linux-x86_64/535.179/NVIDIA-Linux-x86_64-535.179.run";
-    #     hash = "sha256-tDmkUYaZ5S7MdKqtZUEEIlBvH2WaIKIoj+MLUxizcuc=";
-    #   };
-    # };
+    package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs {
+      src = pkgs.fetchurl {
+        url = "https://download.nvidia.com/XFree86/Linux-x86_64/560.35.03/NVIDIA-Linux-x86_64-560.35.03.run";
+        hash = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
+      };
+    };
 
     # NOTE: Enable if there are screen tearing issues.
     # forceFullCompositionPipeline = true;
