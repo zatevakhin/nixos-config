@@ -129,8 +129,7 @@ in {
     "aarch64-linux"
   ];
 
-  # NOTE: Using this kernel because still dependent on the Nvidia 535.179 driver.
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
