@@ -54,7 +54,6 @@
 
     # monitoring
     fastfetch
-    htop
     iotop
     iftop
 
@@ -70,6 +69,18 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [zsh];
+
+  # Htop with configuration
+  programs.htop = {
+    enable = true;
+    settings = {
+      tree_view = 1;
+      highlight_base_name = 1;
+      shadow_other_users = 1;
+      hide_userland_threads = 1;
+      hide_kernel_threads = 1;
+    };
+  };
 
   # Favorite editor
   programs.neovim = {
