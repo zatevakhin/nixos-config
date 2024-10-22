@@ -30,5 +30,6 @@
     "io.github.gamingdoom.Datcord"
     "com.github.tchx84.Flatseal"
     "io.github.zen_browser.zen"
+    "net.werwolv.ImHex"
   ];
 }
