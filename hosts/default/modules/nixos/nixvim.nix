@@ -102,27 +102,9 @@
     ];
 
     extraPlugins = [
-      # pkgs.vimPlugins.avante-nvim
     ];
 
-    # extraConfigLua = ''
-    #   require('avante_lib').load()
-    #   require('avante').setup({
-    #     provider = "openai",
-    #     openai = {
-    #       endpoint = "http://falke.lan:11434/v1/",
-    #       model = "llama3.1:8b",
-    #       temperature = 0,
-    #       max_tokens = 4096,
-    #       ["local"] = true,
-    #     }
-    #   })
-    #
-    #   require('render-markdown').setup({
-    #     file_types = { "markdown", "Avante" },
-    #   })
-    # '';
-
+    # plugins.avante.enable = true;
     plugins.which-key.enable = true;
     plugins.lualine.enable = true;
     plugins.bufferline.enable = true;
