@@ -163,7 +163,17 @@
     plugins.helm.enable = true;
     plugins.trouble.enable = true;
     plugins.comment.enable = true;
-    plugins.image.enable = true;
+    plugins.image = {
+      # BUG: Disabled due to markdown rendered incorrectly with images.
+      enable = false;
+      extraOptions = {
+        markdown = {
+          clear_in_insert_mode = true;
+        };
+      };
+      tmuxShowOnlyInActiveWindow = true;
+      windowOverlapClearEnabled = true;
+    };
 
     colorschemes.kanagawa.enable = true;
 
