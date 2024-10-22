@@ -6,7 +6,7 @@
   hostname,
   ...
 }: let
-  ssh = ./secrets/ssh.nix;
+  ssh = import ./secrets/ssh.nix;
 in {
   imports = [
     # Include the results of the hardware scan.
