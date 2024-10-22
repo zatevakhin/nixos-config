@@ -103,16 +103,6 @@
 
     extraPlugins = [
       # pkgs.vimPlugins.avante-nvim
-      # pkgs.vimPlugins.render-markdown-nvim
-      (pkgs.vimUtils.buildVimPlugin {
-        name = "render-markdown-nvim";
-        src = pkgs.fetchFromGitHub {
-          owner = "MeanderingProgrammer";
-          repo = "render-markdown.nvim";
-          rev = "v7.1.0";
-          hash = "sha256-r8bcMK6y8fRY0lHjZeGsLm395UxZDQuDy4RVf3Pe94g=";
-        };
-      })
     ];
 
     # extraConfigLua = ''
@@ -163,6 +153,13 @@
     plugins.helm.enable = true;
     plugins.trouble.enable = true;
     plugins.comment.enable = true;
+    plugins.render-markdown = {
+      enable = true;
+      settings = {
+        code.language_name = false;
+      };
+    };
+
     plugins.image = {
       # BUG: Disabled due to markdown rendered incorrectly with images.
       enable = false;
