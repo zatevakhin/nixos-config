@@ -69,6 +69,12 @@ in {
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   # </openssh>
 
+  # <docker>
+  virtualisation.docker.daemon.settings = {
+    data-root = "/mnt/storage/.system/docker";
+  };
+  # </docker>
+
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [];
 
