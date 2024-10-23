@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   modulesPath,
   ...
@@ -11,7 +12,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/vda";
+        device = "/dev/mmcblk0";
         content = {
           type = "gpt";
           partitions = {
@@ -41,8 +42,78 @@
           };
         };
       };
+      # <mergefs>
+      nvme0 = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/nvme0";
+              };
+            };
+          };
+        };
+      };
+      nvme1 = {
+        type = "disk";
+        device = "/dev/nvme1n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/nvme1";
+              };
+            };
+          };
+        };
+      };
+      nvme2 = {
+        type = "disk";
+        device = "/dev/nvme2n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/nvme2";
+              };
+            };
+          };
+        };
+      };
+      # </mergefs>
     };
   };
+
+  # MergerFS configuration
+  fileSystems."/mnt/storage" = {
+    device = "/mnt/nvme0:/mnt/nvme1:/mnt/nvme2";
+    fsType = "fuse.mergerfs";
+    options = [
+      "defaults"
+      "allow_other"
+      "use_ino"
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=mfs"
+    ];
+  };
+
+  # Added MergerFS package
+  environment.systemPackages = [pkgs.mergerfs];
 
   boot.initrd.availableKernelModules = ["nvme" "usbhid"];
   boot.initrd.kernelModules = [];
