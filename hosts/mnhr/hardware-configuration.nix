@@ -42,6 +42,9 @@
           };
         };
       };
+
+      # TODO: Add LUKS to JBOD.
+
       # <mergefs>
       nvme0 = {
         type = "disk";
