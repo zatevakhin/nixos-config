@@ -15,6 +15,7 @@ in {
 
     # Shared modules
     ../../modules/nixos/base.nix
+    ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     # Machine specific modules
