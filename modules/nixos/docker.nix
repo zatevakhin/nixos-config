@@ -1,6 +1,6 @@
 {
   pkgs,
-  lib,
+  username,
   ...
 }: {
   virtualisation.docker.enable = true;
@@ -9,4 +9,7 @@
     docker-compose
     docker-buildx
   ];
+
+  # Add user into docker group.
+  users.users.${username}.extraGroups = ["docker"];
 }
