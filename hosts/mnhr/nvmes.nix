@@ -1,6 +1,6 @@
 #
 # sudo mkdir -p /root/nvme.keyfile
-# sudo dd if=/dev/urandom of=/root/nvme.keyfile bs=512 count=4
+# sudo dd if=/dev/urandom of=/root/nvme.keyfile bs=256 count=1
 # sudo chmod 600 /root/nvme.keyfile
 #
 {
