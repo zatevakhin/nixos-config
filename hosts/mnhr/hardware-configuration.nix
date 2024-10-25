@@ -42,10 +42,7 @@
           };
         };
       };
-
-      # TODO: Add LUKS to JBOD.
-
-      # <mergefs>
+      # <jbod>
       nvme0 = {
         type = "disk";
         device = "/dev/nvme0n1";
@@ -55,9 +52,17 @@
             data = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/mnt/nvme0";
+                type = "luks";
+                name = "cryptnvme0";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/root/nvme.keyfile";
+                };
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/mnt/nvme0";
+                };
               };
             };
           };
@@ -72,9 +77,17 @@
             data = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/mnt/nvme1";
+                type = "luks";
+                name = "cryptnvme1";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/root/nvme.keyfile";
+                };
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/mnt/nvme1";
+                };
               };
             };
           };
@@ -89,15 +102,23 @@
             data = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/mnt/nvme2";
+                type = "luks";
+                name = "cryptnvme2";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/root/nvme.keyfile";
+                };
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/mnt/nvme2";
+                };
               };
             };
           };
         };
       };
-      # </mergefs>
+      # </jbod>
     };
   };
 
@@ -115,8 +136,31 @@
     ];
   };
 
+  # Ensure encrypted devices are mounted at boot
+  boot.initrd.luks.devices = {
+    cryptnvme0 = {
+      device = "/dev/disk/by-partlabel/disk-nvme0-data";
+      keyFile = "/root/nvme.keyfile";
+      allowDiscards = true;
+    };
+    cryptnvme1 = {
+      device = "/dev/disk/by-partlabel/disk-nvme1-data";
+      keyFile = "/root/nvme.keyfile";
+      allowDiscards = true;
+    };
+    cryptnvme2 = {
+      device = "/dev/disk/by-partlabel/disk-nvme2-data";
+      keyFile = "/root/nvme.keyfile";
+      allowDiscards = true;
+    };
+  };
+
+  boot.initrd.secrets = {
+    "/root/nvme.keyfile" = "/root/nvme.keyfile";
+  };
+
   # Added MergerFS package
-  environment.systemPackages = [pkgs.mergerfs];
+  environment.systemPackages = [pkgs.mergerfs pkgs.cryptsetup];
 
   boot.initrd.availableKernelModules = ["nvme" "usbhid"];
   boot.initrd.kernelModules = [];
