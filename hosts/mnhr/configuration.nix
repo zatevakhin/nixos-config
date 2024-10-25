@@ -11,14 +11,15 @@ in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/nixos/homepage.nix
-
     # Shared modules
     ../../modules/nixos/base.nix
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     # Machine specific modules
+    ./modules/nixos/homepage.nix
+    # Containers
+    ./containers/traefik
   ];
 
   # <sops>

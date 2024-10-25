@@ -1,0 +1,21 @@
+---
+services:
+  reverse-proxy:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "8080:8080"
+    environment:
+      - TRAEFIK_CONFIG
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${TRAEFIK_CONFIG}:/etc/traefik/traefik.yml:ro"
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.2
+
+networks:
+  proxy:
+    external: true
