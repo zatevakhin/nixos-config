@@ -12,13 +12,13 @@
     # NOTE: If not enough env variables from nvidia offload can be added.
   };
 
-  boot.kernelParams = ["module_blacklist=i915"];
+  boot.blacklistedKernelModules = ["i915"];
 
   # NOTE: Use Intel GPU in Laptop mode on Wayland.
   specialisation = {
     laptop.configuration = {
       system.nixos.tags = ["laptop"];
-      boot.kernelParams = lib.mkForce (lib.filter (param: param != "module_blacklist=i915") config.boot.kernelParams);
+      boot.blacklistedKernelModules = lib.mkForce (lib.filter (param: param != "i915") config.boot.blacklistedKernelModules);
     };
   };
 
