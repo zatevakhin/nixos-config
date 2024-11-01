@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     environment:
       # Quote this value as server name can contain '#'.
-      PROTONVPN_SERVER: "UA#42"
+      PROTONVPN_SERVER: "UA#44"
       # Set this to 1 to show debug logs for issue forms.
       DEBUG: "0"
       # Set this to 0 to disable kill-switch.
