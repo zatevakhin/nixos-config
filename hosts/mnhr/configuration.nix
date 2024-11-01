@@ -24,6 +24,7 @@ in {
     #        - https://github.com/edk2-porting/edk2-rk3588/issues/142#issuecomment-2426288640
     #        - https://github.com/jellyfin/jellyfin-ffmpeg/issues/34
     # ./containers/jellyfin
+    ./containers/immich
   ];
 
   # <sops>
