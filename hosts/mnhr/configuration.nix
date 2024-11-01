@@ -72,9 +72,10 @@ in {
   # </openssh>
 
   # <docker>
-  virtualisation.docker.daemon.settings = {
-    data-root = "/mnt/storage/.system/docker";
-  };
+  # NOTE: Can't use MergerFS as data-root for docker. Looks like some issues with OverlayFS and MergerFS combined.
+  # virtualisation.docker.daemon.settings = {
+  #   data-root = "/mnt/storage/.system/docker";
+  # };
   # </docker>
 
   # List packages installed in system profile. To search, run:
