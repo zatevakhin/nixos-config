@@ -31,5 +31,7 @@
     "com.github.tchx84.Flatseal"
     "io.github.zen_browser.zen"
     "net.werwolv.ImHex"
+    "fr.romainvigier.MetadataCleaner"
+    "com.github.jeromerobert.pdfarranger"
   ];
 }
