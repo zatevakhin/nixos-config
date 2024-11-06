@@ -165,6 +165,14 @@
               description = "Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up.";
             };
           }
+          {
+            "Immich" = {
+              icon = "immich.svg";
+              href = "http://immich.homeworld.lan";
+              siteMonitor = "http://immich.homeworld.lan";
+              description = "High performance self-hosted photo and video management solution.";
+            };
+          }
         ];
       }
     ];
