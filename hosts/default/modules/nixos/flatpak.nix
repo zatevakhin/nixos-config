@@ -33,5 +33,6 @@
     "net.werwolv.ImHex"
     "fr.romainvigier.MetadataCleaner"
     "com.github.jeromerobert.pdfarranger"
+    "com.tomjwatson.Emote"
   ];
 }
