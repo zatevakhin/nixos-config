@@ -21,6 +21,7 @@ in {
     ../../modules/nixos/qemu.nix
     ../../modules/nixos/logitech.nix
     ../../modules/nixos/gaming.nix
+    ../../modules/nixos/firewall.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix
@@ -75,9 +76,6 @@ in {
     (self: super: {ollama = pkgs-unstable.ollama;})
   ];
 
-  networking.nftables.enable = false;
-  networking.firewall.enable = false;
-
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
@@ -120,6 +118,12 @@ in {
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   users.users.root.openssh.authorizedKeys.keys = [me.ssh.authorized.baseship];
   # </openssh>
+
+  # <firewall>
+  networking.firewall.allowedTCPPorts = [
+    1880 # Playing with NodeRed.
+  ];
+  # </firewall>
 
   home-manager = {
     # also pass inputs to home-manager modules
