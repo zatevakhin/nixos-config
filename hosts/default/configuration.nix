@@ -157,7 +157,7 @@ in {
 
   home-manager = {
     # also pass inputs to home-manager modules
-    extraSpecialArgs = {inherit inputs username;};
+    extraSpecialArgs = {inherit inputs username pkgs-unstable;};
     users = {
       "${username}" = import ./home.nix;
     };

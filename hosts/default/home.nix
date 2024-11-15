@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   username,
   ...
 }: {
@@ -12,10 +13,15 @@
     # ./modules/home/firefox.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
+    ./modules/home/emote.nix
     ./modules/home/dconf.nix
     ./modules/home/kitty.nix
     ./modules/home/extensions.nix
     ./modules/home/associations.nix
+  ];
+
+  nixpkgs.overlays = [
+    (self: super: {copyq = pkgs-unstable.copyq;})
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
