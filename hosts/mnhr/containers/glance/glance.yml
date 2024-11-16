@@ -1,0 +1,142 @@
+server:
+  port: 8080
+  assets-path: /app/assets
+
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+
+          - type: rss
+            limit: 10
+            collapse-after: 3
+            cache: 3h
+            feeds:
+              - url: https://ciechanow.ski/atom.xml
+              - url: https://www.joshwcomeau.com/rss.xml
+                title: Josh Comeau
+              - url: https://samwho.dev/rss.xml
+              - url: https://awesomekling.github.io/feed.xml
+              - url: https://ishadeed.com/feed.xml
+                title: Ahmad Shadeed
+
+          - type: twitch-channels
+            channels:
+              - theprimeagen
+              - zatevakhin
+              - thebath
+
+      - size: full
+        widgets:
+        - type: search
+          search-engine: duckduckgo
+          bangs:
+            - title: YouTube
+              shortcut: "!yt"
+              url: https://www.youtube.com/results?search_query={QUERY}
+        - type: hacker-news
+
+        - type: videos
+          channels:
+            - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+            - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
+            - UCOk-gHyjcWZNj3Br4oxwh0A # Techno Tim
+
+        - type: reddit
+          subreddit: selfhosted
+
+      - size: small
+        widgets:
+          - type: weather
+            location: Lisbon, Portugal
+            hour-format: 24h
+
+          - type: markets
+            markets:
+              - symbol: BTC-USD
+                name: Bitcoin
+              - symbol: ETH-USD
+                name: Ethereum
+              - symbol: SOL-USD
+                name: Solana
+
+  - name: Home Lab
+    columns:
+    - size: small
+      widgets:
+        - type: monitor
+          cache: 1m
+          title: Network & Infrastructure
+          sites:
+            - title: Home Assistant
+              url: https://pixelpond-3114538102.duckdns.org:8124
+              icon: /assets/svg/home-assistant-alt.svg
+            - title: Pi Hole
+              url: http://pihole.homeworld.lan/admin
+              icon: /assets/svg/pi-hole.svg
+            - title: Wireguard UI
+              url: http://wg.homeworld.lan
+              icon: /assets/svg/wireguard.svg
+            - title: Vodafone Router
+              url: http://192.168.1.1
+              icon: si:vodafone
+
+        - type: monitor
+          cache: 1m
+          title: Entertainment & Media
+          sites:
+            - title: Jellyfin
+              url: http://jellyfin.homeworld.lan
+              icon: /assets/svg/jellyfin.svg
+            - title: Audiobookshelf
+              url: http://abs.homeworld.lan
+              icon: /assets/svg/audiobookshelf.svg
+            - title: Calibre Web
+              url: http://books.homeworld.lan
+              icon: /assets/svg/calibre-web.svg
+            - title: qBittorrent
+              url: http://qb.homeworld.lan
+              icon: /assets/svg/qbittorrent.svg
+
+        - type: monitor
+          cache: 1m
+          title: Storage & Documents
+          sites:
+            - title: Paperless NGX
+              url: http://paperless.homeworld.lan
+              icon: /assets/svg/paperless-ngx.svg
+            - title: Syncthing
+              url: http://syncthing.homeworld.lan
+              icon: /assets/svg/syncthing.svg
+            - title: Immich
+              url: http://immich.homeworld.lan
+              icon: /assets/svg/immich.svg
+
+        - type: monitor
+          cache: 1m
+          title: Productivity & Communication
+          sites:
+            - title: Forgejo
+              url: http://forgejo.homeworld.lan
+              icon: /assets/svg/forgejo.svg
+            - title: Linkding
+              url: http://linkding.homeworld.lan
+              icon: /assets/svg/linkding.svg
+            - title: Cinny Web
+              url: http://cinny.homeworld.lan
+              icon: /assets/svg/cinny.svg
+            - title: Ghostfolio
+              url: http://ghostfolio.homeworld.lan
+              icon: /assets/png/ghostfolio.png
+
+    - size: full
+      widgets:
+      - type: search
+        search-engine: duckduckgo
+        bangs:
+          - title: YouTube
+            shortcut: "!yt"
+            url: https://www.youtube.com/results?search_query={QUERY}
+

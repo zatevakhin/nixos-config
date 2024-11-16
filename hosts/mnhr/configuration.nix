@@ -25,6 +25,7 @@ in {
     #        - https://github.com/jellyfin/jellyfin-ffmpeg/issues/34
     # ./containers/jellyfin
     ./containers/immich
+    ./containers/glance
   ];
 
   # <sops>

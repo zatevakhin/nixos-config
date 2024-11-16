@@ -1,0 +1,22 @@
+services:
+  glance:
+    image: glanceapp/glance
+    container_name: glance
+    volumes:
+      - "${GLANCE_CONFIG}:/app/glance.yml"
+      - "${SVG_ASSETS_HOST_LOCATION}:/app/assets/svg"
+      - "${PNG_ASSETS_HOST_LOCATION}:/app/assets/png"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+    labels:
+     - traefik.http.routers.glance.rule=Host(`glance.homeworld.lan`)
+     - traefik.http.services.glance.loadbalancer.server.port=8080
+     - traefik.docker.network=proxy
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.8
+
+networks:
+  proxy:
+    external: true
