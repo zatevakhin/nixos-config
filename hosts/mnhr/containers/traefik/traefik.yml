@@ -11,6 +11,11 @@ global:
 entryPoints:
   web:
     address: :80
+    transport:
+      respondingTimeouts:
+        readTimeout: 600s
+        idleTimeout: 600s
+        writeTimeout: 600s
 
 ################################################################
 # API and dashboard configuration
