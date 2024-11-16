@@ -20,7 +20,7 @@ in {
     # <containers>
     # TODO: configure `traefik` service in nix instead of docker.
     ./containers/traefik
-    ./containers/pihole
+    #./containers/pihole
     ./containers/jellyfin
     # </containers>
   ];

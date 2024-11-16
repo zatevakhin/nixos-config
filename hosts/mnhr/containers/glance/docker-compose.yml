@@ -2,6 +2,8 @@ services:
   glance:
     image: glanceapp/glance
     container_name: glance
+    environment:
+      - ADGUARD_PASSWORD
     volumes:
       - "${GLANCE_CONFIG}:/app/glance.yml"
       - "${SVG_ASSETS_HOST_LOCATION}:/app/assets/svg"

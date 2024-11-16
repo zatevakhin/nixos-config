@@ -53,6 +53,12 @@ pages:
             location: Lisbon, Portugal
             hour-format: 24h
 
+          - type: dns-stats
+            service: adguard
+            url: http://adguard.homeworld.lan
+            username: admin
+            password: ${ADGUARD_PASSWORD}
+
           - type: markets
             markets:
               - symbol: BTC-USD
