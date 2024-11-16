@@ -73,6 +73,9 @@ pages:
             - title: Home Assistant
               url: https://pixelpond-3114538102.duckdns.org:8124
               icon: /assets/svg/home-assistant-alt.svg
+            - title: AdGuard
+              url: http://adguard.homeworld.lan
+              icon: /assets/svg/adguard-home.svg
             - title: Pi Hole
               url: http://pihole.homeworld.lan/admin
               icon: /assets/svg/pi-hole.svg

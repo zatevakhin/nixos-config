@@ -13,6 +13,8 @@ services:
      - traefik.http.routers.glance.rule=Host(`glance.homeworld.lan`)
      - traefik.http.services.glance.loadbalancer.server.port=8080
      - traefik.docker.network=proxy
+    dns:
+      - 10.0.1.3 # DNS in `proxy` network.
     networks:
       proxy:
         ipv4_address: 10.0.1.8
