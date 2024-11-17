@@ -18,6 +18,7 @@ in {
     ../../modules/nixos/docker.nix
     # Machine specific modules
     ./modules/nixos/homepage.nix
+    ./modules/nixos/step-ca.nix
     # Containers
     ./containers/traefik
     ./containers/adguard
