@@ -12,6 +12,7 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Shared modules
+    ../../modules/certs/root.nix
     ../../modules/nixos/base.nix
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
