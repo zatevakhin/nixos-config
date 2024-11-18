@@ -115,6 +115,11 @@
       };
       authority = {
         enableAdmin = true;
+        claims = {
+          minTLSCertDuration = "5m";
+          maxTLSCertDuration = "2160h";
+          defaultTLSCertDuration="2160h";
+        };
       };
       tls = {
         cipherSuites = [
