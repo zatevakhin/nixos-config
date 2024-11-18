@@ -13,6 +13,8 @@ services:
     restart: unless-stopped
     labels:
      - traefik.http.routers.glance.rule=Host(`glance.homeworld.lan`)
+     - traefik.http.routers.glance.tls=true
+     - traefik.http.routers.glance.entrypoints=websecure
      - traefik.http.services.glance.loadbalancer.server.port=8080
      - traefik.docker.network=proxy
     dns:
