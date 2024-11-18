@@ -2,6 +2,7 @@
   systemd.services.traefik-compose = {
     environment = {
       TRAEFIK_CONFIG = ./traefik.yml;
+      TRAEFIK_TLS_DYNAMIC_CONFIG = ./tls.yml;
     };
 
     script = ''
