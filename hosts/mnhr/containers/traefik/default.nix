@@ -22,6 +22,6 @@
     '';
 
     wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket"];
+    after = ["docker.service" "docker.socket" "step-certificates.service"];
   };
 }
