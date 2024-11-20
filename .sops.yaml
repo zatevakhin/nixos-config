@@ -1,3 +1,5 @@
+# INFO: Generate machine key using command below.
+# nix run nixpkgs#ssh-to-age -- ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
 keys:
   - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
   - &nuke_ssh age16punxsfd7h3atyanu53hlhrtakx8rmpqhc7q3udsxqncsvl08dqsksuevc
@@ -5,6 +7,7 @@ keys:
   - &raider_ssh age1jjfwcarnlzcnp2g4ufmyt5x9hq2yma72vflqy5py06eyh87ppqlqgcmjmy
   - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
   - &mnhr_machine age1ustkwg4dht8hydkev74cdvp765aundsggutq66ndm5nmckuddqnqlcrv7v
+  - &eulr_machine age17r8y3a9y0v6zcxzcstg3ypnq4skzc205umvsk63yrhuzw8z4zayqqeatcw
 creation_rules:
   - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
     age: *default_ssh
@@ -33,3 +36,8 @@ creation_rules:
     - age:
       - *default_ssh
       - *mnhr_machine
+  - path_regex: hosts/eulr/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *eulr_machine
