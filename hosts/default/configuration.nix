@@ -9,6 +9,7 @@
   ...
 }: let
   wg = import ./secrets/wg.nix;
+  user = import ./secrets/user.nix;
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -153,6 +154,9 @@ in {
     extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd" "dialout"];
     packages = with pkgs; [
       atlauncher # yes! today we playing Minecraft!
+    ];
+    openssh.authorizedKeys.keys = [
+      user.ssh.eulr
     ];
   };
 
