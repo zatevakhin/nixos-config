@@ -19,6 +19,8 @@ in {
   ];
 
   networking.hostName = hostname;
+  networking.computerName = "${hostname}";
+  networking.localHostName = "${hostname}";
   security.pam.enableSudoTouchIdAuth = true;
 
   environment.systemPackages = with pkgs; [
