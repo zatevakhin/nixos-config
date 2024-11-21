@@ -42,6 +42,7 @@ in {
     ];
     casks = [
       "aerospace"
+      "zen-browser"
     ];
     masApps = {};
     onActivation.cleanup = "zap";
@@ -53,6 +54,7 @@ in {
     dock.autohide = true;
     dock.mru-spaces = false;
     dock.persistent-apps = [
+      "/Applications/Zen Browser.app"
       "${pkgs.kitty}/Applications/kitty.app"
       "${pkgs.obsidian}/Applications/Obsidian.app"
       "/Applications/Slack.app"
