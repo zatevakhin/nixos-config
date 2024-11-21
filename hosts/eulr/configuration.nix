@@ -51,15 +51,18 @@ in {
   };
 
   system.defaults = {
-    dock.autohide = true;
-    dock.mru-spaces = false;
-    dock.persistent-apps = [
-      "/Applications/Zen Browser.app"
-      "${pkgs.kitty}/Applications/kitty.app"
-      "${pkgs.obsidian}/Applications/Obsidian.app"
-      "/Applications/Slack.app"
-    ];
-    dock.minimize-to-application = true;
+    dock = {
+      autohide = true;
+      mru-spaces = false;
+      show-recents = false;
+      minimize-to-application = true;
+      persistent-apps = [
+        "/Applications/Zen Browser.app"
+        "${pkgs.kitty}/Applications/kitty.app"
+        "${pkgs.obsidian}/Applications/Obsidian.app"
+        "/Applications/Slack.app"
+      ];
+    };
     finder = {
       ShowPathbar = true;
       CreateDesktop = false;
