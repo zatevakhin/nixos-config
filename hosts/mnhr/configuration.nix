@@ -31,6 +31,7 @@ in {
     # ./containers/jellyfin
     ./containers/immich
     ./containers/glance
+    ./containers/vaultwarden
   ];
 
   # <sops>
@@ -58,7 +59,7 @@ in {
     provisioner = "admin";
     provisioner-password-file = config.sops.secrets.step-provisioner-password-file.path;
     ca-url = "https://ca.homeworld.lan:8443";
-    renewal-interval = "OnCalendar=*-*-*/30 00:00:00";  # Every 30 days at midnight
+    renewal-interval = "OnCalendar=*-*-*/30 00:00:00"; # Every 30 days at midnight
     certificates = {
       "homeworld-wildcard" = {
         domain = "*.homeworld.lan";

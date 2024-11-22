@@ -1,0 +1,23 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://${VAULTWARDEN_DOMAIN}"
+    volumes:
+      - "${VAULTWARDEN_DATA_LOCATION}:/data/"
+    labels:
+     - traefik.http.routers.vaultwarden.rule=Host(`${VAULTWARDEN_DOMAIN}`)
+     - traefik.http.routers.vaultwarden.tls=true
+     - traefik.http.routers.vaultwarden.entrypoints=websecure
+     - traefik.http.services.vaultwarden.loadbalancer.server.port=80
+     - traefik.docker.network=proxy
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.9
+
+networks:
+  proxy:
+    external: true
+
