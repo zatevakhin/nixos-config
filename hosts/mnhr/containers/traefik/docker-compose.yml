@@ -11,12 +11,21 @@ services:
     environment:
       - TRAEFIK_CONFIG
       - TRAEFIK_TLS_DYNAMIC_CONFIG
+      - TRAEFIK_TLS_CERT
+      - TRAEFIK_TLS_CERT_KEY
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${TRAEFIK_CONFIG}:/etc/traefik/traefik.yml:ro"
       - "${TRAEFIK_TLS_DYNAMIC_CONFIG}:/etc/traefik/traefik.d/tls.yml:ro"
-      - "/var/lib/traefik/certs/homeworld-wildcard.crt:/tls/cert.pem:ro"
-      - "/var/lib/traefik/certs/homeworld-wildcard.key:/tls/key.pem:ro"
+      - type: bind
+        source: "${TRAEFIK_TLS_CERT}"
+        target: /tls/cert.pem
+        read_only: true
+      - type: bind
+        source: "${TRAEFIK_TLS_CERT_KEY}"
+        target: /tls/key.pem
+        read_only: true
+
     networks:
       proxy:
         ipv4_address: 10.0.1.2

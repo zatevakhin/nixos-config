@@ -73,13 +73,15 @@ in {
       after = ["network-online.target" "step-ca-bootstrap.service"];
       wants = ["network-online.target"];
 
+      unitConfig = {
+        ConditionPathExists = [cfg.provisioner-password-file];
+      };
+
       serviceConfig = {
         Type = "oneshot";
         User = "root";
         Group = "root";
         RemainAfterExit = true;
-        # Ensure password file exists before starting
-        AssertPathExists = [ cfg.provisioner-password-file ];
       };
 
       path = with pkgs; [step-cli];
@@ -136,4 +138,3 @@ in {
     );
   };
 }
-

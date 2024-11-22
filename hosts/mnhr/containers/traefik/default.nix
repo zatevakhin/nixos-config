@@ -1,8 +1,17 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  cert = "/var/lib/traefik/certs/homeworld-wildcard.crt";
+  key = "/var/lib/traefik/certs/homeworld-wildcard.key";
+in {
   systemd.services.traefik-compose = {
     environment = {
       TRAEFIK_CONFIG = ./traefik.yml;
       TRAEFIK_TLS_DYNAMIC_CONFIG = ./tls.yml;
+      TRAEFIK_TLS_CERT = "${cert}";
+      TRAEFIK_TLS_CERT_KEY = "${key}";
+    };
+
+    unitConfig = {
+      ConditionPathExists = [cert key];
     };
 
     script = ''
@@ -22,6 +31,7 @@
     '';
 
     wantedBy = ["multi-user.target"];
+    requires = ["step-certificates.service"];
     after = ["docker.service" "docker.socket" "step-certificates.service"];
   };
 }
