@@ -1,10 +1,19 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+  root_ca = "/root/.step/certs/root_ca.crt";
+in {
 
   systemd.services.traefik-compose = {
     environment = {
-      TRAEFIK_CONFIG=./traefik.yml;
-      TRAEFIK_DYNAMIC_CONFIG=./traefik_dynamic.yml;
+      TRAEFIK_CONFIG = ./traefik.yml;
+      TRAEFIK_DYNAMIC_CONFIG = ./traefik_dynamic.yml;
+      HOST_ROOT_CA = "${root_ca}";
+      LEGO_CA_CERTIFICATES = "/etc/traefik/certs/root.crt";
     };
+
+    unitConfig = {
+      ConditionPathExists = [root_ca];
+    };
+
     script = ''
       network_name="proxy"
       subnet="10.0.1.0/24"
@@ -22,6 +31,7 @@
     '';
 
     wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket"];
+    requires = ["step-ca-bootstrap.service"];
+    after = ["docker.service" "docker.socket" "step-ca-bootstrap.service"];
   };
 }

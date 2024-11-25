@@ -8,11 +8,19 @@ services:
       - --log.level=INFO
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
+    environment:
+      - LEGO_CA_CERTIFICATES
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${TRAEFIK_CONFIG}:/etc/traefik/traefik.yml:ro"
       - "${TRAEFIK_DYNAMIC_CONFIG}:/etc/traefik/traefik.d/traefik_dynamic.yml:ro"
+      - type: bind
+        source: "${HOST_ROOT_CA}"
+        target: "${LEGO_CA_CERTIFICATES}"
+        read_only: true
+
     networks:
       proxy:
         ipv4_address: 10.0.1.2

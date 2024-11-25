@@ -12,6 +12,8 @@ entryPoints:
   web:
     address: :80
 
+  websecure:
+    address: ":443"
 ################################################################
 # API and dashboard configuration
 ################################################################
@@ -28,4 +30,19 @@ providers:
     watch: true
 
   docker:
+    exposedByDefault: false
     endpoint: unix:///var/run/docker.sock
+
+################################################################
+# Certificates Resolvers
+################################################################
+certificatesResolvers:
+  stepca:
+    acme:
+      storage: "acme.json"
+      caServer: "https://ca.homeworld.lan:8443/acme/acme/directory"
+      certificatesDuration: 24
+      httpChallenge:
+        entryPoint: web
+
+
