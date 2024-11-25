@@ -80,13 +80,12 @@ pages:
               url: https://pixelpond-3114538102.duckdns.org:8124
               icon: /assets/svg/home-assistant-alt.svg
             - title: AdGuard
-              url: http://adguard.homeworld.lan
+              url: https://adguard.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/adguard-home.svg
-            - title: Pi Hole
-              url: http://pihole.homeworld.lan/admin
-              icon: /assets/svg/pi-hole.svg
             - title: Wireguard UI
-              url: http://wg.homeworld.lan
+              url: https://wg.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/wireguard.svg
             - title: Vodafone Router
               url: http://192.168.1.1
@@ -100,13 +99,16 @@ pages:
               url: http://jellyfin.homeworld.lan
               icon: /assets/svg/jellyfin.svg
             - title: Audiobookshelf
-              url: http://abs.homeworld.lan
+              url: https://abs.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/audiobookshelf.svg
             - title: Calibre Web
-              url: http://books.homeworld.lan
+              url: https://books.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/calibre-web.svg
             - title: qBittorrent
-              url: http://qb.homeworld.lan
+              url: https://qb.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/qbittorrent.svg
 
         - type: monitor
@@ -114,27 +116,37 @@ pages:
           title: Storage & Documents
           sites:
             - title: Paperless NGX
-              url: http://paperless.homeworld.lan
+              url: https://paperless.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/paperless-ngx.svg
             - title: Syncthing
-              url: http://syncthing.homeworld.lan
+              url: https://syncthing.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/syncthing.svg
             - title: Immich
-              url: http://immich.homeworld.lan
+              url: https://immich.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/immich.svg
 
         - type: monitor
           cache: 1m
           title: Productivity & Communication
           sites:
+            - title: Vaultwarden
+              url: https://vw.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/vaultwarden.svg
             - title: Forgejo
-              url: http://forgejo.homeworld.lan
+              url: https://forgejo.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/forgejo.svg
             - title: Linkding
-              url: http://linkding.homeworld.lan
+              url: https://linkding.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/linkding.svg
             - title: Cinny Web
-              url: http://cinny.homeworld.lan
+              url: https://cinny.homeworld.lan
+              allow-insecure: true
               icon: /assets/svg/cinny.svg
             - title: Ghostfolio
               url: http://ghostfolio.homeworld.lan
