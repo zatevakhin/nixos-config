@@ -18,6 +18,7 @@ in {
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
+    ../../modules/nixos/step-ca-bootstrap.nix
     # <containers>
     ./containers/traefik
     ./containers/forgejo
@@ -36,6 +37,14 @@ in {
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   sops.secrets."user/password/hashed" = {};
   # </sops>
+
+  # <step-ca>
+  services.step-ca-bootstrap = {
+    enable = true;
+    ca-url = "https://ca.homeworld.lan:8443";
+    fingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
+  };
+  # </step-ca>
 
   networking.hostName = hostname;
 

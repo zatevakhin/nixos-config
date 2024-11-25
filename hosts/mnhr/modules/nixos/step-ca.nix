@@ -77,10 +77,10 @@
         --name="StepSister CA" \
         --dns="$STEP_CA_DNS" \
         --address="$STEP_CA_ADDRESS:$STEP_CA_PORT" \
-        --provisioner "admin" \
-        --password-file "${config.sops.secrets.step-ca-password.path}" \
-        --provisioner-password-file "${config.sops.secrets.step-ca-password.path}" \
-        --remote-management
+        --provisioner="admin" \
+        --password-file="${config.sops.secrets.step-ca-password.path}" \
+        --provisioner-password-file="${config.sops.secrets.step-ca-password.path}" \
+        --acme
     '';
 
     preStart = ''
@@ -115,11 +115,23 @@
       };
       authority = {
         enableAdmin = true;
+        certificateAuthority = "https://ca.homeworld.lan:8443";
+        certificateAuthorityFingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
+        certificateIssuer = {
+          type= "jwk";
+          provisioner = "acme-jwk";
+        };
         claims = {
           minTLSCertDuration = "5m";
           maxTLSCertDuration = "2160h";
-          defaultTLSCertDuration="2160h";
+          defaultTLSCertDuration = "2160h";
         };
+        provisioners = [
+          {
+            type = "ACME";
+            name = "acme";
+          }
+        ];
       };
       tls = {
         cipherSuites = [

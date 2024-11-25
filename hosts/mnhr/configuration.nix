@@ -20,8 +20,6 @@ in {
     # Machine specific modules
     ./modules/nixos/homepage.nix
     ./modules/nixos/step-ca.nix
-    ./modules/nixos/step-ca-bootstrap.nix
-    ./modules/nixos/step-certificates.nix
     # Containers
     ./containers/traefik
     ./containers/adguard
@@ -45,29 +43,7 @@ in {
   services.step-ca-bootstrap = {
     enable = true;
     ca-url = "https://ca.homeworld.lan:8443";
-    fingerprint = "3e38469e23830961ad4b3908934db7824c9492559e3540f693738762bf1867d5";
-  };
-
-  sops.secrets.step-provisioner-password-file = {
-    sopsFile = ./secrets/step-ca.yaml;
-    format = "yaml";
-    key = "step/password";
-  };
-
-  services.step-certificates = {
-    enable = true;
-    provisioner = "admin";
-    provisioner-password-file = config.sops.secrets.step-provisioner-password-file.path;
-    ca-url = "https://ca.homeworld.lan:8443";
-    renewal-interval = "OnCalendar=*-*-*/30 00:00:00"; # Every 30 days at midnight
-    certificates = {
-      "homeworld-wildcard" = {
-        domain = "*.homeworld.lan";
-        cert-dir = "traefik/certs";
-        notify-service = "traefik.service";
-        validity-period = 2160; # 90 days validity
-      };
-    };
+    fingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
   };
   # </step-ca>
 
