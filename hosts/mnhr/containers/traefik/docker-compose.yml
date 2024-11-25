@@ -10,22 +10,16 @@ services:
       - "8080:8080"
     environment:
       - TRAEFIK_CONFIG
-      - TRAEFIK_TLS_DYNAMIC_CONFIG
-      - TRAEFIK_TLS_CERT
-      - TRAEFIK_TLS_CERT_KEY
+      - LEGO_CA_CERTIFICATES
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${TRAEFIK_CONFIG}:/etc/traefik/traefik.yml:ro"
-      - "${TRAEFIK_TLS_DYNAMIC_CONFIG}:/etc/traefik/traefik.d/tls.yml:ro"
       - type: bind
-        source: "${TRAEFIK_TLS_CERT}"
-        target: /tls/cert.pem
+        source: "${HOST_ROOT_CA}"
+        target: "${LEGO_CA_CERTIFICATES}"
         read_only: true
-      - type: bind
-        source: "${TRAEFIK_TLS_CERT_KEY}"
-        target: /tls/key.pem
-        read_only: true
-
+    dns:
+      - 10.0.1.3
     networks:
       proxy:
         ipv4_address: 10.0.1.2

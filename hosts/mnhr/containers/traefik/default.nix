@@ -1,17 +1,15 @@
 {pkgs, ...}: let
-  cert = "/var/lib/traefik/certs/homeworld-wildcard.crt";
-  key = "/var/lib/traefik/certs/homeworld-wildcard.key";
+  root_ca = "/root/.step/certs/root_ca.crt";
 in {
   systemd.services.traefik-compose = {
     environment = {
       TRAEFIK_CONFIG = ./traefik.yml;
-      TRAEFIK_TLS_DYNAMIC_CONFIG = ./tls.yml;
-      TRAEFIK_TLS_CERT = "${cert}";
-      TRAEFIK_TLS_CERT_KEY = "${key}";
+      HOST_ROOT_CA = "${root_ca}";
+      LEGO_CA_CERTIFICATES="/etc/traefik/certs/root.crt";
     };
 
     unitConfig = {
-      ConditionPathExists = [cert key];
+      ConditionPathExists = [root_ca];
     };
 
     script = ''
@@ -31,7 +29,7 @@ in {
     '';
 
     wantedBy = ["multi-user.target"];
-    requires = ["step-certificates.service"];
-    after = ["docker.service" "docker.socket" "step-certificates.service"];
+    requires = ["step-ca-bootstrap.service"];
+    after = ["docker.service" "docker.socket" "step-ca-bootstrap.service"];
   };
 }

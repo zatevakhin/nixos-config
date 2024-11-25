@@ -12,9 +12,11 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     restart: unless-stopped
     labels:
+     - traefik.enable=true
      - traefik.http.routers.glance.rule=Host(`glance.homeworld.lan`)
      - traefik.http.routers.glance.tls=true
      - traefik.http.routers.glance.entrypoints=websecure
+     - traefik.http.routers.glance.tls.certresolver=stepca
      - traefik.http.services.glance.loadbalancer.server.port=8080
      - traefik.docker.network=proxy
     dns:

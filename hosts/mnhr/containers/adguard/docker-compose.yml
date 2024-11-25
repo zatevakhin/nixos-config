@@ -24,7 +24,11 @@ services:
       - net.ipv4.ip_forward=1
     restart: unless-stopped
     labels:
+     - traefik.enable=true
      - traefik.http.routers.wg.rule=Host(`wg.homeworld.lan`)
+     - traefik.http.routers.wg.tls=true
+     - traefik.http.routers.wg.entrypoints=websecure
+     - traefik.http.routers.wg.tls.certresolver=stepca
      - traefik.http.services.wg.loadbalancer.server.port=51821
      - traefik.docker.network=proxy
 
@@ -47,7 +51,11 @@ services:
       proxy:
         ipv4_address: 10.0.1.3
     labels:
+      - traefik.enable=true
       - traefik.http.routers.adguard.rule=Host(`adguard.homeworld.lan`)
+      - traefik.http.routers.adguard.tls=true
+      - traefik.http.routers.adguard.entrypoints=websecure
+      - traefik.http.routers.adguard.tls.certresolver=stepca
       - traefik.http.services.adguard.loadbalancer.server.port=80
       - traefik.docker.network=proxy
     ports:

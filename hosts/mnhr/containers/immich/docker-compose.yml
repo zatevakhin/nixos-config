@@ -19,7 +19,11 @@ services:
     ports:
      - "2283:2283"
     labels:
+     - traefik.enable=true
      - traefik.http.routers.immich.rule=Host(`immich.homeworld.lan`)
+     - traefik.http.routers.immich.tls=true
+     - traefik.http.routers.immich.entrypoints=websecure
+     - traefik.http.routers.immich.tls.certresolver=stepca
      - traefik.http.services.immich.loadbalancer.server.port=2283
      - traefik.docker.network=proxy
     environment:
