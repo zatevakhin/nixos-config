@@ -60,7 +60,11 @@ services:
       PAPERLESS_URL: http://paperless.homeworld.lan
 
     labels:
+      - traefik.enable=true
       - traefik.http.routers.paperless-ngx.rule=Host(`paperless.homeworld.lan`)
+      - traefik.http.routers.paperless-ngx.tls=true
+      - traefik.http.routers.paperless-ngx.entrypoints=websecure
+      - traefik.http.routers.paperless-ngx.tls.certresolver=stepca
       - traefik.http.services.paperless-ngx.loadbalancer.server.port=8000
       - traefik.docker.network=proxy
     networks:

@@ -12,7 +12,11 @@ services:
       - "/mnt/storage/books:/books"
     restart: unless-stopped
     labels:
+      - traefik.enable=true
       - traefik.http.routers.calibre-web.rule=Host(`books.homeworld.lan`)
+      - traefik.http.routers.calibre-web.tls=true
+      - traefik.http.routers.calibre-web.entrypoints=websecure
+      - traefik.http.routers.calibre-web.tls.certresolver=stepca
       - traefik.http.services.calibre-web.loadbalancer.server.port=8083
     networks:
       proxy:

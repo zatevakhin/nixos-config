@@ -18,7 +18,11 @@ services:
       # you are running ABS on
       - audiobookshelf-config:/config
     labels:
+      - traefik.enable=true
       - traefik.http.routers.abs.rule=Host(`abs.homeworld.lan`)
+      - traefik.http.routers.abs.tls=true
+      - traefik.http.routers.abs.entrypoints=websecure
+      - traefik.http.routers.abs.tls.certresolver=stepca
       - traefik.http.services.abs.loadbalancer.server.port=80
     restart: unless-stopped
     networks:

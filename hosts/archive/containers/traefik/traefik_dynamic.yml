@@ -1,18 +1,14 @@
-## Dynamic configuration
 http:
   services:
-    homepage:
-      loadBalancer:
-        servers:
-        - url: "http://archive.lan:8082/"
     syncthing:
       loadBalancer:
         servers:
         - url: "http://archive.lan:8384/"
   routers:
-    to-homepage:
-      rule: Host(`homeworld.lan`)
-      service: homepage
     to-syncthing:
-      rule: Host(`syncthing.homeworld.lan`)
-      service: syncthing
+      rule: "Host(`syncthing.homeworld.lan`)"
+      entryPoints: "websecure"
+      service: "syncthing"
+      tls:
+        certResolver: "stepca"
+

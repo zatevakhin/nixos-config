@@ -12,7 +12,11 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
+      - traefik.enable=true
       - traefik.http.routers.forgejo.rule=Host(`forgejo.homeworld.lan`)
+      - traefik.http.routers.forgejo.tls=true
+      - traefik.http.routers.forgejo.entrypoints=websecure
+      - traefik.http.routers.forgejo.tls.certresolver=stepca
       - traefik.http.services.forgejo.loadbalancer.server.port=3000
     networks:
       proxy:

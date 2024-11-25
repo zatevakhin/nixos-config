@@ -6,7 +6,11 @@ services:
     volumes:
       - data:/etc/linkding/data
     labels:
+      - traefik.enable=true
       - traefik.http.routers.linkding.rule=Host(`linkding.homeworld.lan`)
+      - traefik.http.routers.linkding.tls=true
+      - traefik.http.routers.linkding.entrypoints=websecure
+      - traefik.http.routers.linkding.tls.certresolver=stepca
       - traefik.http.services.linkding.loadbalancer.server.port=9090
     restart: unless-stopped
     environment:
