@@ -90,7 +90,7 @@ in {
     };
 
     wg1 = {
-      address = ["10.8.0.8/24"];
+      address = ["10.8.0.5/24"];
       dns = ["10.0.1.3"] ++ wg.home.search;
       autostart = false;
       listenPort = 51820;
