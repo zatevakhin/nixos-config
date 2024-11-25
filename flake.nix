@@ -207,5 +207,15 @@
         }
       ];
     };
+
+    # NOTE: Build ISO image with specified configuration.
+    # >> nix build .#nixosConfigurations.iso.config.system.build.isoImage
+    nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
+      system = "${system}";
+      modules = [
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ./hosts/iso/configuration.nix
+      ];
+    };
   };
 }

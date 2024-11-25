@@ -19,3 +19,5 @@ hosts/raider/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/mnhr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
+
+hosts/iso/secrets/iso.nix filter=git-agecrypt diff=git-agecrypt
