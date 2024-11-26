@@ -1,7 +1,11 @@
-{ pkgs, lib, config, ... }: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   root_ca = "/root/.step/certs/root_ca.crt";
 in {
-
   systemd.services.traefik-compose = {
     environment = {
       TRAEFIK_CONFIG = ./traefik.yml;
