@@ -54,7 +54,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.adguard.rule=Host(`adguard.homeworld.lan`)
       - traefik.http.routers.adguard.tls=true
-      - traefik.http.routers.adguard.entrypoints=websecure
+      - traefik.http.routers.adguard.entrypoints=web,websecure
       - traefik.http.routers.adguard.tls.certresolver=stepca
       - traefik.http.services.adguard.loadbalancer.server.port=80
       - traefik.docker.network=proxy
