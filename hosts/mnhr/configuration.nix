@@ -50,12 +50,15 @@ in {
 
   # <certificates>
   security.pki.certificateFiles = [
-    "${pkgs.stepsister-root-ca}/etc/ssl/certs/${pkgs.stepsister-root-ca.name}.pem"
+    (pkgs.fetchurl {
+      url = "https://ca.homeworld.lan:8443/roots.pem";
+      hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+      curlOpts = "--insecure";
+    })
   ];
   # </certificates>
 
   nixpkgs.overlays = [
-    (self: super: {stepsister-root-ca = super.callPackage ../../modules/packages/stepsister-root-ca/package.nix {};})
   ];
 
   networking.nftables.enable = false;
@@ -106,7 +109,6 @@ in {
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    stepsister-root-ca
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];
