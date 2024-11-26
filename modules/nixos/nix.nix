@@ -7,6 +7,8 @@
     #   options = "--delete-older-than 14d";
     # };
 
+    package = pkgs.lix;
+
     optimise = {
       automatic = true;
       dates = ["weekly"];
