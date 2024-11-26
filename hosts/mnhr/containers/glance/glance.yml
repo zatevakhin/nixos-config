@@ -161,3 +161,22 @@ pages:
             shortcut: "!yt"
             url: https://www.youtube.com/results?search_query={QUERY}
 
+    - size: small
+      widgets:
+      - type: releases
+        show-source-icon: true
+        repositories:
+          - immich-app/immich
+          - paperless-ngx/paperless-ngx
+          - dani-garcia/vaultwarden
+          - AdguardTeam/AdGuardHome
+          - advplyr/audiobookshelf
+          - glanceapp/glance
+          - wg-easy/wg-easy
+          - tprasadtp/protonvpn-docker
+          - dockerhub:linuxserver/calibre-web
+          - codeberg:Forgejo/forgejo
+          - dockerhub:sissbruecker/linkding
+          - dockerhub:jellyfin/jellyfin
+          - dockerhub:qbittorrentofficial/qbittorrent-nox
+
