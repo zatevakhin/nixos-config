@@ -15,7 +15,6 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Shared modules
-    ../../modules/certs/root.nix
     ../../modules/nixos/base.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
@@ -60,6 +59,12 @@ in {
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key" "/home/${username}/.ssh/id_ed25519"];
   sops.secrets."user/password/hashed" = {};
   # </sops>
+
+  # <certificates>
+  security.pki.certificateFiles = [
+    "${pkgs.stepsister-root-ca}/etc/ssl/certs/${pkgs.stepsister-root-ca.name}.pem"
+  ];
+  # </certificates>
 
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
@@ -115,6 +120,7 @@ in {
     (self: super: {neovim = pkgs-unstable.neovim;})
     (self: super: {neovim-unwrapped = pkgs-unstable.neovim-unwrapped;})
     (self: super: {vimPlugins = pkgs-unstable.vimPlugins;})
+    (self: super: {stepsister-root-ca = super.callPackage ../../modules/packages/stepsister-root-ca/package.nix {};})
   ];
 
   programs.nix-ld.libraries = with pkgs; [
@@ -171,6 +177,7 @@ in {
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     xorg.xhost # required for docker x11 passthrough
+    stepsister-root-ca
   ];
 
   nixpkgs.config.permittedInsecurePackages = [];

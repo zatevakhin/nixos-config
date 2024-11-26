@@ -12,7 +12,6 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Shared modules
-    ../../modules/certs/root.nix
     ../../modules/nixos/base.nix
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
@@ -49,7 +48,14 @@ in {
   };
   # </step-ca>
 
+  # <certificates>
+  security.pki.certificateFiles = [
+    "${pkgs.stepsister-root-ca}/etc/ssl/certs/${pkgs.stepsister-root-ca.name}.pem"
+  ];
+  # </certificates>
+
   nixpkgs.overlays = [
+    (self: super: {stepsister-root-ca = super.callPackage ../../modules/packages/stepsister-root-ca/package.nix {};})
   ];
 
   networking.nftables.enable = false;
@@ -99,7 +105,9 @@ in {
   # </docker>
 
   # List packages installed in system profile. To search, run:
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    stepsister-root-ca
+  ];
 
   nixpkgs.config.permittedInsecurePackages = [];
 
