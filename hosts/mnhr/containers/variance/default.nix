@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  systemd.services.cinny-web-compose = {
+  systemd.services.variance-compose = {
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
 
     wantedBy = ["multi-user.target"];

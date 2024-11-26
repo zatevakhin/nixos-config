@@ -144,10 +144,10 @@ pages:
               url: https://linkding.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/linkding.svg
-            - title: Cinny Web
-              url: https://cinny.homeworld.lan
+            - title: Variance Web
+              url: https://va.homeworld.lan
               allow-insecure: true
-              icon: /assets/svg/cinny.svg
+              icon: /assets/svg/matrix.svg
             - title: Ghostfolio
               url: http://ghostfolio.homeworld.lan
               icon: /assets/png/ghostfolio.png

@@ -27,7 +27,6 @@ in {
     ./containers/calibre-web
     ./containers/paperless-ngx
     ./containers/audiobookshelf
-    ./containers/cinny
     # </containers>
   ];
 

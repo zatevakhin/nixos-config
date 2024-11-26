@@ -31,6 +31,7 @@ in {
     ./containers/immich
     ./containers/glance
     ./containers/vaultwarden
+    ./containers/variance
   ];
 
   # <sops>
