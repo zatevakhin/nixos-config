@@ -148,9 +148,6 @@ pages:
               url: https://va.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/matrix.svg
-            - title: Ghostfolio
-              url: https://gf.homeworld.lan
-              icon: /assets/png/ghostfolio.png
 
     - size: full
       widgets:
@@ -174,7 +171,7 @@ pages:
           - glanceapp/glance
           - wg-easy/wg-easy
           - tprasadtp/protonvpn-docker
-          - ghostfolio/ghostfolio
+          - ollama/ollama
           - dockerhub:linuxserver/calibre-web
           - codeberg:Forgejo/forgejo
           - dockerhub:sissbruecker/linkding

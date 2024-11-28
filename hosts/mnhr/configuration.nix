@@ -31,7 +31,6 @@ in {
     ./containers/glance
     ./containers/vaultwarden
     ./containers/variance
-    ./containers/ghostfolio
   ];
 
   # <sops>
