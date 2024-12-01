@@ -4,13 +4,13 @@
       picture-options = "zoom";
 
       picture-uri = builtins.fetchurl {
-        url = "https://w.wallhaven.cc/full/ex/wallhaven-ex136k.jpg";
-        sha256 = "00z10ykrh826vj0ch4vm62wbvy6q53jj752b2241cv62j4zxv56j";
+        url = "https://images8.alphacoders.com/128/1285341.jpg";
+        sha256 = "199ly8yyj8v72v6qvwp04zdhm51fcxb0qxli5lg2fr4zwiz2hm6f";
       };
 
       picture-uri-dark = builtins.fetchurl {
-        url = "https://w.wallhaven.cc/full/ex/wallhaven-ex136k.jpg";
-        sha256 = "00z10ykrh826vj0ch4vm62wbvy6q53jj752b2241cv62j4zxv56j";
+        url = "https://images8.alphacoders.com/128/1285341.jpg";
+        sha256 = "199ly8yyj8v72v6qvwp04zdhm51fcxb0qxli5lg2fr4zwiz2hm6f";
       };
     };
 
@@ -22,7 +22,7 @@
       color-scheme = "prefer-dark";
       clock-show-weekday = true;
       clock-format = "24h";
-      gtk-theme = "Adwaita";
+      #gtk-theme = "Adwaita";
       icon-theme = "Papirus-Dark";
       enable-hot-corners = false;
       clock-show-seconds = true;

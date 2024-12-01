@@ -40,13 +40,17 @@ in {
     polarity = "dark";
 
     image = builtins.fetchurl {
-      url = "https://w.wallhaven.cc/full/ex/wallhaven-ex136k.jpg";
-      sha256 = "00z10ykrh826vj0ch4vm62wbvy6q53jj752b2241cv62j4zxv56j";
+      url = "https://images8.alphacoders.com/128/1285341.jpg";
+      sha256 = "199ly8yyj8v72v6qvwp04zdhm51fcxb0qxli5lg2fr4zwiz2hm6f";
     };
+    imageScalingMode = "fill";
 
     targets = {
       console.enable = true;
       gnome.enable = true;
+      gtk.enable = true;
+      nixos-icons.enable = true;
+      plymouth.enable = true;
     };
   };
 
