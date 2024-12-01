@@ -158,6 +158,9 @@ in {
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
 
+  # Users are immutable and managed by NixOS
+  users.mutableUsers = false;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     useDefaultShell = true;
