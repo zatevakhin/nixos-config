@@ -41,7 +41,7 @@
   services.tumbler.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Override some internationalisation properties.
   i18n.defaultLocale = lib.mkForce "en_US.UTF-8";

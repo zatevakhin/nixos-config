@@ -155,6 +155,7 @@
     };
 
     colorschemes.kanagawa.enable = true;
+    plugins.web-devicons.enable = true;
 
     plugins.gitsigns = {
       enable = true;
@@ -257,25 +258,30 @@
       gi = "implementation";
       gt = "type_definition";
     };
-    plugins.lsp.servers.typos-lsp.enable = true;
+    plugins.lsp.servers.typos_lsp.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
-    plugins.lsp.servers.helm-ls.enable = true;
-    plugins.lsp.servers.yamlls.enable = true;
+    plugins.lsp.servers.helm_ls.enable = true;
+    # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
-    plugins.lsp.servers.ruff-lsp.enable = true;
+    plugins.lsp.servers.ruff_lsp.enable = true;
     plugins.lsp.servers.nixd.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
-    plugins.lsp.servers.docker-compose-language-service.enable = true;
-    plugins.lsp.servers.rust-analyzer.enable = true;
+    plugins.lsp.servers.docker_compose_language_service.enable = true;
+    plugins.lsp.servers.rust_analyzer.enable = true;
+    plugins.lsp.servers.rust_analyzer.installRustc = false;
+    plugins.lsp.servers.rust_analyzer.installCargo = false;
+
     # </lsp>
 
     # <treesitter>
     plugins.treesitter = {
       enable = true;
-      ensureInstalled = ["c" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
+      settings = {
+        ensure_installed = ["c" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
+        incremental_selection.enable = true;
+      };
     };
 
-    plugins.treesitter.incrementalSelection.enable = true;
     plugins.treesitter-context.enable = true;
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
