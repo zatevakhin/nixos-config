@@ -66,6 +66,7 @@ in {
   # <ollama>
   services.ollama = {
     enable = true;
+    # openFirewall = true;
     listenAddress = "0.0.0.0:11434";
     acceleration = "cuda";
   };
@@ -121,7 +122,7 @@ in {
 
   # <firewall>
   networking.firewall.allowedTCPPorts = [
-    1880 # Playing with NodeRed.
+    1880 11434
   ];
   # </firewall>
 
