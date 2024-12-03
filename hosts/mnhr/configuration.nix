@@ -31,6 +31,7 @@ in {
     ./containers/glance
     ./containers/vaultwarden
     ./containers/variance
+    ./containers/searxng
   ];
 
   # <sops>
