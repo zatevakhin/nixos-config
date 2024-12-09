@@ -172,9 +172,7 @@ in {
     packages = with pkgs; [
       atlauncher # yes! today we playing Minecraft!
     ];
-    openssh.authorizedKeys.keys = [
-      user.ssh.eulr
-    ];
+    openssh.authorizedKeys.keys = [ ];
   };
 
   home-manager = {
