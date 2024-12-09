@@ -9,7 +9,6 @@
   ...
 }: let
   wg = import ./secrets/wg.nix;
-  user = import ./secrets/user.nix;
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -22,6 +21,7 @@ in {
     ../../modules/nixos/laptop.nix
     ../../modules/nixos/logitech.nix
     ../../modules/nixos/gaming.nix
+    ../../modules/nixos/tor.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
@@ -172,7 +172,7 @@ in {
     packages = with pkgs; [
       atlauncher # yes! today we playing Minecraft!
     ];
-    openssh.authorizedKeys.keys = [ ];
+    openssh.authorizedKeys.keys = [];
   };
 
   home-manager = {
