@@ -34,5 +34,6 @@
     "in.cinny.Cinny"
     "io.github.gamingdoom.Datcord"
     "com.github.tchx84.Flatseal"
+    "net.lutris.Lutris"
   ];
 }
