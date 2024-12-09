@@ -80,7 +80,39 @@
         key = "<C-f>";
         mode = ["n" "v" "i"];
         options = {
-          desc = "Focus on Neotree.";
+          desc = "Focus Neotree";
+        };
+      }
+      {
+        action = "<cmd>tabnew<CR>";
+        key = "<leader>tw";
+        mode = ["n"];
+        options = {
+          desc = "New tab";
+        };
+      }
+      {
+        action = "<cmd>tabnext<CR>";
+        key = "<leader>tn";
+        mode = ["n"];
+        options = {
+          desc = "Next tab";
+        };
+      }
+      {
+        action = "<cmd>tabprevious<CR>";
+        key = "<leader>tp";
+        mode = ["n"];
+        options = {
+          desc = "Next tab";
+        };
+      }
+      {
+        action = "<cmd>tabclose<CR>";
+        key = "<leader>tc";
+        mode = ["n"];
+        options = {
+          desc = "Close tab";
         };
       }
       {
@@ -128,9 +160,13 @@
       };
     };
 
-    plugins.noice.enable = true;
-    plugins.noice.notify.enabled = true;
-    plugins.noice.popupmenu.enabled = true;
+    plugins.noice = {
+      enable = true;
+      settings = {
+        notify.enabled = true;
+        popupmenu.enabled = true;
+      };
+    };
 
     plugins.helm.enable = true;
     plugins.trouble.enable = true;
@@ -234,6 +270,7 @@
       {name = "nvim_lsp";}
       {name = "luasnip";}
       {name = "path";}
+      {name = "vim-dadbod-completion";}
       {name = "buffer";}
     ];
 
@@ -263,7 +300,7 @@
     plugins.lsp.servers.helm_ls.enable = true;
     # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
-    plugins.lsp.servers.ruff_lsp.enable = true;
+    plugins.lsp.servers.ruff.enable = true;
     plugins.lsp.servers.nixd.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.docker_compose_language_service.enable = true;
@@ -272,6 +309,10 @@
     plugins.lsp.servers.rust_analyzer.installCargo = false;
 
     # </lsp>
+
+    plugins.vim-dadbod.enable = true;
+    plugins.vim-dadbod-ui.enable = true;
+    plugins.vim-dadbod-completion.enable = true;
 
     # <treesitter>
     plugins.treesitter = {
