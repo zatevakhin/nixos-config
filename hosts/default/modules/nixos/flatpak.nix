@@ -34,5 +34,6 @@
     "fr.romainvigier.MetadataCleaner"
     "com.github.jeromerobert.pdfarranger"
     "com.tomjwatson.Emote"
+    "net.lutris.Lutris"
   ];
 }
