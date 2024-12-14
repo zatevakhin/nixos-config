@@ -7,6 +7,7 @@
       list = true;
       listchars = "trail:•";
       signcolumn = "yes";
+      fileformat = "unix";
       number = true;
       relativenumber = true;
       termguicolors = true;
@@ -136,7 +137,27 @@
     extraPlugins = [
     ];
 
-    # plugins.avante.enable = true;
+    plugins.avante = {
+      enable = true;
+      settings = {
+        hints.enabled = false;
+        windows.sidebar_header.enabled = false;
+        provider = "ollama";
+
+        behaviour = {
+          auto_suggestions = false;
+        };
+        vendors = {
+          ollama = {
+            __inherited_from = "openai";
+            api_key_name = "";
+            endpoint = "http://falke.lan:11434/v1";
+            model = "qwen2.5-coder:7b";
+          };
+        };
+      };
+    };
+
     plugins.which-key.enable = true;
     plugins.lualine.enable = true;
     plugins.bufferline.enable = true;
@@ -160,11 +181,17 @@
       };
     };
 
+    plugins.notify.enable = true;
     plugins.noice = {
       enable = true;
       settings = {
         notify.enabled = true;
         popupmenu.enabled = true;
+        lsp.override = {
+          "cmp.entry.get_documentation" = true;
+          "vim.lsp.util.convert_input_to_markdown_lines" = true;
+          "vim.lsp.util.stylize_markdown" = true;
+        };
       };
     };
 
@@ -300,8 +327,8 @@
     plugins.lsp.servers.helm_ls.enable = true;
     # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
-    plugins.lsp.servers.ruff.enable = true;
-    plugins.lsp.servers.nixd.enable = true;
+    # plugins.lsp.servers.ruff.enable = true;
+    plugins.lsp.servers.nil_ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.docker_compose_language_service.enable = true;
     plugins.lsp.servers.rust_analyzer.enable = true;
