@@ -16,7 +16,6 @@ in {
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
-    ../../modules/nixos/step-ca-bootstrap.nix
     # Machine specific modules
     ./modules/nixos/homepage.nix
     ./modules/nixos/step-ca.nix
@@ -40,14 +39,6 @@ in {
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   sops.secrets."user/password/hashed" = {};
   # </sops>
-
-  # <step-ca>
-  services.step-ca-bootstrap = {
-    enable = true;
-    ca-url = "https://ca.homeworld.lan:8443";
-    fingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
-  };
-  # </step-ca>
 
   # <certificates>
   security.pki.certificateFiles = [

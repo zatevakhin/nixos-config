@@ -50,6 +50,7 @@ certificatesResolvers:
       certificatesDuration: 24
       httpChallenge:
         entryPoint: web
+      keyType: EC256
 
 
 
