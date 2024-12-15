@@ -31,6 +31,7 @@ in {
     ./containers/vaultwarden
     ./containers/variance
     ./containers/searxng
+    ./containers/ntfy
   ];
 
   # <sops>
