@@ -135,6 +135,10 @@ pages:
           cache: 1m
           title: Productivity & Communication
           sites:
+            - title: SearxNG
+              url: https://searxng.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/searxng.svg
             - title: Vaultwarden
               url: https://vw.homeworld.lan
               allow-insecure: true
