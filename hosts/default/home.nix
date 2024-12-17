@@ -18,6 +18,7 @@
     ./modules/home/kitty.nix
     ./modules/home/extensions.nix
     ./modules/home/associations.nix
+    ./modules/home/helix.nix
   ];
 
   nixpkgs.overlays = [
