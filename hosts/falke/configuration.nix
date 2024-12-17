@@ -39,7 +39,6 @@ in {
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
-  virtualisation.docker.enableNvidia = lib.mkForce true;
   # </docker>
 
   # <wireguard>
@@ -66,8 +65,9 @@ in {
   # <ollama>
   services.ollama = {
     enable = true;
-    # openFirewall = true;
-    listenAddress = "0.0.0.0:11434";
+    openFirewall = true;
+    host = "0.0.0.0";
+    port = 11434;
     acceleration = "cuda";
   };
   # </ollama>
@@ -123,7 +123,7 @@ in {
   # <firewall>
   networking.firewall.allowedTCPPorts = [
     1880
-    11434
+    8081
   ];
   # </firewall>
 

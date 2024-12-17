@@ -17,7 +17,7 @@
     youtube-music
     keepassxc
     obs-studio
-    gnome.dconf-editor
+    dconf-editor
 
     # Theming
     papirus-icon-theme
@@ -48,23 +48,24 @@
   i18n.supportedLocales = lib.mkForce ["en_US.UTF-8/UTF-8" "ja_JP.UTF-8/UTF-8"];
 
   i18n.inputMethod = {
-    enabled = "ibus";
+    enable = true;
+    type = "ibus";
     ibus.engines = with pkgs.ibus-engines; [mozc];
   };
 
   # Cleanup unused apps
   environment.gnome.excludePackages = with pkgs; [
-    gnome.gnome-software
-    gnome.gnome-system-monitor
-    gnome.gnome-contacts
-    gnome.gnome-music
+    gnome-software
+    gnome-system-monitor
+    gnome-contacts
+    gnome-music
     gnome-tour
-    gnome.gnome-logs
-    gnome.cheese
+    gnome-logs
+    cheese
     gedit
-    gnome.epiphany
-    gnome.geary
-    gnome.totem
+    epiphany
+    geary
+    totem
     sound-theme-freedesktop
     gnome-text-editor
   ];
