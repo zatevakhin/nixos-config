@@ -31,6 +31,7 @@
     eza
     lshw
     unixtools.xxd
+    basez
 
     # network tools
     wget
@@ -62,7 +63,6 @@
 
     # filemanagers
     mc
-    yazi
   ];
 
   # Default shell
