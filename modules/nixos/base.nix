@@ -32,6 +32,7 @@
     lshw
     unixtools.xxd
     basez
+    libbase58
 
     # network tools
     wget
