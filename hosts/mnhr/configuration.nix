@@ -16,6 +16,7 @@ in {
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
+    ../../modules/docker/nodered
     # Machine specific modules
     ./modules/nixos/homepage.nix
     ./modules/nixos/step-ca.nix

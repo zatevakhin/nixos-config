@@ -1,0 +1,41 @@
+---
+services:
+  nodered:
+    container_name: nodered
+    build:
+      context: .
+      dockerfile: "${NODE_RED_DOCKERFILE}"
+      # HACK: Can't resolve some external hosts due to DNS is the same host.
+      network: host
+    healthcheck:
+      disable: true
+    environment:
+      - NODE_RED_EXPORT_GLOBAL_CONTEXT_KEYS=true
+      - NODE_RED_EDITOR_THEME=monokai-dimmed
+      - NODE_RED_SETTINGS_JS
+      - NODE_RED_DOCKERFILE
+    command: ["--settings", "/app/settings.js"]
+    restart: unless-stopped
+    volumes:
+      - "${NODE_RED_SETTINGS_JS}:/app/settings.js"
+      - "nodered-data:/data"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nodered.rule=Host(`nodered.homeworld.lan`)
+      - traefik.http.routers.nodered.tls=true
+      - traefik.http.routers.nodered.entrypoints=websecure
+      - traefik.http.routers.nodered.tls.certresolver=stepca
+      - traefik.http.services.nodered.loadbalancer.server.port=1880
+      - traefik.docker.network=proxy
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.13
+    dns:
+      - 10.0.1.3
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  nodered-data:
