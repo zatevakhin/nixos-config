@@ -219,6 +219,12 @@
 
     colorschemes.kanagawa.enable = true;
     plugins.web-devicons.enable = true;
+    plugins.mini = {
+      enable = true;
+      modules = {
+        icons.style = "glyph";
+      };
+    };
 
     plugins.gitsigns = {
       enable = true;
@@ -355,6 +361,7 @@
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
     plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    plugins.treesitter-textobjects.enable = true;
     # </treesitter>
   };
 }
