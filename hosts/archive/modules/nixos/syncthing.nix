@@ -62,7 +62,7 @@ in {
           "Anzh's Obsidian" = {
             id = cfg.folders.anzh.obsidian.id;
             path = "/mnt/storage/syncthing/anzh/obsidian/";
-            devices = ["anzh-samsung.phone" "anzh-pixel8.phone" "anzh-tuxedo.lan"];
+            devices = ["anzh-tuxedo.lan"];
           };
 
           "Anzh's Passwords" = {
