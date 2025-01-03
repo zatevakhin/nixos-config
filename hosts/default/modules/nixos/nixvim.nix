@@ -360,7 +360,8 @@
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
-    plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
+    # plugins.treesitter-refactor.highlightDefinitions.enable = true;
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>
   };
