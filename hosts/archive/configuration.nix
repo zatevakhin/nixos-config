@@ -12,7 +12,6 @@ in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/nixos/homepage.nix
     ./modules/nixos/syncthing.nix
 
     ../../modules/nixos/base.nix
