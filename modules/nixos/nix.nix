@@ -1,11 +1,11 @@
 {pkgs, ...}: {
   nix = {
     # NOTE: Use one (programs.nh.clean.enable or nix.gc.automatic) to avoid conflict.
-    # gc = {
-    #   automatic = true;
-    #   dates = "weekly";
-    #   options = "--delete-older-than 14d";
-    # };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
 
     package = pkgs.lix;
 
@@ -27,13 +27,6 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-  };
-
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 7d --keep 3";
-    clean.dates = "weekly";
   };
 
   environment.systemPackages = with pkgs; [
