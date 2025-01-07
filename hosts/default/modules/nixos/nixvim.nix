@@ -246,7 +246,6 @@
       enable = true;
       enableGitStatus = true;
       enableModifiedMarkers = true;
-      closeIfLastWindow = true;
       gitStatusAsync = true;
       extraOptions = {
         use_libuv_file_watcher = true;
