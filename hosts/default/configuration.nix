@@ -22,6 +22,7 @@ in {
     ../../modules/nixos/logitech.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/tor.nix
+    ../../modules/nixos/adb.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
@@ -168,7 +169,7 @@ in {
     hashedPasswordFile = config.sops.secrets."user/password/hashed".path;
     isNormalUser = true;
     description = "Ivan Zatevakhin";
-    extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd" "dialout"];
+    extraGroups = ["networkmanager" "wheel" "kvm" "libvirtd" "dialout"];
     packages = with pkgs; [
       atlauncher # yes! today we playing Minecraft!
     ];
