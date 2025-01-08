@@ -1,8 +1,8 @@
 {...}: {
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = {
-    "x-scheme-handler/http" = ["org.mozilla.firefox.desktop"];
-    "x-scheme-handler/https" = ["org.mozilla.firefox.desktop"];
+    "x-scheme-handler/http" = ["io.github.zen_browser.zen.desktop"];
+    "x-scheme-handler/https" = ["io.github.zen_browser.zen.desktop"];
     "application/pdf" = ["org.gnome.Evince.desktop"];
 
     "image/jpeg" = ["org.gnome.Loupe.desktop"];

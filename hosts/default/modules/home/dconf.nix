@@ -53,7 +53,7 @@
       last-selected-power-profile = "performance";
 
       favorite-apps = [
-        "org.mozilla.firefox.desktop"
+        "io.github.zen_browser.zen.desktop"
         "org.gnome.Nautilus.desktop"
         "io.github.tdesktop_x64.TDesktop.desktop"
       ];
