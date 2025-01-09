@@ -11,7 +11,7 @@ stdenvNoCC.mkDerivation {
     owner = "walkxcode";
     repo = "dashboard-icons";
     rev = "main";
-    hash = "sha256-rKXeMAhHV0Ax7mVFyn6hIZXm5RFkbGakjugU0DG0jLM=";
+    hash = "sha256-HhoKnul+6JQ2LdmEbLUNBxzJ8f4kjsQPk/V+jOzIM/Q=";
   };
 
   installPhase = ''
