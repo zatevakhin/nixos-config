@@ -23,6 +23,7 @@ in {
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/tor.nix
     ../../modules/nixos/adb.nix
+    ../../modules/nixos/appimage.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
