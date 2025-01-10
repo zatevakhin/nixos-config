@@ -154,8 +154,12 @@ in {
 
   networking.networkmanager.enable = true;
 
+  #
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [8080];
+  networking.firewall.allowedTCPPorts = [
+    8080
+    2021 # Open for BambuStudio
+  ];
   # </networking>
 
   # Set your time zone.
