@@ -18,6 +18,7 @@
     keepassxc
     obs-studio
     dconf-editor
+    legcord
 
     # Theming
     papirus-icon-theme
