@@ -18,10 +18,9 @@ in {
     ../../modules/nixos/docker.nix
     ../../modules/docker/nodered
     # Machine specific modules
-    ./modules/nixos/homepage.nix
     ./modules/nixos/step-ca.nix
+    ./modules/nixos/traefik.nix
     # Containers
-    ./containers/traefik
     ./containers/adguard
     # ISSUE: No hardware acceleration for video decoding in mainline ffmpeg.
     #        - https://github.com/edk2-porting/edk2-rk3588/issues/142#issuecomment-2426288640
