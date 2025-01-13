@@ -17,6 +17,7 @@ in {
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/docker/nodered
+    ../../modules/docker/open-webui
     # Machine specific modules
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
