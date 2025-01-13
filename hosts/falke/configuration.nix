@@ -22,6 +22,7 @@ in {
     ../../modules/nixos/logitech.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/firewall.nix
+    ../../modules/docker/ollama
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix
@@ -62,19 +63,8 @@ in {
   };
   # </wireguard>
 
-  # <ollama>
-  services.ollama = {
-    enable = true;
-    openFirewall = true;
-    host = "0.0.0.0";
-    port = 11434;
-    acceleration = "cuda";
-  };
-  # </ollama>
-
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
-    (self: super: {ollama = pkgs-unstable.ollama;})
   ];
 
   programs.nix-ld.libraries = with pkgs; [
