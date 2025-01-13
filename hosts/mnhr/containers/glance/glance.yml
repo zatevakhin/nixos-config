@@ -90,6 +90,10 @@ pages:
               url: https://wg.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/wireguard.svg
+            - title: NodeRed
+              url: https://nodered.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/node-red.svg
             - title: Vodafone Router
               url: http://192.168.1.1
               icon: si:vodafone
@@ -135,6 +139,10 @@ pages:
           cache: 1m
           title: Productivity & Communication
           sites:
+            - title: OpenWebUI (Ollama)
+              url: https://owu.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/ollama.svg
             - title: SearxNG
               url: https://searxng.homeworld.lan
               allow-insecure: true
