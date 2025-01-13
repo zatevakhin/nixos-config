@@ -1,10 +1,12 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }: let
-  root_ca = "/root/.step/certs/root_ca.crt";
+  root_ca = pkgs.fetchurl {
+    url = "https://ca.homeworld.lan:8443/roots.pem";
+    hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+    curlOpts = "--insecure";
+  };
 in {
   systemd.services.traefik-compose = {
     environment = {
@@ -35,7 +37,6 @@ in {
     '';
 
     wantedBy = ["multi-user.target"];
-    requires = ["step-ca-bootstrap.service"];
-    after = ["docker.service" "docker.socket" "step-ca-bootstrap.service"];
+    after = ["docker.service" "docker.socket"];
   };
 }

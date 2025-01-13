@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
   username,
   hostname,
@@ -13,11 +12,9 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./modules/nixos/syncthing.nix
-
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
-    ../../modules/nixos/step-ca-bootstrap.nix
     # <containers>
     ./containers/traefik
     ./containers/forgejo
@@ -36,13 +33,15 @@ in {
   sops.secrets."user/password/hashed" = {};
   # </sops>
 
-  # <step-ca>
-  services.step-ca-bootstrap = {
-    enable = true;
-    ca-url = "https://ca.homeworld.lan:8443";
-    fingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
-  };
-  # </step-ca>
+  # <certificates>
+  security.pki.certificateFiles = [
+    (pkgs.fetchurl {
+      url = "https://ca.homeworld.lan:8443/roots.pem";
+      hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+      curlOpts = "--insecure";
+    })
+  ];
+  # </certificates>
 
   networking.hostName = hostname;
 
