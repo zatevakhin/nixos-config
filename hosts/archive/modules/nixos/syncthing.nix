@@ -35,7 +35,6 @@ in {
         devices = {
           "baseship.lan" = {id = cfg.devices.baseship.id;};
           "ivan-nothing.phone" = {id = cfg.devices.nothing.id;};
-          "anzh-samsung.phone" = {id = cfg.devices.s21u.id;};
           "anzh-tuxedo.lan" = {id = cfg.devices.tuxedo.id;};
           "anzh-pixel8.phone" = {id = cfg.devices.pixel8.id;};
         };
