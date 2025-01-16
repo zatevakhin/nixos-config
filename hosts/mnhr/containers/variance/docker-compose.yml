@@ -3,7 +3,7 @@ services:
   variance:
     container_name: variance-web
     build:
-      context: https://github.com/mat-1/variance.git#96110dd5532dbba4591d265d4288ad7b3bb6712f
+      context: https://github.com/mat-1/variance.git#6264e0faffad324d43c3d41282fa3bd44dba6674
       # HACK: Can't resolve some external hosts due to DNS is the same host.
       network: host
     labels:
