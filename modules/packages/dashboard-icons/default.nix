@@ -8,10 +8,10 @@ stdenvNoCC.mkDerivation {
   version = "1.0.0";
 
   src = fetchFromGitHub {
-    owner = "walkxcode";
+    owner = "homarr-labs";
     repo = "dashboard-icons";
-    rev = "main";
-    hash = "sha256-HhoKnul+6JQ2LdmEbLUNBxzJ8f4kjsQPk/V+jOzIM/Q=";
+    rev = "9c59ee602f74b9848434813f5870cd0bab23d117";
+    hash = "sha256-PLcaGQqphMTlSzcOaNrRNtOpXmk1BnCJqBjWSNcSbXo=";
   };
 
   installPhase = ''
@@ -26,7 +26,7 @@ stdenvNoCC.mkDerivation {
 
   meta = with lib; {
     description = "A collection of dashboard icons for various applications and services";
-    homepage = "https://github.com/walkxcode/dashboard-icons";
+    homepage = "https://github.com/homarr-labs/dashboard-icons";
     license = licenses.mit;
     platforms = platforms.all;
     maintainers = with maintainers; [];
