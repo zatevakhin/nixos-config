@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   systemd.services.jellyfin-compose = {
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
 

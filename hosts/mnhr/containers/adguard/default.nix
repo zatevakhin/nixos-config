@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   sops.secrets.wireguard-domain = {
     sopsFile = ../../secrets/wg-easy.yaml;
     format = "yaml";
