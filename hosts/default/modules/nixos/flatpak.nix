@@ -29,7 +29,7 @@
     "in.cinny.Cinny"
     "io.github.gamingdoom.Datcord"
     "com.github.tchx84.Flatseal"
-    "io.github.zen_browser.zen"
+    "app.zen_browser.zen"
     "net.werwolv.ImHex"
     "fr.romainvigier.MetadataCleaner"
     "com.github.jeromerobert.pdfarranger"

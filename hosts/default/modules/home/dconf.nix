@@ -22,7 +22,6 @@
       color-scheme = "prefer-dark";
       clock-show-weekday = true;
       clock-format = "24h";
-      #gtk-theme = "Adwaita";
       icon-theme = "Papirus-Dark";
       enable-hot-corners = false;
       clock-show-seconds = true;
@@ -37,7 +36,6 @@
     };
 
     "org/gnome/desktop/input-sources" = {
-      # xkb-options = ["grp:caps_toggle"];
       per-window = true;
     };
 
@@ -53,7 +51,7 @@
       last-selected-power-profile = "performance";
 
       favorite-apps = [
-        "io.github.zen_browser.zen.desktop"
+        "app.zen_browser.zen.desktop"
         "org.gnome.Nautilus.desktop"
         "io.github.tdesktop_x64.TDesktop.desktop"
       ];
