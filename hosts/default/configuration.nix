@@ -7,9 +7,8 @@
   username,
   hostname,
   ...
-}: let
-  wg = import ./secrets/wg.nix;
-in {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -33,6 +32,7 @@ in {
     ./modules/nixos/flatpak.nix
     # NOTE: See what broken in Wayland. https://gist.github.com/probonopd/9feb7c20257af5dd915e3a9f2d1f2277
     ./modules/nixos/wayland.nix
+    ./modules/nixos/wiregurad.nix
   ];
 
   # <stylix>
@@ -82,49 +82,10 @@ in {
 
   # NOTE: Now when running containers that require GPUs
   #       use next syntax to add GPUs to container.
-  #       $ docekr run --rm -it --device=nvidia.com/gpu=all nvidia/cuda...
+  #       $ docker run --rm -it --device=nvidia.com/gpu=all nvidia/cuda...
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
   # </docker>
 
-  # <wireguard>
-  networking.wg-quick.interfaces = {
-    wg0 = {
-      address = ["192.168.5.8/32"];
-      dns = ["192.168.128.254"] ++ wg.work.search;
-      autostart = false;
-      listenPort = 51820;
-      privateKey = wg.work.private_key;
-
-      peers = [
-        {
-          publicKey = wg.work.public_key;
-          allowedIPs = ["192.168.128.0/23" "192.168.150.0/24" "192.168.5.0/24" "192.168.151.0/24"];
-          endpoint = wg.work.endpoint;
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-
-    wg1 = {
-      address = ["10.8.0.5/24"];
-      dns = ["10.0.1.3"] ++ wg.home.search;
-      autostart = false;
-      listenPort = 51820;
-      privateKey = wg.home.private_key;
-
-      peers = [
-        {
-          publicKey = wg.home.public_key;
-          presharedKey = wg.home.preshared_key;
-          # allowedIPs = [ "10.8.0.0/24" "10.8.1.0/24" "129.168.1.1/24" ];
-          allowedIPs = ["0.0.0.0/0" "::/0"];
-          endpoint = wg.home.endpoint;
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
-  # </wireguard>
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
