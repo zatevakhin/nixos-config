@@ -22,6 +22,7 @@ in {
     ../../modules/nixos/logitech.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/firewall.nix
+    ../../modules/nixos/nixvim.nix
     ../../modules/docker/ollama
     # Machine specific modules
     ./modules/nixos/desktop.nix
@@ -65,6 +66,9 @@ in {
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
+    (self: super: {neovim = pkgs-unstable.neovim;})
+    (self: super: {neovim-unwrapped = pkgs-unstable.neovim-unwrapped;})
+    (self: super: {vimPlugins = pkgs-unstable.vimPlugins;})
   ];
 
   programs.nix-ld.libraries = with pkgs; [
@@ -107,6 +111,7 @@ in {
 
   # <openssh>
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  services.openssh.settings.X11Forwarding = lib.mkForce true;
   users.users.root.openssh.authorizedKeys.keys = [me.ssh.authorized.baseship];
   # </openssh>
 

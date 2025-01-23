@@ -23,11 +23,11 @@
     ../../modules/nixos/tor.nix
     ../../modules/nixos/adb.nix
     ../../modules/nixos/appimage.nix
+    ../../modules/nixos/nixvim.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
     ./modules/nixos/development.nix
-    ./modules/nixos/nixvim.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
     # NOTE: See what broken in Wayland. https://gist.github.com/probonopd/9feb7c20257af5dd915e3a9f2d1f2277

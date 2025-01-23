@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
@@ -140,19 +140,13 @@
     plugins.avante = {
       enable = true;
       settings = {
-        hints.enabled = false;
-        windows.sidebar_header.enabled = false;
         provider = "ollama";
-
-        behaviour = {
-          auto_suggestions = false;
-        };
         vendors = {
           ollama = {
             __inherited_from = "openai";
             api_key_name = "";
-            endpoint = "http://falke.lan:11434/v1";
-            model = "qwen2.5-coder:7b";
+            endpoint = "http://ollama.homeworld.lan/v1";
+            model = "codegemma:7b";
           };
         };
       };
@@ -181,7 +175,14 @@
       };
     };
 
-    plugins.notify.enable = true;
+    plugins.snacks = {
+      enable = true;
+      settings = {
+        notifier.enabled = true;
+      };
+    };
+
+
     plugins.noice = {
       enable = true;
       settings = {
@@ -202,6 +203,7 @@
       enable = true;
       settings = {
         code.language_name = false;
+        file_types = ["markdown" "Avante"];
       };
     };
 
@@ -328,6 +330,7 @@
       gt = "type_definition";
     };
     plugins.lsp.servers.typos_lsp.enable = true;
+    plugins.lsp.servers.clangd.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
     plugins.lsp.servers.helm_ls.enable = true;
     # plugins.lsp.servers.yamlls.enable = true;
@@ -350,7 +353,7 @@
     plugins.treesitter = {
       enable = true;
       settings = {
-        ensure_installed = ["c" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
+        ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
         incremental_selection.enable = true;
       };
     };
