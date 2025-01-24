@@ -36,5 +36,6 @@
     "com.tomjwatson.Emote"
     "net.lutris.Lutris"
     "com.bambulab.BambuStudio"
+    "dev.bragefuglseth.Keypunch"
   ];
 }
