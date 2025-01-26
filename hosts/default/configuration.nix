@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
     # Shared modules
     ../../modules/nixos/base.nix
+    ../../modules/nixos/nix-index.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/qemu.nix
