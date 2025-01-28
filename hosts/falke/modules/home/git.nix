@@ -24,7 +24,7 @@ in {
 
         contents.user.name = me.work.name;
         contents.user.email = me.work.email;
-        # contents.user.signingkey = "~/.ssh/${me.work.key}";
+        contents.user.signingkey = "~/.ssh/id_ed25519.pub";
       }
     ];
   };
