@@ -19,6 +19,7 @@ services:
      - traefik.http.routers.glance.tls.certresolver=stepca
      - traefik.http.services.glance.loadbalancer.server.port=8080
      - traefik.docker.network=proxy
+     - com.centurylinklabs.watchtower.enable=true
     dns:
       - 10.0.1.3 # DNS in `proxy` network.
     networks:
