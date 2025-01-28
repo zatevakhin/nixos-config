@@ -33,6 +33,7 @@ in {
     ./containers/variance
     ./containers/searxng
     ./containers/ntfy
+    ./containers/watchtower
   ];
 
   # <sops>
