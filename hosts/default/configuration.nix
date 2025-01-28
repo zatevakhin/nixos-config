@@ -7,8 +7,7 @@
   username,
   hostname,
   ...
-}:
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -34,6 +33,8 @@
     # NOTE: See what broken in Wayland. https://gist.github.com/probonopd/9feb7c20257af5dd915e3a9f2d1f2277
     ./modules/nixos/wayland.nix
     ./modules/nixos/wiregurad.nix
+    # overlays
+    ../../modules/overlays/open-interpreter.nix
   ];
 
   # <stylix>
@@ -86,7 +87,6 @@
   #       $ docker run --rm -it --device=nvidia.com/gpu=all nvidia/cuda...
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
   # </docker>
-
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
