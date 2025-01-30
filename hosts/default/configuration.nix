@@ -109,7 +109,8 @@
     "aarch64-linux"
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # NOTE: Using this kernel because latest does not support Nvidia 565.77 driver.
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
