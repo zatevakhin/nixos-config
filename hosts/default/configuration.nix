@@ -7,7 +7,9 @@
   username,
   hostname,
   ...
-}: {
+}: let
+  me = import ./secrets/user.nix;
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -143,6 +145,10 @@
     ];
     openssh.authorizedKeys.keys = [];
   };
+
+  # <openssh>
+  users.users.root.openssh.authorizedKeys.keys = [me.ssh.flkr];
+  # </openssh>
 
   home-manager = {
     # also pass inputs to home-manager modules

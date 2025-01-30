@@ -76,10 +76,6 @@ in {
 
   environment.sessionVariables = {};
 
-  # <openssh>
-  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
-  # </openssh>
-
   services.locate.enable = true;
   services.locate.interval = "daily";
 

@@ -90,11 +90,6 @@ in {
 
   users.users.root.openssh.authorizedKeys.keys = [ssh.authorized.baseship];
 
-  # <openssh>
-  services.openssh.settings.PasswordAuthentication = lib.mkForce true;
-  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
-  # </openssh>
-
   # <docker>
   # NOTE: Can't use MergerFS as data-root for docker. Looks like some issues with OverlayFS and MergerFS combined.
   # virtualisation.docker.daemon.settings = {

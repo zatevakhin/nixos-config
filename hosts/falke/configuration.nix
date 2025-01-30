@@ -116,7 +116,6 @@ in {
   };
 
   # <openssh>
-  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   services.openssh.settings.X11Forwarding = lib.mkForce true;
   users.users.root.openssh.authorizedKeys.keys = [me.ssh.authorized.baseship];
   # </openssh>

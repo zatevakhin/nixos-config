@@ -83,10 +83,6 @@ in {
     me.ssh.authorized.baseship
   ];
 
-  # <openssh>
-  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
-  # </openssh>
-
   home-manager = {
     # also pass inputs to home-manager modules
     extraSpecialArgs = {inherit inputs username;};
