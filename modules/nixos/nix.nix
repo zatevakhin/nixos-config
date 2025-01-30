@@ -17,6 +17,13 @@
     settings = {
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["root" "@wheel"];
+      substituters = [
+        "https://cache.nixos.org"
+        "http://falke.lan:5000"
+      ];
+      trusted-public-keys = [
+        "flkr-nix-cache:ZWIXhzptsVZiIUS/P70FFSbGbcZSw/2l5FOsn5itYEA="
+      ];
     };
   };
 

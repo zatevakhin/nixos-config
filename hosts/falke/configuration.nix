@@ -16,6 +16,7 @@ in {
     ./hardware-configuration.nix
     # Shared modules
     ../../modules/nixos/base.nix
+    ../../modules/nixos/nix-serve.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/qemu.nix
@@ -36,7 +37,12 @@ in {
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key" "/home/${username}/.ssh/id_ed25519"];
   sops.secrets."user/password/hashed" = {};
+  sops.secrets."nix-cache/private_key" = {};
   # </sops>
+
+  # <nix-serve>
+  services.nix-serve.secretKeyFile = config.sops.secrets."nix-cache/private_key".path;
+  # </nix-serve>
 
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
