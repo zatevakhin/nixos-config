@@ -119,13 +119,13 @@ in {
 
   networking.networkmanager.enable = true;
 
-  #
-  networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
     8080
+  ];
+  networking.firewall.allowedUDPPorts = [
     2021 # Open for BambuStudio
   ];
-  # </networking>
+ # </networking>
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
