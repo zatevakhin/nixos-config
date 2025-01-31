@@ -83,7 +83,7 @@
     };
   };
 
-  # Favorite editor
+  # NOTE: Will be overridden in `nixvim.nix` if included.
   programs.neovim = {
     enable = true;
     viAlias = true;

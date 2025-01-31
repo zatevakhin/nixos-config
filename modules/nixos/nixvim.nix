@@ -1,4 +1,8 @@
-{...}: {
+{lib, ...}: {
+
+  # NOTE: Disable default neovim because it is enabled in `base.nix`
+  programs.neovim.enable = lib.mkForce false;
+
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
