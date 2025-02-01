@@ -81,12 +81,25 @@
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
+          grafana = {
+            rule = "Host(`grafana.homeworld.lan`)";
+            service = "grafana";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
         };
 
         services.ollama = {
           loadBalancer.servers = [
             {
               url = "http://falke.lan:11434";
+            }
+          ];
+        };
+        services.grafana = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:3000";
             }
           ];
         };
