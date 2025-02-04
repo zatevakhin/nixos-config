@@ -16,7 +16,7 @@ in {
     ./hardware-configuration.nix
     # Shared modules
     ../../modules/nixos/base.nix
-    ../../modules/nixos/nix-serve.nix
+    #../../modules/nixos/nix-serve.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/qemu.nix
@@ -41,7 +41,7 @@ in {
   # </sops>
 
   # <nix-serve>
-  services.nix-serve.secretKeyFile = config.sops.secrets."nix-cache/private_key".path;
+  #services.nix-serve.secretKeyFile = config.sops.secrets."nix-cache/private_key".path;
   # </nix-serve>
 
   # <docker>
