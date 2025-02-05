@@ -35,6 +35,7 @@ in {
     # NOTE: See what broken in Wayland. https://gist.github.com/probonopd/9feb7c20257af5dd915e3a9f2d1f2277
     ./modules/nixos/wayland.nix
     ./modules/nixos/wiregurad.nix
+    ./modules/nixos/dnsmasq.nix
     # overlays
     ../../modules/overlays/open-interpreter.nix
   ];
@@ -125,7 +126,7 @@ in {
   networking.firewall.allowedUDPPorts = [
     2021 # Open for BambuStudio
   ];
- # </networking>
+  # </networking>
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
