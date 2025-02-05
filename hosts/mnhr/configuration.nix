@@ -35,6 +35,7 @@ in {
     ./containers/searxng
     ./containers/ntfy
     ./containers/watchtower
+    ./containers/influxdb
   ];
 
   # <sops>
