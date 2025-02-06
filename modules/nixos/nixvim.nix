@@ -1,11 +1,12 @@
 {lib, ...}: {
-
   # NOTE: Disable default neovim because it is enabled in `base.nix`
   programs.neovim.enable = lib.mkForce false;
 
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
+    # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
+    nixpkgs.useGlobalPackages = false;
 
     opts = {
       list = true;
