@@ -1,11 +1,29 @@
-{username, ...}: let
+{
+  config,
+  username,
+  ...
+}: let
   cfg = import ../../secrets/syncthing.nix;
 in {
+  sops.secrets.syncthing_private_key = {
+    sopsFile = ../../secrets/syncthing.yaml;
+    format = "yaml";
+    key = "syncthing/keys/private";
+    owner = username;
+  };
+
+  sops.secrets.syncthing_public_key = {
+    sopsFile = ../../secrets/syncthing.yaml;
+    format = "yaml";
+    key = "syncthing/keys/public";
+    owner = username;
+  };
+
   services = {
     syncthing = {
       enable = true;
-      cert = "/home/${username}/.config/creds/syncthing/cert.pem";
-      key = "/home/${username}/.config/creds/syncthing/key.pem";
+      cert = config.sops.secrets.syncthing_public_key.path;
+      key = config.sops.secrets.syncthing_private_key.path;
       user = username;
       dataDir = "/home/${username}/Documents";
       configDir = "/home/${username}/.config/syncthing";
