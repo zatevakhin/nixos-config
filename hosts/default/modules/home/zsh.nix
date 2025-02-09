@@ -25,6 +25,7 @@
       gl = "${pkgs.git}/bin/git pull";
       gs = "${pkgs.git}/bin/git status --short";
       gsl = "${pkgs.git}/bin/git status";
+      glg = "${pkgs.git}/bin/git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
 
       mamba = "${pkgs.micromamba}/bin/micromamba";
       conda = "${pkgs.micromamba}/bin/micromamba";
