@@ -1,16 +1,34 @@
-{username, ...}: let
+{
+  config,
+  username,
+  ...
+}: let
   cfg = import ../../secrets/syncthing.nix;
 in {
+  sops.secrets.syncthing_private_key = {
+    sopsFile = ../../secrets/syncthing.yaml;
+    format = "yaml";
+    key = "syncthing/keys/private";
+    owner = username;
+  };
+
+  sops.secrets.syncthing_public_key = {
+    sopsFile = ../../secrets/syncthing.yaml;
+    format = "yaml";
+    key = "syncthing/keys/public";
+    owner = username;
+  };
+
+  # NOTE: GUI port is not in the list of default ports.
   networking.firewall.allowedTCPPorts = [8384];
 
   services = {
     syncthing = {
       enable = true;
       openDefaultPorts = true;
-
-      cert = "/mnt/storage/syncthing/.config/creds/cert.pem";
+      cert = config.sops.secrets.syncthing_public_key.path;
+      key = config.sops.secrets.syncthing_private_key.path;
       user = username;
-      key = "/mnt/storage/syncthing/.config/creds/key.pem";
       dataDir = "/mnt/storage/syncthing/";
       configDir = "/mnt/storage/syncthing/.config/";
       guiAddress = "0.0.0.0:8384";
