@@ -4,6 +4,8 @@
     direnv
     micromamba
     rustup
+    gcc
+    clang
     lazygit
   ];
 }
