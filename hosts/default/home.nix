@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   pkgs-unstable,
   username,
@@ -29,6 +30,16 @@
   # manage.
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
+
+  sops = {
+    age.sshKeyPaths = ["/home/${username}/.ssh/id_ed25519"];
+    defaultSopsFile = ./secrets/default.yaml;
+    secrets."user/keys/sops/private" = {};
+    templates."age-keys.txt" = {
+      content = ''${config.sops.placeholder."user/keys/sops/private"}'';
+      path = "/home/${username}/.config/sops/age/keys.txt";
+    };
+  };
 
   home.sessionVariables = {
     MAMBA_ROOT_PREFIX = "$HOME/.micromamba";
