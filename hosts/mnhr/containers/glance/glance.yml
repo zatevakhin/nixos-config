@@ -94,6 +94,14 @@ pages:
               url: https://nodered.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/node-red.svg
+            - title: Grafana
+              url: https://grafana.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/grafana.svg
+            - title: Influxdb
+              url: https://influxdb.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/influxdb.svg
             - title: Vodafone Router
               url: http://192.168.1.1
               icon: si:vodafone
