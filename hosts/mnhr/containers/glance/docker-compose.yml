@@ -5,7 +5,7 @@ services:
     environment:
       - ADGUARD_PASSWORD
     volumes:
-      - "${GLANCE_CONFIG}:/app/glance.yml"
+      - "${GLANCE_CONFIG}:/app/config/glance.yml"
       - "${SVG_ASSETS_HOST_LOCATION}:/app/assets/svg"
       - "${PNG_ASSETS_HOST_LOCATION}:/app/assets/png"
       - "/etc/timezone:/etc/timezone:ro"
