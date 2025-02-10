@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
     networks:
       proxy:
+        ipv4_address: 10.0.1.14
+
     labels:
      - traefik.enable=true
      - traefik.http.routers.influxdb.rule=Host(`influxdb.homeworld.lan`)
