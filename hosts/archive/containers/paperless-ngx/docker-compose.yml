@@ -57,7 +57,7 @@ services:
       PAPERLESS_OCR_LANGUAGE: eng+por+ukr+rus
       PAPERLESS_OCR_LANGUAGES: eng por ukr rus
       PAPERLESS_TIME_ZONE: Europe/Lisbon
-      PAPERLESS_URL: http://paperless.homeworld.lan
+      PAPERLESS_URL: https://paperless.homeworld.lan
 
     labels:
       - traefik.enable=true
