@@ -1,4 +1,14 @@
 {pkgs, ...}: {
+  programs.zsh = {
+    shellAliases = {
+      icat = "${pkgs.kitty}/bin/kitty icat";
+    };
+
+    initExtra = ''
+      [ "$TERM" = "xterm-kitty" ] && alias ssh="${pkgs.kitty}/bin/kitty +kitten ssh"
+    '';
+  };
+
   programs.kitty = {
     enable = true;
     settings = {
