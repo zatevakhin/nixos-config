@@ -36,6 +36,7 @@ in {
     ./modules/nixos/wayland.nix
     ./modules/nixos/wiregurad.nix
     ./modules/nixos/dnsmasq.nix
+    ./modules/nixos/telegraf.nix
     # overlays
     ../../modules/overlays/open-interpreter.nix
   ];
