@@ -38,6 +38,7 @@
     wget
     curl
     nmap
+    gping
 
     # hardware tools
     pciutils
