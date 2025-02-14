@@ -139,9 +139,6 @@
       }
     ];
 
-    extraPlugins = [
-    ];
-
     plugins.avante = {
       enable = true;
       settings = {
@@ -151,7 +148,7 @@
             __inherited_from = "openai";
             api_key_name = "";
             endpoint = "http://ollama.homeworld.lan/v1";
-            model = "codegemma:7b";
+            model = "qwen2.5-coder:32b";
           };
         };
       };
@@ -186,7 +183,6 @@
         notifier.enabled = true;
       };
     };
-
 
     plugins.noice = {
       enable = true;
