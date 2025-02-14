@@ -20,7 +20,7 @@
 
   services.flatpak.packages = [
     "org.mozilla.firefox"
-    "com.brave.Browser"
+    "org.torproject.torbrowser-launcher"
     "io.github.tdesktop_x64.TDesktop"
     "com.slack.Slack"
     "md.obsidian.Obsidian"
