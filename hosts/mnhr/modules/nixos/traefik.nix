@@ -73,7 +73,6 @@
             rule = "Host(`ollama.homeworld.lan`)";
             entryPoints = ["web"];
             service = "ollama";
-
           };
           ollama = {
             rule = "Host(`ollama.homeworld.lan`)";
@@ -84,6 +83,18 @@
           grafana = {
             rule = "Host(`grafana.homeworld.lan`)";
             service = "grafana";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+          minio-console = {
+            rule = "Host(`console-minio.homeworld.lan`)";
+            service = "console-minio";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+          minio-api = {
+            rule = "Host(`minio.homeworld.lan`)";
+            service = "minio-api";
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
@@ -100,6 +111,20 @@
           loadBalancer.servers = [
             {
               url = "http://localhost:3000";
+            }
+          ];
+        };
+        services.console-minio = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:9001";
+            }
+          ];
+        };
+        services.minio-api = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:9000";
             }
           ];
         };

@@ -22,6 +22,7 @@ in {
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
     ./modules/nixos/grafana.nix
+    ./modules/nixos/minio.nix
     # Containers
     ./containers/adguard
     # ISSUE: No hardware acceleration for video decoding in mainline ffmpeg.

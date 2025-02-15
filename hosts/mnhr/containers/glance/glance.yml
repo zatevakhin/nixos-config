@@ -102,6 +102,10 @@ pages:
               url: https://influxdb.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/influxdb.svg
+            - title: MinIO
+              url: https://console-minio.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/minio-light.svg
             - title: Vodafone Router
               url: http://192.168.1.1
               icon: si:vodafone
