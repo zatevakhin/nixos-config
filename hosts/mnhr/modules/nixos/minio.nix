@@ -23,6 +23,7 @@
 
   services.minio = {
     enable = true;
+    region = "eu-west-1";
     rootCredentialsFile = config.sops.templates."minio.env".path;
     dataDir = ["/mnt/storage/.services/minio/data"];
     configDir = "/mnt/storage/.services/minio/config";
