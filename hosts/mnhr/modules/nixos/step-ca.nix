@@ -118,13 +118,21 @@
         certificateAuthority = "https://ca.homeworld.lan:8443";
         certificateAuthorityFingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
         certificateIssuer = {
-          type= "jwk";
+          type = "jwk";
           provisioner = "acme-jwk";
         };
         claims = {
           minTLSCertDuration = "5m";
           maxTLSCertDuration = "2160h";
           defaultTLSCertDuration = "2160h";
+        };
+        policy = {
+          x509 = {
+            allow = {
+              dns = ["*.homeworld.lan"];
+            };
+            allowWildcardNames = true;
+          };
         };
         provisioners = [
           {

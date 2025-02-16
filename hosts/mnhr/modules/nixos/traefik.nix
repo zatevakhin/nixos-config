@@ -86,17 +86,28 @@
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
+          minio-api = {
+            # ISSUE: Seems wildcard certificates was not created using force sync path on client side for now.
+            rule = "HostRegexp(`{subdomain:[a-zA-Z0-9-]+}.minio.homeworld.lan`) || Host(`minio.homeworld.lan`)";
+            service = "minio-api";
+            entryPoints = ["websecure"];
+            tls = {
+              certResolver = "stepca";
+              domains = [
+                {
+                  main = "minio.homeworld.lan";
+                  sans = ["*.minio.homeworld.lan"];
+                }
+              ];
+            };
+          };
           minio-console = {
             rule = "Host(`console-minio.homeworld.lan`)";
             service = "console-minio";
             entryPoints = ["websecure"];
-            tls.certResolver = "stepca";
-          };
-          minio-api = {
-            rule = "Host(`minio.homeworld.lan`)";
-            service = "minio-api";
-            entryPoints = ["websecure"];
-            tls.certResolver = "stepca";
+            tls = {
+              certResolver = "stepca";
+            };
           };
         };
 
