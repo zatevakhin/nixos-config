@@ -2,15 +2,18 @@
   programs.tmux = {
     enable = true;
     mouse = true;
-    terminal = "screen-256color";
-    historyLimit = 10000;
+    shortcut = "space";
+    terminal = "tmux-256color";
+    historyLimit = 50000;
     extraConfig = ''
       set -gq allow-passthrough on
     '';
     plugins = with pkgs.tmuxPlugins; [
+      sensible
       tmux-fzf
       catppuccin
       resurrect
+      vim-tmux-navigator
     ];
   };
 }
