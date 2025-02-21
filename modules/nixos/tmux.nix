@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  rusmux = pkgs.callPackage ../packages/rusmux {};
+in {
+  environment.systemPackages = [
+    rusmux
+  ];
+
   programs.tmux = {
     enable = true;
     shortcut = "space";
