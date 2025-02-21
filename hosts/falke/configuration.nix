@@ -24,6 +24,7 @@ in {
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/firewall.nix
     ../../modules/nixos/nixvim.nix
+    ../../modules/nixos/tmux.nix
     ../../modules/docker/ollama
     # Machine specific modules
     ./modules/nixos/desktop.nix

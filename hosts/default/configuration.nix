@@ -26,6 +26,7 @@ in {
     ../../modules/nixos/adb.nix
     ../../modules/nixos/appimage.nix
     ../../modules/nixos/nixvim.nix
+    ../../modules/nixos/tmux.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
