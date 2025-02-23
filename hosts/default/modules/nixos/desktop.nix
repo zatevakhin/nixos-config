@@ -16,7 +16,6 @@
     mpv
     youtube-music
     keepassxc
-    obs-studio
     dconf-editor
 
     # Theming

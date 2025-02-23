@@ -37,5 +37,6 @@
     "net.lutris.Lutris"
     "com.bambulab.BambuStudio"
     "dev.bragefuglseth.Keypunch"
+    "com.obsproject.Studio"
   ];
 }
