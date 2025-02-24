@@ -14,6 +14,19 @@ in {
     ./modules/nixos/nixvim.nix
   ];
 
+  sops = {
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    defaultSopsFile = ./secrets/default.yaml;
+    secrets.ssh-private-key = {
+      key = "user/keys/ssh/private";
+      owner = username;
+    };
+    secrets.ssh-public-key = {
+      key = "user/keys/ssh/public";
+      owner = username;
+    };
+  };
+
   users.users.${username}.openssh.authorizedKeys.keys = [
     ssh.authorized.baseship
   ];
@@ -33,6 +46,7 @@ in {
     jq
     curl
     tealdeer
+    git-agecrypt
   ];
 
   homebrew = {
@@ -41,7 +55,7 @@ in {
       "nikitabobko/tap"
     ];
     casks = [
-      "aerospace"
+      "xquartz"
       "zen-browser"
     ];
     masApps = {};
@@ -109,18 +123,14 @@ in {
     useUserPackages = true;
     extraSpecialArgs = {inherit inputs username;};
     users.${username} = import ./home.nix;
-    # sharedModules = [
-    #   inputs.sops-nix-unstable.homeManagerModules.sops
-    # ];
+    sharedModules = [
+      inputs.sops-nix-unstable.homeManagerModules.sops
+    ];
   };
 
-  fonts.packages = [
-    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];})
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
   ];
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";

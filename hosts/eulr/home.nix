@@ -1,19 +1,32 @@
 {
   inputs,
   config,
-  pkgs,
   lib,
   username,
   ...
 }: {
-  # imports = [
-  #   inputs.sops-nix-unstable.homeManagerModules.sops
-  # ];
+  imports = [
+    ./modules/home/zsh.nix
+    ./modules/home/starship.nix
+  ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "${username}";
   home.homeDirectory = lib.mkForce "/Users/${username}";
+
+  # HACK: Is there a better way?
+  home.file.".ssh/id_ed25519" = {
+    enable = true;
+    force = true;
+    source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/ssh-private-key";
+  };
+
+  home.file.".ssh/id_ed25519.pub" = {
+    enable = true;
+    force = true;
+    source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/ssh-public-key";
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
