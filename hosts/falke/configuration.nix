@@ -113,12 +113,15 @@ in {
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = [
       me.ssh.authorized.baseship
+      me.ssh.authorized.eulr
     ];
   };
 
   # <openssh>
   services.openssh.settings.X11Forwarding = lib.mkForce true;
-  users.users.root.openssh.authorizedKeys.keys = [me.ssh.authorized.baseship];
+  users.users.root.openssh.authorizedKeys.keys = [
+    me.ssh.authorized.baseship
+  ];
   # </openssh>
 
   # <firewall>

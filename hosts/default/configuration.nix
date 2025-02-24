@@ -143,7 +143,7 @@ in {
     packages = with pkgs; [
       atlauncher # yes! today we playing Minecraft!
     ];
-    openssh.authorizedKeys.keys = [];
+    openssh.authorizedKeys.keys = [me.ssh.eulr];
   };
 
   # <openssh>
