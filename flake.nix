@@ -29,6 +29,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager-next = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim";
     };
@@ -182,7 +187,7 @@
 
         inputs.nixvim.nixDarwinModules.nixvim
         inputs.sops-nix-unstable.darwinModules.sops
-        inputs.home-manager.darwinModules.home-manager
+        inputs.home-manager-next.darwinModules.home-manager
         nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
