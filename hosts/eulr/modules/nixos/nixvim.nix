@@ -1,12 +1,14 @@
-{pkgs, ...}: {
+{lib, ...}: {
   programs.nixvim = {
     enable = true;
-    # defaultEditor = true;
+    # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
+    nixpkgs.useGlobalPackages = false;
 
     opts = {
       list = true;
       listchars = "trail:•";
       signcolumn = "yes";
+      fileformat = "unix";
       number = true;
       relativenumber = true;
       termguicolors = true;
@@ -80,7 +82,39 @@
         key = "<C-f>";
         mode = ["n" "v" "i"];
         options = {
-          desc = "Focus on Neotree.";
+          desc = "Focus Neotree";
+        };
+      }
+      {
+        action = "<cmd>tabnew<CR>";
+        key = "<leader>tw";
+        mode = ["n"];
+        options = {
+          desc = "New tab";
+        };
+      }
+      {
+        action = "<cmd>tabnext<CR>";
+        key = "<leader>tn";
+        mode = ["n"];
+        options = {
+          desc = "Next tab";
+        };
+      }
+      {
+        action = "<cmd>tabprevious<CR>";
+        key = "<leader>tp";
+        mode = ["n"];
+        options = {
+          desc = "Next tab";
+        };
+      }
+      {
+        action = "<cmd>tabclose<CR>";
+        key = "<leader>tc";
+        mode = ["n"];
+        options = {
+          desc = "Close tab";
         };
       }
       {
@@ -101,10 +135,21 @@
       }
     ];
 
-    extraPlugins = [
-    ];
+    plugins.avante = {
+      enable = true;
+      settings = {
+        provider = "ollama";
+        vendors = {
+          ollama = {
+            __inherited_from = "openai";
+            api_key_name = "";
+            endpoint = "http://ollama.homeworld.lan/v1";
+            model = "qwen2.5-coder:32b";
+          };
+        };
+      };
+    };
 
-    # plugins.avante.enable = true;
     plugins.which-key.enable = true;
     plugins.lualine.enable = true;
     plugins.bufferline.enable = true;
@@ -128,9 +173,25 @@
       };
     };
 
-    plugins.noice.enable = true;
-    plugins.noice.notify.enabled = true;
-    plugins.noice.popupmenu.enabled = true;
+    plugins.snacks = {
+      enable = true;
+      settings = {
+        notifier.enabled = true;
+      };
+    };
+
+    plugins.noice = {
+      enable = true;
+      settings = {
+        notify.enabled = true;
+        popupmenu.enabled = true;
+        lsp.override = {
+          "cmp.entry.get_documentation" = true;
+          "vim.lsp.util.convert_input_to_markdown_lines" = true;
+          "vim.lsp.util.stylize_markdown" = true;
+        };
+      };
+    };
 
     plugins.helm.enable = true;
     plugins.trouble.enable = true;
@@ -139,6 +200,7 @@
       enable = true;
       settings = {
         code.language_name = false;
+        file_types = ["markdown" "Avante"];
       };
     };
 
@@ -155,6 +217,13 @@
     };
 
     colorschemes.kanagawa.enable = true;
+    plugins.web-devicons.enable = true;
+    plugins.mini = {
+      enable = true;
+      modules = {
+        icons.style = "glyph";
+      };
+    };
 
     plugins.gitsigns = {
       enable = true;
@@ -176,7 +245,6 @@
       enable = true;
       enableGitStatus = true;
       enableModifiedMarkers = true;
-      closeIfLastWindow = true;
       gitStatusAsync = true;
       extraOptions = {
         use_libuv_file_watcher = true;
@@ -201,7 +269,6 @@
       };
     };
 
-    plugins.web-devicons.enable = true;
     plugins.netman.enable = true;
     plugins.netman.neoTreeIntegration = true;
 
@@ -234,6 +301,7 @@
       {name = "nvim_lsp";}
       {name = "luasnip";}
       {name = "path";}
+      {name = "vim-dadbod-completion";}
       {name = "buffer";}
     ];
 
@@ -259,22 +327,30 @@
       gt = "type_definition";
     };
     plugins.lsp.servers.typos_lsp.enable = true;
+    plugins.lsp.servers.clangd.enable = true;
     plugins.lsp.servers.jsonls.enable = true;
     plugins.lsp.servers.helm_ls.enable = true;
-    plugins.lsp.servers.yamlls.enable = true;
+    # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
-    plugins.lsp.servers.ruff_lsp.enable = true;
-    plugins.lsp.servers.nixd.enable = true;
+    # plugins.lsp.servers.ruff.enable = true;
+    plugins.lsp.servers.nil_ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.docker_compose_language_service.enable = true;
-    #plugins.lsp.servers.rust_analyzer.enable = true;
+    plugins.lsp.servers.rust_analyzer.enable = true;
+    plugins.lsp.servers.rust_analyzer.installRustc = false;
+    plugins.lsp.servers.rust_analyzer.installCargo = false;
+
     # </lsp>
+
+    plugins.vim-dadbod.enable = true;
+    plugins.vim-dadbod-ui.enable = true;
+    plugins.vim-dadbod-completion.enable = true;
 
     # <treesitter>
     plugins.treesitter = {
       enable = true;
       settings = {
-        ensure_installed = ["c" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
+        ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
         incremental_selection.enable = true;
       };
     };
@@ -283,7 +359,9 @@
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
-    plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
+    # plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    plugins.treesitter-textobjects.enable = true;
     # </treesitter>
   };
 }
