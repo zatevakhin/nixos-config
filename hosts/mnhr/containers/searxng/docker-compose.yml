@@ -47,13 +47,19 @@ services:
       - SETUID
     labels:
       - traefik.enable=true
-      # Basic routing
-      - traefik.http.routers.searxng.rule=Host(`${SEARXNG_HOSTNAME}`)
-      - traefik.http.routers.searxng.tls=true
-      - traefik.http.routers.searxng.entrypoints=websecure
-      - traefik.http.routers.searxng.tls.certresolver=stepca
-      - traefik.http.services.searxng.loadbalancer.server.port=8080
       - traefik.docker.network=proxy
+      # HTTP Router Configuration
+      - traefik.http.routers.searxng.rule=Host(`${SEARXNG_HOSTNAME}`)
+      - traefik.http.routers.searxng.entrypoints=web
+      - traefik.http.routers.searxng.service=searxng-service
+      # HTTPS Router Configuration
+      - traefik.http.routers.searxng-https.rule=Host(`${SEARXNG_HOSTNAME}`)
+      - traefik.http.routers.searxng-https.tls=true
+      - traefik.http.routers.searxng-https.entrypoints=websecure
+      - traefik.http.routers.searxng-https.tls.certresolver=stepca
+      - traefik.http.routers.adguard-https.service=searxng-service
+      # Shared Service Configuration
+      - traefik.http.services.searxng-service.loadbalancer.server.port=8080
 
       # Basic security headers
       - traefik.http.middlewares.searxng-basic-headers.headers.stsSeconds=31536000
@@ -100,6 +106,7 @@ services:
       # Compression (if not already enabled globally in Traefik)
       - traefik.http.middlewares.searxng-compress.compress=true
       - traefik.http.routers.searxng.middlewares=searxng-compress
+      - traefik.http.routers.searxng-https.middlewares=searxng-compress
 
     logging:
       driver: "json-file"
