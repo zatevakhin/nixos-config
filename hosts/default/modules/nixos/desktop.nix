@@ -9,6 +9,7 @@
     ../../../../modules/nixos/opengl.nix
     ../../../../modules/nixos/audio.nix
     ../../../../modules/nixos/bluetooth.nix
+    ../../../../modules/nixos/printing.nix
   ];
 
   environment.systemPackages = with pkgs; [
