@@ -58,15 +58,21 @@ services:
       PAPERLESS_OCR_LANGUAGES: eng por ukr rus
       PAPERLESS_TIME_ZONE: Europe/Lisbon
       PAPERLESS_URL: https://paperless.homeworld.lan
-
     labels:
       - traefik.enable=true
-      - traefik.http.routers.paperless-ngx.rule=Host(`paperless.homeworld.lan`)
-      - traefik.http.routers.paperless-ngx.tls=true
-      - traefik.http.routers.paperless-ngx.entrypoints=websecure
-      - traefik.http.routers.paperless-ngx.tls.certresolver=stepca
-      - traefik.http.services.paperless-ngx.loadbalancer.server.port=8000
       - traefik.docker.network=proxy
+      # HTTP Router Configuration
+      - traefik.http.routers.paperless-ngx.rule=Host(`paperless.homeworld.lan`)
+      - traefik.http.routers.paperless-ngx.entrypoints=web
+      - traefik.http.routers.paperless-ngx.service=paperless-service
+      # HTTPS Router Configuration
+      - traefik.http.routers.paperless-ngx-https.rule=Host(`paperless.homeworld.lan`)
+      - traefik.http.routers.paperless-ngx-https.tls=true
+      - traefik.http.routers.paperless-ngx-https.entrypoints=websecure
+      - traefik.http.routers.paperless-ngx-https.tls.certresolver=stepca
+      - traefik.http.routers.paperless-ngx-https.service=paperless-service
+      # Shared Service Configuration
+      - traefik.http.services.paperless-service.loadbalancer.server.port=8000
     networks:
       proxy:
         ipv4_address: 10.0.1.4
