@@ -17,6 +17,7 @@
 
     "video/x-matroska" = ["mpv.desktop"];
     "video/mp4" = ["mpv.desktop"];
+    "video/webm" = ["mpv.desktop"];
     "video/quicktime" = ["mpv.desktop"];
     "audio/ogg" = ["mpv.desktop"];
   };
