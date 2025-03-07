@@ -354,6 +354,7 @@
     plugins.treesitter = {
       enable = true;
       settings = {
+        highlight.enable = true;
         ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
         incremental_selection.enable = true;
       };
