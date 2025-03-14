@@ -45,6 +45,10 @@ in {
   #services.nix-serve.secretKeyFile = config.sops.secrets."nix-cache/private_key".path;
   # </nix-serve>
 
+  # <nixvim>
+  programs.nixvim.plugins.avante.settings.ollama.endpoint = lib.mkForce "http://localhost:11434";
+  # </nixvim>
+
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
