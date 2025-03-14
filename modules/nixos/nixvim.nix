@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs-unstable,
+  ...
+}: {
   # NOTE: Disable default neovim because it is enabled in `base.nix`
   programs.neovim.enable = lib.mkForce false;
 
@@ -141,14 +145,109 @@
 
     plugins.avante = {
       enable = true;
+      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (old: {
+        version = "main";
+        src = pkgs-unstable.fetchFromGitHub {
+          owner = "yetone";
+          repo = "avante.nvim";
+          rev = "110ba8a21fa407e5e01ee55e87015c9cc629ac8e";
+          hash = "sha256-w1KTciZHMel1PEKJkhmqJF1od26bl8UEV2NRChk/CV8=";
+        };
+        nvimSkipModule = [
+          "avante.providers.ollama"
+          "avante.providers.vertex_claude"
+          "avante.providers.azure"
+          "avante.providers.copilot"
+        ];
+      });
+
       settings = {
         provider = "ollama";
+        ollama = {
+          endpoint = "http://ollama.homeworld.lan";
+          model = "deepseek-r1:8b-llama-distill-q8_0";
+          options = {
+            num_ctx = 16384;
+          };
+        };
+
+        rag_service = {
+          # FIXME: Something is wrong as for now.
+          enabled = false;
+          host_mount = "/projects";
+          provider = "ollama";
+          llm_model = "llama3.2:3b";
+          embed_model = "granite-embedding:278m";
+          endpoint = "http://ollama.homeworld.lan";
+        };
+
         vendors = {
-          ollama = {
-            __inherited_from = "openai";
-            api_key_name = "";
-            endpoint = "http://ollama.homeworld.lan/v1";
-            model = "qwen2.5-coder:32b";
+          "llama3.2:1b" = {
+            __inherited_from = "ollama";
+            model = "llama3.2:1b";
+          };
+          "llama3.2:3b" = {
+            __inherited_from = "ollama";
+            model = "llama3.2:3b";
+          };
+          "llama3.1:8b" = {
+            __inherited_from = "ollama";
+            model = "llama3.1:8b";
+          };
+          "codellama:7b" = {
+            __inherited_from = "ollama";
+            model = "codellama:7b";
+          };
+          "codellama:13b" = {
+            __inherited_from = "ollama";
+            model = "codellama:13b";
+          };
+          "mistral:7b" = {
+            __inherited_from = "ollama";
+            model = "mistral:7b";
+          };
+          "deepseek-r1:1.5b" = {
+            __inherited_from = "ollama";
+            model = "deepseek-r1:1.5b";
+          };
+          "deepseek-r1:8b" = {
+            __inherited_from = "ollama";
+            model = "deepseek-r1:8b";
+          };
+          "deepseek-r1:8b-Q8" = {
+            __inherited_from = "ollama";
+            model = "deepseek-r1:8b-llama-distill-q8_0";
+          };
+          "deepseek-r1:14b" = {
+            __inherited_from = "ollama";
+            model = "deepseek-r1:14b";
+          };
+          "deepseek-r1:32b" = {
+            __inherited_from = "ollama";
+            model = "deepseek-r1:32b";
+          };
+          "qwq:32b" = {
+            __inherited_from = "ollama";
+            model = "qwq:32b";
+          };
+          "phi4:14b" = {
+            __inherited_from = "ollama";
+            model = "phi4:14b";
+          };
+          "gemma3:4b" = {
+            __inherited_from = "ollama";
+            model = "gemma3:4b";
+            options.num_ctx = 8192;
+          };
+          "gemma3:12b" = {
+            __inherited_from = "ollama";
+            model = "gemma3:12b";
+            options.num_ctx = 8192;
+          };
+          "gemma3:27b" = {
+            __inherited_from = "ollama";
+            model = "gemma3:27b";
+            options.num_ctx = 8192;
           };
         };
       };
