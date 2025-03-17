@@ -31,6 +31,7 @@ in {
     ./modules/nixos/development.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
+    ./modules/nixos/keepalived.nix
   ];
 
   # <sops>
