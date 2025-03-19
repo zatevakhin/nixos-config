@@ -31,7 +31,8 @@ in {
     ./modules/nixos/development.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
-    ./modules/nixos/keepalived.nix
+    # NOTE: Removed as new network card arrived.
+    # ./modules/nixos/keepalived.nix
   ];
 
   # <sops>
