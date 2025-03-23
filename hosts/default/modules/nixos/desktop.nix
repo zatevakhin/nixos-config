@@ -18,6 +18,7 @@
     youtube-music
     keepassxc
     dconf-editor
+    mumble
 
     # Theming
     papirus-icon-theme
