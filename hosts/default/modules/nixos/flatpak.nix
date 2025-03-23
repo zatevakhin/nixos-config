@@ -39,5 +39,6 @@
     "dev.bragefuglseth.Keypunch"
     "com.obsproject.Studio"
     "io.github.woelper.Oculante"
+    "org.tenacityaudio.Tenacity"
   ];
 }
