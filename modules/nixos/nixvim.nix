@@ -46,6 +46,22 @@
 
     keymaps = [
       {
+        action = "<cmd>redo<CR>";
+        key = "r";
+        mode = "n";
+        options = {
+          desc = "Redo";
+        };
+      }
+      {
+        action = "<cmd>redo<CR>";
+        key = "<C-r>";
+        mode = "i";
+        options = {
+          desc = "Redo in I mode";
+        };
+      }
+      {
         action = "<cmd>vsplit<CR>";
         key = "<leader>vv";
         mode = "n";
@@ -141,6 +157,14 @@
           desc = "Create Git Worktree";
         };
       }
+      {
+        action = "<cmd>Telescope undo<CR>";
+        key = "<leader>u";
+        mode = "n";
+        options = {
+          desc = "Undo history";
+        };
+      }
     ];
 
     plugins.avante = {
@@ -162,6 +186,13 @@
       });
 
       settings = {
+        # auto_suggestions_provider = "llama3.2:1b";
+        # behaviour = {
+        #   auto_suggestions = true;
+        # };
+
+        hints.enabled = false;
+
         provider = "ollama";
         ollama = {
           endpoint = "http://ollama.homeworld.lan";
@@ -269,10 +300,31 @@
       enable = true;
 
       keymaps = {
-        "<C-f>" = "find_files";
+        "<leader>fe" = "find_files";
         "<leader>ff" = "find_files";
         "<leader>fb" = "buffers";
         "<leader>fg" = "live_grep";
+      };
+
+      extensions = {
+        undo = {
+          enable = true;
+          settings = {
+            use_delta = true;
+            mapping = {
+              i = {
+                "<c-cr>" = "require('telescope-undo.actions').restore";
+                "<cr>" = "require('telescope-undo.actions').yank_additions";
+                "<s-cr>" = "require('telescope-undo.actions').yank_deletions";
+              };
+              n = {
+                Y = "require('telescope-undo.actions').yank_deletions";
+                u = "require('telescope-undo.actions').restore";
+                y = "require('telescope-undo.actions').yank_additions";
+              };
+            };
+          };
+        };
       };
     };
 
@@ -363,8 +415,11 @@
 
       filesystem.filteredItems.hideDotfiles = false;
 
+      sources = ["filesystem"];
+
       window = {
-        width = 35;
+        # width = 35;
+        position = "float";
 
         popup = {
           position = "50%";
