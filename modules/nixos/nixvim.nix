@@ -165,6 +165,14 @@
           desc = "Undo history";
         };
       }
+      {
+        action = "<cmd>Telescope undo<CR>";
+        key = "<leader>u";
+        mode = "n";
+        options = {
+          desc = "Undo history";
+        };
+      }
     ];
 
     plugins.avante = {
