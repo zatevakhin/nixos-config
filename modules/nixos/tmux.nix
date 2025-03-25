@@ -13,8 +13,9 @@ in {
     terminal = "tmux-256color";
     historyLimit = 50000;
     extraConfig = ''
+      set -gq set-clipboard on
       set -gq allow-passthrough on
-      set -g mouse on
+      set -gq mouse on
 
       # Vim style pane selection
       bind h select-pane -L
