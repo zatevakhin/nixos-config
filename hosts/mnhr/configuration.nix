@@ -37,6 +37,7 @@ in {
     ./containers/ntfy
     ./containers/watchtower
     ./containers/influxdb
+    ./containers/restreamer
   ];
 
   # <sops>

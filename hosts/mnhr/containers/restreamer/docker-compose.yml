@@ -1,0 +1,34 @@
+---
+services:
+  restreamer:
+    image: datarhei/restreamer:latest
+    privileged: true
+    volumes:
+      - data:/core/config
+      - data:/core/data
+    # ports:
+      # - "8080:8080"
+      # - "8181:8181"
+      # - "1935:1935"
+      # - "1936:1936"
+      # - "6000:6000/udp"
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.15
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.restreamer.rule=Host(`restreamer.homeworld.lan`)
+     - traefik.http.routers.restreamer.tls=true
+     - traefik.http.routers.restreamer.entrypoints=websecure
+     - traefik.http.routers.restreamer.tls.certresolver=stepca
+     - traefik.http.services.restreamer.loadbalancer.server.port=8080
+     - traefik.docker.network=proxy
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  data:
+
