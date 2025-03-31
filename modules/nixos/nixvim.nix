@@ -498,7 +498,7 @@
     plugins.lsp.servers.helm_ls.enable = true;
     # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
-    # plugins.lsp.servers.ruff.enable = true;
+    plugins.lsp.servers.ruff.enable = true;
     plugins.lsp.servers.nil_ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.docker_compose_language_service.enable = true;
