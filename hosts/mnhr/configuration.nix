@@ -16,6 +16,7 @@ in {
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
+    ../../modules/nixos/tor.nix
     ../../modules/docker/nodered
     ../../modules/docker/open-webui
     # Machine specific modules
