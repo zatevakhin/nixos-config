@@ -68,7 +68,13 @@ in {
       peers = [
         {
           publicKey = wg.work.public_key;
-          allowedIPs = ["192.168.128.0/23" "192.168.150.0/24" "192.168.5.0/24" "192.168.151.0/24"];
+          allowedIPs = [
+            "192.168.128.0/23"
+            "192.168.150.0/24"
+            "192.168.5.0/24"
+            "192.168.151.0/24"
+            "192.168.149.0/24" # HW and IGS
+          ];
           endpoint = wg.work.endpoint;
           persistentKeepalive = 25;
         }
