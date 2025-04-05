@@ -167,6 +167,9 @@
   boot.kernelModules = [];
   boot.extraModulePackages = [];
 
+  boot.supportedFilesystems.zfs = true;
+  boot.zfs.package = pkgs.zfs;
+
   hardware.enableRedistributableFirmware = true;
   hardware.deviceTree = {
     enable = true;
