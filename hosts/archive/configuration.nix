@@ -15,6 +15,7 @@ in {
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
+    ../../modules/nixos/containers/adguard.nix
     # <containers>
     ./containers/traefik
     ./containers/forgejo
@@ -25,6 +26,10 @@ in {
     ./containers/audiobookshelf
     # </containers>
   ];
+
+  # <adguard>
+  networking.nat.externalInterface = lib.mkForce "end0";
+  # </adguard>
 
   # <sops>
   sops.defaultSopsFormat = "yaml";

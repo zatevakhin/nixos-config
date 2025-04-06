@@ -1,11 +1,11 @@
-{...}: {
+{lib, ...}: {
   # TODO: Make AdGuard DNS as HA service.
   networking = {
     nat = {
       enable = true;
       internalInterfaces = ["ve-+"];
       # NOTE: Should be configured per-instance.
-      externalInterface = "enp5s0";
+      externalInterface = lib.mkDefault null;
       enableIPv6 = false;
     };
 
@@ -243,7 +243,7 @@
         };
       };
 
-      system.stateVersion = "24.05";
+      system.stateVersion = "24.11";
 
       networking = {
         useHostResolvConf = lib.mkForce false;
