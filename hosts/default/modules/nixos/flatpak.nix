@@ -40,5 +40,6 @@
     "com.obsproject.Studio"
     "io.github.woelper.Oculante"
     "org.tenacityaudio.Tenacity"
+    "net.minetest.Minetest"
   ];
 }
