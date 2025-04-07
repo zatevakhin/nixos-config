@@ -8,7 +8,17 @@
   # >>> sudo nix run nixpkgs#step-cli -- certificate fingerprint /var/lib/step-ca/certs/root_ca.crt
   # 2. Retrieve certificate
   # >>> nix run nixpkgs#step-cli -- ca bootstrap --ca-url https://ca.homeworld.lan:8443 --fingerprint <fingerprint>
-  # 3. Install certificate. Copy certificate content.
+  # 3. Retrieve certificate and save it to nix store.
+  # ```nix
+  # security.pki.certificateFiles = [
+  #   (pkgs.fetchurl {
+  #     url = "https://<domain>[:port]/roots.pem";
+  #     hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+  #     curlOpts = "--insecure";
+  #   })
+  # ];
+  # ```
+  # 4. Install certificate. Copy certificate content.
   # ```nix
   #   security.pki.certificates = [
   #     ''
