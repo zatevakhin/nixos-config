@@ -1,0 +1,21 @@
+---
+services:
+  deep-research:
+    image: anotia/deep-research-web:latest
+    container_name: deep-research
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 10.0.1.16
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.research.rule=Host(`research.homeworld.lan`)
+     - traefik.http.routers.research.tls=true
+     - traefik.http.routers.research.entrypoints=websecure
+     - traefik.http.routers.research.tls.certresolver=stepca
+     - traefik.http.services.research.loadbalancer.server.port=3000
+     - traefik.docker.network=proxy
+networks:
+  proxy:
+    external: true
+

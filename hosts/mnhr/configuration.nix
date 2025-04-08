@@ -39,6 +39,7 @@ in {
     ./containers/watchtower
     #./containers/influxdb
     #./containers/restreamer
+    ./containers/deep-research
   ];
 
   # <sops>

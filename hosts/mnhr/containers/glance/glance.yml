@@ -155,6 +155,10 @@ pages:
               url: https://owu.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/ollama.svg
+            - title: DeepResearch
+              url: https://research.homeworld.lan
+              allow-insecure: true
+              icon: si:fing
             - title: SearxNG
               url: https://searxng.homeworld.lan
               allow-insecure: true
