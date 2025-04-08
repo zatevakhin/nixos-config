@@ -11,7 +11,7 @@ services:
     volumes:
       - config:/config
       - cache:/cache/
-      - "/mnt/storage/media/:/media/"
+      - "/storage/media/:/media/"
     restart: unless-stopped
     networks:
       proxy:

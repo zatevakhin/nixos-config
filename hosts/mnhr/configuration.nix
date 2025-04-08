@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   username,
   hostname,
   ...
@@ -22,7 +21,7 @@ in {
     # Machine specific modules
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
-    ./modules/nixos/grafana.nix
+    #./modules/nixos/grafana.nix
     ./modules/nixos/minio.nix
     # Containers
     ./containers/adguard
@@ -30,15 +29,16 @@ in {
     #        - https://github.com/edk2-porting/edk2-rk3588/issues/142#issuecomment-2426288640
     #        - https://github.com/jellyfin/jellyfin-ffmpeg/issues/34
     # ./containers/jellyfin
+
     ./containers/immich
     ./containers/glance
     ./containers/vaultwarden
     ./containers/variance
     ./containers/searxng
-    ./containers/ntfy
+    #./containers/ntfy
     ./containers/watchtower
-    ./containers/influxdb
-    ./containers/restreamer
+    #./containers/influxdb
+    #./containers/restreamer
   ];
 
   # <sops>

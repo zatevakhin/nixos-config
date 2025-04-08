@@ -6,8 +6,8 @@
       DB_PASSWORD = "postgres";
       TZ = "Europe/Lisbon";
 
-      UPLOAD_LOCATION = "/mnt/storage/.services/immich/data";
-      DB_DATA_LOCATION = "/mnt/storage/.services/immich/db";
+      UPLOAD_LOCATION = "/storage/.services/immich/data";
+      DB_DATA_LOCATION = "/storage/.services/immich/db";
 
       DB_USERNAME = "postgres";
       DB_DATABASE_NAME = "immich";

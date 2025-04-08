@@ -42,14 +42,14 @@
           };
         };
       };
-      # <jbod>
+      # ZFS RAIDZ1 setup
       nvme0 = {
         type = "disk";
         device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
-            data = {
+            zfs = {
               size = "100%";
               content = {
                 type = "luks";
@@ -59,9 +59,8 @@
                   keyFile = "/root/nvme.keyfile";
                 };
                 content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/mnt/nvme0";
+                  type = "zfs";
+                  pool = "storage";
                 };
               };
             };
@@ -74,7 +73,7 @@
         content = {
           type = "gpt";
           partitions = {
-            data = {
+            zfs = {
               size = "100%";
               content = {
                 type = "luks";
@@ -84,9 +83,8 @@
                   keyFile = "/root/nvme.keyfile";
                 };
                 content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/mnt/nvme1";
+                  type = "zfs";
+                  pool = "storage";
                 };
               };
             };
@@ -99,7 +97,7 @@
         content = {
           type = "gpt";
           partitions = {
-            data = {
+            zfs = {
               size = "100%";
               content = {
                 type = "luks";
@@ -109,47 +107,96 @@
                   keyFile = "/root/nvme.keyfile";
                 };
                 content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/mnt/nvme2";
+                  type = "zfs";
+                  pool = "storage";
                 };
               };
             };
           };
         };
       };
-      # </jbod>
+      nvme3 = {
+        type = "disk";
+        device = "/dev/nvme3n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "cryptnvme3";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/root/nvme.keyfile";
+                };
+                content = {
+                  type = "zfs";
+                  pool = "storage";
+                };
+              };
+            };
+          };
+        };
+      };
     };
-  };
-
-  # MergerFS configuration
-  fileSystems."/mnt/storage" = {
-    device = "/mnt/nvme0:/mnt/nvme1:/mnt/nvme2";
-    fsType = "fuse.mergerfs";
-    options = [
-      "defaults"
-      "allow_other"
-      "use_ino"
-      "cache.files=partial"
-      "dropcacheonclose=true"
-      "category.create=mfs"
-    ];
+    zpool = {
+      storage = {
+        type = "zpool";
+        mode = "raidz1";
+        mountpoint = "/storage";
+        datasets = {
+          "media" = {
+            type = "zfs_fs";
+            mountpoint = "/storage/media";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
+          "docker" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/docker";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
+          "services" = {
+            type = "zfs_fs";
+            mountpoint = "/storage/.services";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
+        };
+      };
+    };
   };
 
   # Ensure encrypted devices are mounted at boot
   boot.initrd.luks.devices = {
     cryptnvme0 = {
-      device = "/dev/disk/by-partlabel/disk-nvme0-data";
+      device = "/dev/disk/by-partlabel/disk-nvme0-zfs";
       keyFile = "/root/nvme.keyfile";
       allowDiscards = true;
     };
     cryptnvme1 = {
-      device = "/dev/disk/by-partlabel/disk-nvme1-data";
+      device = "/dev/disk/by-partlabel/disk-nvme1-zfs";
       keyFile = "/root/nvme.keyfile";
       allowDiscards = true;
     };
     cryptnvme2 = {
-      device = "/dev/disk/by-partlabel/disk-nvme2-data";
+      device = "/dev/disk/by-partlabel/disk-nvme2-zfs";
+      keyFile = "/root/nvme.keyfile";
+      allowDiscards = true;
+    };
+    cryptnvme3 = {
+      device = "/dev/disk/by-partlabel/disk-nvme3-zfs";
       keyFile = "/root/nvme.keyfile";
       allowDiscards = true;
     };
@@ -160,7 +207,7 @@
   };
 
   # Added MergerFS package
-  environment.systemPackages = [pkgs.mergerfs pkgs.cryptsetup];
+  environment.systemPackages = with pkgs; [cryptsetup zfs zfstools];
 
   boot.initrd.availableKernelModules = ["nvme" "usbhid"];
   boot.initrd.kernelModules = [];
@@ -169,6 +216,11 @@
 
   boot.supportedFilesystems.zfs = true;
   boot.zfs.package = pkgs.zfs;
+
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+  };
 
   hardware.enableRedistributableFirmware = true;
   hardware.deviceTree = {

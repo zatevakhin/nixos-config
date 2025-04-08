@@ -25,9 +25,9 @@
     enable = true;
     region = "eu-west-1";
     rootCredentialsFile = config.sops.templates."minio.env".path;
-    dataDir = ["/mnt/storage/.services/minio/data"];
-    configDir = "/mnt/storage/.services/minio/config";
-    certificatesDir = "/mnt/storage/.services/minio/certs";
+    dataDir = ["/storage/.services/minio/data"];
+    configDir = "/storage/.services/minio/config";
+    certificatesDir = "/storage/.services/minio/certs";
     browser = true;
   };
 

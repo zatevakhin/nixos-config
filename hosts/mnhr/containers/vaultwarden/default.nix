@@ -23,7 +23,7 @@
       INVITATIONS_ALLOWED = "false";
       ICON_SERVICE = "duckduckgo";
       VAULTWARDEN_DOMAIN = "vw.homeworld.lan";
-      VAULTWARDEN_DATA_LOCATION = "/mnt/storage/.services/vaultwarden/data";
+      VAULTWARDEN_DATA_LOCATION = "/storage/.services/vaultwarden/data";
     };
 
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
