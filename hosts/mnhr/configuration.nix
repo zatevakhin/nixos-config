@@ -74,7 +74,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_13;
   networking.hostName = hostname; # Define your hostname.
   networking.hostId = "906df12d";
 
