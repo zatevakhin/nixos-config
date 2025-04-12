@@ -21,5 +21,6 @@
     "video/quicktime" = ["mpv.desktop"];
     "audio/ogg" = ["mpv.desktop"];
     "audio/flac" = ["mpv.desktop"];
+    "audio/x-wav" = ["mpv.desktop"];
   };
 }
