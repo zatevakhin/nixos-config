@@ -97,6 +97,31 @@ in {
 
   users.users.root.openssh.authorizedKeys.keys = [ssh.authorized.baseship];
 
+  # <ssh-over-tor>
+  sops.secrets.secret_key = {
+    sopsFile = ./secrets/tor.yaml;
+    format = "yaml";
+    key = "services/ssh/secret_key";
+    owner = config.systemd.services.tor.serviceConfig.User;
+  };
+
+  services.tor.relay.onionServices = {
+    ssh = {
+      version = 3;
+      secretKey = config.sops.secrets.secret_key.path;
+      map = [
+        {
+          port = 22;
+          target = {
+            addr = "127.0.0.1";
+            port = 22;
+          };
+        }
+      ];
+    };
+  };
+  # </ssh-over-tor>
+
   # <docker>
   # NOTE: Can't use MergerFS as data-root for docker. Looks like some issues with OverlayFS and MergerFS combined.
   # virtualisation.docker.daemon.settings = {
