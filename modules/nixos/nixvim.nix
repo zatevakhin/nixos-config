@@ -44,6 +44,13 @@
       };
     };
 
+    diagnostics = {
+      virtual_lines = {
+        only_current_line = true;
+      };
+      virtual_text = false;
+    };
+
     keymaps = [
       {
         action = "<cmd>redo<CR>";
