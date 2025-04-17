@@ -151,6 +151,7 @@ in {
   # </openssh>
 
   home-manager = {
+    backupFileExtension = "backup";
     extraSpecialArgs = {inherit inputs username pkgs-unstable;};
     users = {
       "${username}" = import ./home.nix;
