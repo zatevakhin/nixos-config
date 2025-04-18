@@ -18,7 +18,6 @@ in {
     ../../modules/nixos/containers/adguard.nix
     # <containers>
     ./containers/traefik
-    ./containers/forgejo
     ./containers/qbittorrent
     ./containers/calibre-web
     ./containers/paperless-ngx

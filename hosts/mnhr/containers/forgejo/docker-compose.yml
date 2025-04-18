@@ -1,11 +1,11 @@
 ---
 services:
   server:
-    image: codeberg.org/forgejo/forgejo:7
+    image: codeberg.org/forgejo/forgejo:11
     container_name: forgejo
     environment:
       - USER_UID=1000
-      - USER_GID=1000
+      - USER_GID=100
     restart: always
     volumes:
       - forgejo-data:/data
@@ -18,9 +18,10 @@ services:
       - traefik.http.routers.forgejo.entrypoints=websecure
       - traefik.http.routers.forgejo.tls.certresolver=stepca
       - traefik.http.services.forgejo.loadbalancer.server.port=3000
+
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.7
 
 networks:
   proxy:

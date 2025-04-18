@@ -5,6 +5,7 @@ in {
     (args @ {pkgs, ...}: import ./adguard (args // {dns = dns;}))
     (args @ {pkgs, ...}: import ./glance (args // {dns = dns;}))
     ./immich
+    ./forgejo
     ./vaultwarden
     ./linkding
     ./variance
