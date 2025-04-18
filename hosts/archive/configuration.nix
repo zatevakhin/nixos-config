@@ -19,7 +19,6 @@ in {
     # <containers>
     ./containers/traefik
     ./containers/forgejo
-    ./containers/linkding
     ./containers/qbittorrent
     ./containers/calibre-web
     ./containers/paperless-ngx

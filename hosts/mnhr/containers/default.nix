@@ -6,6 +6,7 @@ in {
     (args @ {pkgs, ...}: import ./glance (args // {dns = dns;}))
     ./immich
     ./vaultwarden
+    ./linkding
     ./variance
     ./searxng
     ./deep-research

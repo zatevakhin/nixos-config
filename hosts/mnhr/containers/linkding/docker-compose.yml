@@ -4,9 +4,10 @@ services:
     container_name: linkding
     image: sissbruecker/linkding:latest
     volumes:
-      - data:/etc/linkding/data
+      - linkding-data:/etc/linkding/data
     labels:
       - traefik.enable=true
+      - traefik.docker.network=proxy
       - traefik.http.routers.linkding.rule=Host(`linkding.homeworld.lan`)
       - traefik.http.routers.linkding.tls=true
       - traefik.http.routers.linkding.entrypoints=websecure
@@ -17,13 +18,13 @@ services:
       - LD_SUPERUSER_NAME
       - LD_SUPERUSER_PASSWORD
 
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.8
 
 networks:
   proxy:
     external: true
 
 volumes:
-  data:
+  linkding-data:
