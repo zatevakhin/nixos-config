@@ -1,9 +1,11 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }: {
+  # NOTE: Configuration dome through config file in config directory.
+  # /config/qBittorrent/qBittorrent.conf
+
   sops.secrets.proton-vpn-private-key = {
     sopsFile = ../../secrets/proton-vpn.yaml;
     format = "yaml";
@@ -18,6 +20,7 @@
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
 
     wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket" "traefik-compose.service"];
+    after = ["docker.service" "docker.socket" "traefik.service" "adguard-compose.service"];
+    requires = ["docker.service" "traefik.service" "adguard-compose.service"];
   };
 }

@@ -155,6 +155,15 @@
               xattr = "sa";
             };
           };
+          "downloads" = {
+            type = "zfs_fs";
+            mountpoint = "/storage/downloads";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
           "docker" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/docker";

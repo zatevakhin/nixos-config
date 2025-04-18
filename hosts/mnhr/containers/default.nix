@@ -10,6 +10,7 @@ in {
     ./linkding
     ./variance
     ./searxng
+    ./qbittorrent
     ./deep-research
 
     #./ntfy
