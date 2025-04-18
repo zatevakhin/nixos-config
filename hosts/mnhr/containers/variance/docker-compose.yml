@@ -14,9 +14,9 @@ services:
       - traefik.http.routers.variance.tls.certresolver=stepca
       - traefik.http.services.variance.loadbalancer.server.port=80
     restart: unless-stopped
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.10
 
 networks:
   proxy:

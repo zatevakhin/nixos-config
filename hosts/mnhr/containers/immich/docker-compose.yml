@@ -12,9 +12,9 @@ services:
   immich:
     container_name: immich
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.7
       immich:
     ports:
      - "2283:2283"

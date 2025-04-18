@@ -17,9 +17,9 @@ services:
     volumes:
       - data:/var/lib/ntfy
     restart: unless-stopped
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.12
     labels:
      - traefik.enable=true
      - traefik.http.routers.ntfy.rule=Host(`ntfy.homeworld.lan`)

@@ -21,10 +21,10 @@ services:
      - traefik.docker.network=proxy
      - com.centurylinklabs.watchtower.enable=true
     dns:
-      - 10.0.1.3 # DNS in `proxy` network.
+      - "${DOCKER_DNS_IP}"
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.8
 
 networks:
   proxy:

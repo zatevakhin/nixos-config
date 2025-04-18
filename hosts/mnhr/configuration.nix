@@ -16,30 +16,13 @@ in {
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/tor.nix
-    ../../modules/docker/nodered
-    ../../modules/docker/open-webui
     # Machine specific modules
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
     #./modules/nixos/grafana.nix
     ./modules/nixos/minio.nix
-    # Containers
-    ./containers/adguard
-    # ISSUE: No hardware acceleration for video decoding in mainline ffmpeg.
-    #        - https://github.com/edk2-porting/edk2-rk3588/issues/142#issuecomment-2426288640
-    #        - https://github.com/jellyfin/jellyfin-ffmpeg/issues/34
-    # ./containers/jellyfin
-
-    ./containers/immich
-    ./containers/glance
-    ./containers/vaultwarden
-    ./containers/variance
-    ./containers/searxng
-    #./containers/ntfy
-    ./containers/watchtower
-    #./containers/influxdb
-    #./containers/restreamer
-    ./containers/deep-research
+    # All services in docker containers
+    ./containers
   ];
 
   # <sops>

@@ -25,13 +25,10 @@ services:
     container_name: searxng
     image: docker.io/searxng/searxng:latest
     restart: unless-stopped
+    dns_search: proxy
     networks:
       proxy:
-        # Adjust IP address as needed for your network
-        ipv4_address: 10.0.1.11
       internal:
-    dns:
-      - 10.0.1.3
     volumes:
       - searxng-data:/etc/searxng:rw
     environment:

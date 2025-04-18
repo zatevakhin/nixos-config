@@ -1,8 +1,10 @@
 {
   pkgs,
   config,
+  dns,
   ...
 }: {
+  # TODO: Split docker-compose in adguard and wireguard
   sops.secrets.wireguard-domain = {
     sopsFile = ../../secrets/wg-easy.yaml;
     format = "yaml";
@@ -23,6 +25,10 @@
   systemd.services.adguard-compose = {
     serviceConfig = {
       EnvironmentFile = config.sops.templates."wg-easy-creds.env".path;
+    };
+
+    environment = {
+      DOCKER_DNS_IP = "${dns}";
     };
 
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";

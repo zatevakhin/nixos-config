@@ -65,7 +65,8 @@ in {
     };
 
     wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket" "traefik.service"];
+    after = ["docker.service" "docker.socket" "traefik.service" "adguard-compose.service"];
+    requires = ["docker.service" "traefik.service" "adguard-compose.service"];
   };
 
   systemd.services.influxdb-buckets = {

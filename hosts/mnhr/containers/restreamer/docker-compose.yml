@@ -13,9 +13,9 @@ services:
       # - "1936:1936"
       # - "6000:6000/udp"
     restart: unless-stopped
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.15
     labels:
      - traefik.enable=true
      - traefik.http.routers.restreamer.rule=Host(`restreamer.homeworld.lan`)

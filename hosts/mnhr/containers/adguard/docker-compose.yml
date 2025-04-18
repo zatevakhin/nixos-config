@@ -8,7 +8,7 @@ services:
       - PASSWORD_HASH
       - LANG=en
       - UI_TRAFFIC_STATS=true
-      - WG_DEFAULT_DNS=10.0.1.3
+      - WG_DEFAULT_DNS=${DOCKER_DNS_IP}
       - WG_DEFAULT_ADDRESS=10.8.0.x
       - UI_CHART_TYPE=1
     volumes:
@@ -34,13 +34,12 @@ services:
 
     networks:
       wg-easy:
-        ipv4_address: 10.8.1.4
       proxy:
-        ipv4_address: 10.0.1.4
 
   adguardhome:
     image: adguard/adguardhome
     container_name: adguardhome
+    hostname: dns.adguard.container
     restart: unless-stopped
     volumes:
       - adguard_work:/opt/adguardhome/work
@@ -49,7 +48,7 @@ services:
       wg-easy:
         ipv4_address: 10.8.1.3
       proxy:
-        ipv4_address: 10.0.1.3
+        ipv4_address: "${DOCKER_DNS_IP}"
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy

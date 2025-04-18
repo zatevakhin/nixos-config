@@ -15,10 +15,9 @@ services:
       - data:/var/lib/influxdb2
       - config:/etc/influxdb2
     restart: unless-stopped
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.14
-
     labels:
      - traefik.enable=true
      - traefik.http.routers.influxdb.rule=Host(`influxdb.homeworld.lan`)
