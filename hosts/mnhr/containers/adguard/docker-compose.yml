@@ -57,12 +57,6 @@ services:
       - traefik.http.routers.adguard.rule=Host(`adguard.homeworld.lan`)
       - traefik.http.routers.adguard.entrypoints=web
       - traefik.http.routers.adguard.service=adguard-service
-      # HTTPS Router Configuration
-      - traefik.http.routers.adguard-https.rule=Host(`adguard.homeworld.lan`)
-      - traefik.http.routers.adguard-https.tls=true
-      - traefik.http.routers.adguard-https.entrypoints=websecure
-      - traefik.http.routers.adguard-https.tls.certresolver=stepca
-      - traefik.http.routers.adguard-https.service=adguard-service
       # Shared Service Configuration
       - traefik.http.services.adguard-service.loadbalancer.server.port=80
     ports:

@@ -83,8 +83,7 @@ pages:
               url: https://pixelpond-3114538102.duckdns.org:8124
               icon: /assets/svg/home-assistant-alt.svg
             - title: AdGuard
-              url: https://adguard.homeworld.lan
-              allow-insecure: true
+              url: http://adguard.homeworld.lan
               icon: /assets/svg/adguard-home.svg
             - title: Wireguard UI
               url: https://wg.homeworld.lan
