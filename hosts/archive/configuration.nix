@@ -20,7 +20,6 @@ in {
     ./containers/traefik
     ./containers/calibre-web
     ./containers/paperless-ngx
-    ./containers/audiobookshelf
     # </containers>
   ];
 

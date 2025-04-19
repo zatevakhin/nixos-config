@@ -24,10 +24,17 @@ services:
       - traefik.http.routers.abs.entrypoints=websecure
       - traefik.http.routers.abs.tls.certresolver=stepca
       - traefik.http.services.abs.loadbalancer.server.port=80
+      # WebSocket support middleware
+      - traefik.http.middlewares.abs-websocket.headers.customRequestHeaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.abs-websocket.headers.customResponseHeaders.Connection=Upgrade
+      # Apply the middleware
+      - traefik.http.routers.abs.middlewares=abs-websocket
+
     restart: unless-stopped
+
+    dns_search: proxy
     networks:
       proxy:
-        ipv4_address: 10.0.1.6
     # You can use the following environment variable to run the ABS
     # docker container as a specific user. You will need to change
     # the UID and GID to the correct values for your user.

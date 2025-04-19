@@ -12,6 +12,7 @@ in {
     ./searxng
     ./qbittorrent
     ./deep-research
+    ./audiobookshelf
 
     #./ntfy
     #./influxdb
