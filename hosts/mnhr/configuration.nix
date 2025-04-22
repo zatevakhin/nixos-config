@@ -61,9 +61,6 @@ in {
   networking.hostName = hostname; # Define your hostname.
   networking.hostId = "906df12d";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
 
