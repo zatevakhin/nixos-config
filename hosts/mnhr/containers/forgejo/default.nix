@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   systemd.services.forgejo-compose = {
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
 
@@ -7,5 +6,4 @@
     after = ["docker.service" "docker.socket" "traefik.service" "adguard-compose.service"];
     requires = ["docker.service" "traefik.service" "adguard-compose.service"];
   };
-
 }
