@@ -1,0 +1,30 @@
+---
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:4.4.2
+    container_name: grocy
+    environment:
+      - TZ=Europe/Lisbon
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - grocy-data:/config
+    restart: unless-stopped
+    dns_search: proxy
+    networks:
+      proxy:
+    labels:
+     - traefik.enable=true
+     - traefik.http.routers.grocy.rule=Host(`grocy.homeworld.lan`)
+     - traefik.http.routers.grocy.tls=true
+     - traefik.http.routers.grocy.entrypoints=websecure
+     - traefik.http.routers.grocy.tls.certresolver=stepca
+     - traefik.http.services.grocy.loadbalancer.server.port=80
+     - traefik.docker.network=proxy
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  grocy-data:

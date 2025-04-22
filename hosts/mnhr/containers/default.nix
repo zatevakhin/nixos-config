@@ -15,6 +15,8 @@ in {
     ./deep-research
     ./audiobookshelf
 
+    ./grocy
+    ./kitchenowl
     #./ntfy
     #./influxdb
     #./restreamer

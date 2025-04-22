@@ -178,6 +178,14 @@ pages:
               url: https://va.homeworld.lan
               allow-insecure: true
               icon: /assets/svg/matrix.svg
+            - title: Grocy
+              url: https://grocy.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/grocy.svg
+            - title: Kitchen Own
+              url: https://kitchenowl.homeworld.lan
+              allow-insecure: true
+              icon: /assets/svg/kitchenowl.svg
 
     - size: full
       widgets:
