@@ -12,6 +12,49 @@
     # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
     nixpkgs.useGlobalPackages = false;
 
+    extraPlugins = [pkgs-unstable.vimPlugins.iron-nvim];
+    extraConfigLua = ''
+      local iron = require("iron.core")
+      local view = require("iron.view")
+      local common = require("iron.fts.common")
+
+      iron.setup {
+        config = {
+          scratch_repl = true,
+          repl_definition = {
+            sh = {
+              command = {"zsh"}
+            },
+            python = {
+              command = { "ipython", "--no-autoindent", "--colors=Linux" },
+              format = common.bracketed_paste_python,
+              block_dividers = { "# %%", "#%%" },
+            }
+          },
+          repl_open_cmd = view.split.rightbelow("%25"),
+          repl_filetype = function(bufnr, ft)
+            return ft
+          end,
+        },
+        keymaps = {
+          toggle_repl = "<space>rr",
+          restart_repl = "<space>rR",
+          send_motion = "<space>sc",
+          visual_send = "<space>sc",
+          send_code_block = "<space>sb",
+          send_code_block_and_move = "<space>sn",
+          exit = "<space>sq",
+          clear = "<space>cl",
+          cr = "<space>s<cr>",
+          interrupt = "<space>s<space>",
+        },
+        highlight = {
+          italic = true,
+        },
+        ignore_blank_lines = true,
+      }
+    '';
+
     opts = {
       list = true;
       listchars = "trail:•";
@@ -108,6 +151,15 @@
           desc = "Show project select list.";
         };
       }
+      {
+        action = "<cmd>Telescope buffers<CR>";
+        key = "<C-b>";
+        mode = ["n" "v" "i"];
+        options = {
+          desc = "Show buffers select list.";
+        };
+      }
+
       {
         action = "<cmd>Neotree focus<CR>";
         key = "<C-f>";
@@ -458,6 +510,11 @@
 
     # <cmp>
     plugins.cmp.enable = true;
+    plugins.lspkind = {
+      enable = true;
+      cmp.enable = true;
+    };
+
     plugins.cmp-nvim-lsp.enable = true;
     plugins.cmp-path.enable = true;
     plugins.cmp-buffer.enable = true;
@@ -485,7 +542,12 @@
 
     # <lsp>
     plugins.lsp-lines.enable = true;
-    plugins.lsp-status.enable = true;
+    plugins.lsp-status = {
+      enable = true;
+      settings = {
+        spinner_frames = ["⣾" "⣽" "⣻" "⢿" "⡿" "⣟" "⣯" "⣷"];
+      };
+    };
 
     plugins.lsp-format.enable = true;
     plugins.none-ls.enable = true;
