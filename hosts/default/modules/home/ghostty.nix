@@ -3,9 +3,6 @@
   # https://github.com/ghostty-org/ghostty/discussions/2701
   # https://ghostty.org/docs/help/terminfo
   programs.zsh.initExtra = ''
-    if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
-      export TERM=xterm-256color
-    fi
   '';
 
   programs.ghostty = {
@@ -14,8 +11,11 @@
     settings = {
       theme = "Kanagawa Wave";
       font-size = 11;
+      font-thicken = true;
       font-family = "FiraCode Nerd Font";
-      window-decoration = "none";
+      window-decoration = true;
+      gtk-titlebar = false;
+      gtk-adwaita = false;
     };
   };
   dconf.settings = {

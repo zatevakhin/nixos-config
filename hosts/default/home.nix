@@ -13,8 +13,7 @@
     ./modules/home/copyq.nix
     ./modules/home/emote.nix
     ./modules/home/dconf.nix
-    ./modules/home/kitty.nix
-    #./modules/home/ghostty.nix
+    ./modules/home/ghostty.nix
     ./modules/home/extensions.nix
     ./modules/home/associations.nix
     ./modules/home/helix.nix

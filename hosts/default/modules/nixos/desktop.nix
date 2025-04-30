@@ -19,7 +19,6 @@
     keepassxc
     dconf-editor
     mumble
-    ghostty
 
     # Theming
     papirus-icon-theme
