@@ -63,6 +63,7 @@
       number = true;
       relativenumber = true;
       termguicolors = true;
+      scrolloff = 5; # From: hx defaults
       shiftwidth = 4;
       tabstop = 4;
       softtabstop = 0;
@@ -367,10 +368,9 @@
       enable = true;
 
       keymaps = {
-        "<leader>fe" = "find_files";
-        "<leader>ff" = "find_files";
-        "<leader>fb" = "buffers";
-        "<leader>fg" = "live_grep";
+        "<space>ff" = "find_files";
+        "<space>fb" = "buffers";
+        "<space>fg" = "live_grep";
       };
 
       extensions = {
