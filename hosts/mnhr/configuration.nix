@@ -17,6 +17,7 @@ in {
     ../../modules/nixos/docker.nix
     ../../modules/nixos/tor.nix
     # Machine specific modules
+    ./modules/nixos/glance.nix
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
     #./modules/nixos/grafana.nix

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   systemd.services.traefik = {
     serviceConfig = {
       SupplementaryGroups = ["docker"];
@@ -68,6 +72,13 @@
     dynamicConfigOptions = {
       http = {
         routers = {
+          glance = {
+            rule = "Host(`glance.homeworld.lan`)";
+            service = "glance";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           # HACK: Until OpenWebUI don't support self signed certificates for ollama URL.
           ollama-http = {
             rule = "Host(`ollama.homeworld.lan`)";
@@ -109,6 +120,14 @@
               certResolver = "stepca";
             };
           };
+        };
+
+        services.glance = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.glance.settings.server.port}";
+            }
+          ];
         };
 
         services.ollama = {
