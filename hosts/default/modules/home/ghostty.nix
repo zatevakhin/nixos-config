@@ -2,6 +2,7 @@
   # NOTE: Not used due to issues with terminfo
   # https://github.com/ghostty-org/ghostty/discussions/2701
   # https://ghostty.org/docs/help/terminfo
+  # https://gist.github.com/alexjsteffen/867c9688be84de4acacbbf18afe7dab1
   programs.zsh.initExtra = ''
   '';
 
@@ -16,6 +17,7 @@
       window-decoration = true;
       gtk-titlebar = false;
       gtk-adwaita = false;
+      mouse-scroll-multiplier = 0.5;
     };
   };
   dconf.settings = {
