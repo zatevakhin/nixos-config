@@ -1,0 +1,33 @@
+---
+services:
+  stump:
+    image: aaronleopold/stump
+    container_name: stump
+    environment:
+      - PUID=1000
+      - PGID=100
+    volumes:
+      - stump-data:/data
+      - stump-config:/config
+    restart: unless-stopped
+    dns_search: proxy
+    networks:
+      proxy:
+    labels:
+     - traefik.enable=true
+     - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+     - traefik.http.routers.stump.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+     - traefik.http.routers.stump.tls=true
+     - traefik.http.routers.stump.entrypoints=websecure
+     - traefik.http.routers.stump.tls.certresolver=stepca
+      # Service Configuration
+     - traefik.http.services.stump.loadbalancer.server.port=10801
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  stump-data:
+  stump-config:

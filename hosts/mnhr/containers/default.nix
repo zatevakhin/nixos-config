@@ -24,6 +24,7 @@
 
     ./nodered
     ./open-webui
+    ./stump
 
     # Services that don't need an IP
     ./watchtower
