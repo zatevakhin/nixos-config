@@ -1,8 +1,18 @@
 {
   pkgs,
   config,
+  hostname,
   ...
-}: {
+}: let
+  domain = "qb.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   # NOTE: Configuration dome through config file in config directory.
   # /config/qBittorrent/qBittorrent.conf
 
@@ -14,6 +24,7 @@
 
   systemd.services.qbittorrent-compose = {
     environment = {
+      INTERNAL_DOMAIN_NAME = domain;
       PROTON_VPN_PRIVATE_KEY_PATH = config.sops.secrets.proton-vpn-private-key.path;
     };
 

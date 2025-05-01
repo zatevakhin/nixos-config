@@ -33,7 +33,7 @@ services:
       - searxng-data:/etc/searxng:rw
     environment:
       - SEARXNG_HOSTNAME
-      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME}/
+      - SEARXNG_BASE_URL=https://${INTERNAL_DOMAIN_NAME}/
       - UWSGI_WORKERS=4
       - UWSGI_THREADS=4
     cap_drop:
@@ -46,11 +46,11 @@ services:
       - traefik.enable=true
       - traefik.docker.network=proxy
       # HTTP Router Configuration
-      - traefik.http.routers.searxng.rule=Host(`${SEARXNG_HOSTNAME}`)
+      - traefik.http.routers.searxng.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.searxng.entrypoints=web
       - traefik.http.routers.searxng.service=searxng-service
       # HTTPS Router Configuration
-      - traefik.http.routers.searxng-https.rule=Host(`${SEARXNG_HOSTNAME}`)
+      - traefik.http.routers.searxng-https.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.searxng-https.tls=true
       - traefik.http.routers.searxng-https.entrypoints=websecure
       - traefik.http.routers.searxng-https.tls.certresolver=stepca
@@ -88,16 +88,16 @@ services:
       - "traefik.http.middlewares.searxng-default-csp.headers.contentSecurityPolicy=upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https://github.com/searxng/searxng/issues/new; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://overpass-api.de; img-src 'self' data: https://*.tile.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com https://www.deezer.com https://www.mixcloud.com https://w.soundcloud.com https://embed.spotify.com"
 
       # Route-specific middleware chains
-      - traefik.http.routers.searxng-static.rule=Host(`${SEARXNG_HOSTNAME}`) && PathPrefix(`/static/`)
+      - traefik.http.routers.searxng-static.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && PathPrefix(`/static/`)
       - traefik.http.routers.searxng-static.middlewares=searxng-basic-headers,searxng-static-cache
 
-      - traefik.http.routers.searxng-api.rule=Host(`${SEARXNG_HOSTNAME}`) && (PathPrefix(`/config`) || PathPrefix(`/healthz`) || PathPrefix(`/stats/errors`) || PathPrefix(`/stats/checker`))
+      - traefik.http.routers.searxng-api.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && (PathPrefix(`/config`) || PathPrefix(`/healthz`) || PathPrefix(`/stats/errors`) || PathPrefix(`/stats/checker`))
       - traefik.http.routers.searxng-api.middlewares=searxng-basic-headers,searxng-api
 
-      - traefik.http.routers.searxng-imageproxy.rule=Host(`${SEARXNG_HOSTNAME}`) && PathPrefix(`/image_proxy`)
+      - traefik.http.routers.searxng-imageproxy.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && PathPrefix(`/image_proxy`)
       - traefik.http.routers.searxng-imageproxy.middlewares=searxng-basic-headers,searxng-imageproxy-csp
 
-      - traefik.http.routers.searxng-default.rule=Host(`${SEARXNG_HOSTNAME}`)
+      - traefik.http.routers.searxng-default.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.searxng-default.middlewares=searxng-basic-headers,searxng-notstatic-cache,searxng-default-csp
 
       # Compression (if not already enabled globally in Traefik)

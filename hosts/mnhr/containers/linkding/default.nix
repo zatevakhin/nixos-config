@@ -1,8 +1,17 @@
 {
   pkgs,
   config,
+  hostname,
   ...
-}: {
+}: let
+  domain = "linkding.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
   sops.secrets.linkding-superuser-user = {
     sopsFile = ../../secrets/linkding.yaml;
     format = "yaml";
@@ -21,6 +30,10 @@
   '';
 
   systemd.services.linkding-compose = {
+    environment = {
+      INTERNAL_DOMAIN_NAME = domain;
+    };
+
     serviceConfig = {
       EnvironmentFile = config.sops.templates."linkding-creds.env".path;
     };

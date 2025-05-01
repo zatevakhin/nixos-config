@@ -8,10 +8,12 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.linkding.rule=Host(`linkding.homeworld.lan`)
+      # HTTPS Router Configuration
+      - traefik.http.routers.linkding.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.linkding.tls=true
       - traefik.http.routers.linkding.entrypoints=websecure
       - traefik.http.routers.linkding.tls.certresolver=stepca
+      # Service Configuration
       - traefik.http.services.linkding.loadbalancer.server.port=9090
     restart: unless-stopped
     environment:

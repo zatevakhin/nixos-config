@@ -18,12 +18,14 @@ services:
       proxy:
     labels:
      - traefik.enable=true
-     - traefik.http.routers.restreamer.rule=Host(`restreamer.homeworld.lan`)
+     - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+     - traefik.http.routers.restreamer.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.restreamer.tls=true
      - traefik.http.routers.restreamer.entrypoints=websecure
      - traefik.http.routers.restreamer.tls.certresolver=stepca
+      # Service Configuration
      - traefik.http.services.restreamer.loadbalancer.server.port=8080
-     - traefik.docker.network=proxy
 
 networks:
   proxy:

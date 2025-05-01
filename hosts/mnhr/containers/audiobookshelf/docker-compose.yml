@@ -19,10 +19,13 @@ services:
       - audiobookshelf-config:/config
     labels:
       - traefik.enable=true
-      - traefik.http.routers.abs.rule=Host(`abs.homeworld.lan`)
+      - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+      - traefik.http.routers.abs.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.abs.tls=true
       - traefik.http.routers.abs.entrypoints=websecure
       - traefik.http.routers.abs.tls.certresolver=stepca
+      # Service Configuration
       - traefik.http.services.abs.loadbalancer.server.port=80
       # WebSocket support middleware
       - traefik.http.middlewares.abs-websocket.headers.customRequestHeaders.X-Forwarded-Proto=https

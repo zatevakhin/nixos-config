@@ -1,9 +1,11 @@
 {
   pkgs,
   config,
+  hostname,
   ...
 }: let
   dashboard-icons = pkgs.callPackage ../../../../modules/packages/dashboard-icons {};
+  domain = "glance.homeworld.lan";
 in {
   sops.secrets.adguard-password = {
     sopsFile = ../../secrets/adguard.yaml;
@@ -17,13 +19,20 @@ in {
 
   systemd.services.glance.serviceConfig.EnvironmentFile = config.sops.templates."adguard-creds.env".path;
 
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   services.glance = {
     enable = true;
     openFirewall = true;
     settings = {
       server = {
         port = 8001;
-        host = "0.0.0.0";
+        host = "127.0.0.1";
         assets-path = "${dashboard-icons}/share/dashboard-icons/";
       };
       pages = [

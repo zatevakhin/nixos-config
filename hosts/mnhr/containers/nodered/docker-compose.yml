@@ -21,12 +21,14 @@ services:
       - "nodered-data:/data"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.nodered.rule=Host(`nodered.homeworld.lan`)
+      - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+      - traefik.http.routers.nodered.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.nodered.tls=true
       - traefik.http.routers.nodered.entrypoints=websecure
       - traefik.http.routers.nodered.tls.certresolver=stepca
+      # Service Configuration
       - traefik.http.services.nodered.loadbalancer.server.port=1880
-      - traefik.docker.network=proxy
     dns_search: proxy
     networks:
       proxy:

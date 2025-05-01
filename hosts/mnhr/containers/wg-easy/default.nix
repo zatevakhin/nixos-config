@@ -1,8 +1,18 @@
 {
   pkgs,
   config,
+  hostname,
   ...
-}: {
+}: let
+  domain = "wg.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   sops.secrets.wireguard-domain = {
     sopsFile = ../../secrets/wg-easy.yaml;
     format = "yaml";
@@ -21,6 +31,10 @@
   '';
 
   systemd.services.wg-easy-compose = {
+    environment = {
+      INTERNAL_DOMAIN_NAME = domain;
+    };
+
     serviceConfig = {
       EnvironmentFile = config.sops.templates."wg-easy-creds.env".path;
     };

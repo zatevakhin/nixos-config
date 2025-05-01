@@ -74,10 +74,6 @@
         # TODO: Need to define services files and IP mapping somewhere.
         rewrites = [
           {
-            domain = "abs.homeworld.lan";
-            answer = "archive.lan";
-          }
-          {
             domain = "adguard.homeworld.lan";
             answer = "mnhr.lan";
           }
@@ -86,48 +82,20 @@
             answer = "archive.lan";
           }
           {
-            domain = "pihole.homeworld.lan";
-            answer = "nuke.lan";
-          }
-          {
             domain = "mnhr.lan";
             answer = "192.168.1.191";
-          }
-          {
-            domain = "glance.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "forgejo.homeworld.lan";
-            answer = "archive.lan";
-          }
-          {
-            domain = "immich.homeworld.lan";
-            answer = "mnhr.lan";
           }
           {
             domain = "jellyfin.homeworld.lan";
             answer = "nuke.lan";
           }
           {
-            domain = "linkding.homeworld.lan";
-            answer = "archive.lan";
-          }
-          {
             domain = "paperless.homeworld.lan";
-            answer = "archive.lan";
-          }
-          {
-            domain = "qb.homeworld.lan";
             answer = "archive.lan";
           }
           {
             domain = "syncthing.homeworld.lan";
             answer = "archive.lan";
-          }
-          {
-            domain = "wg.homeworld.lan";
-            answer = "mnhr.lan";
           }
           {
             domain = "archive.lan";
@@ -138,59 +106,15 @@
             answer = "192.168.1.102";
           }
           {
-            domain = "ca.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
             domain = "eulr.lan";
             answer = "192.168.1.194";
-          }
-          {
-            domain = "vw.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "va.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "searxng.homeworld.lan";
-            answer = "mnhr.lan";
           }
           {
             domain = "falke.lan";
             answer = "192.168.1.246";
           }
           {
-            domain = "ntfy.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "nodered.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
             domain = "ollama.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "owu.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "grafana.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "influxdb.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "minio.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "console-minio.homeworld.lan";
             answer = "mnhr.lan";
           }
           {
@@ -200,42 +124,6 @@
           {
             domain = "falke.lan";
             answer = "192.168.1.246";
-          }
-          {
-            domain = "restreamer.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "research.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "grocy.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "kitchenowl.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "stump.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "radarr.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "sonarr.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "bazarr.homeworld.lan";
-            answer = "mnhr.lan";
-          }
-          {
-            domain = "sabnzbd.homeworld.lan";
-            answer = "mnhr.lan";
           }
         ];
       };

@@ -1,8 +1,11 @@
 {
-  config,
   pkgs,
+  config,
+  hostname,
   ...
-}: {
+}: let
+  domain = "ca.homeworld.lan";
+in {
   # INFO: Usage
   # 1. Verify that certificate is available. Should match with that one in logs of `stpe-ca.service`.
   # >>> sudo nix run nixpkgs#step-cli -- certificate fingerprint /var/lib/step-ca/certs/root_ca.crt
@@ -34,6 +37,13 @@
   #   security.pki.certificateFiles = [ </path/to/certificate> ];
   # ```
 
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   sops.secrets.step-ca-password = {
     sopsFile = ../../secrets/step-ca.yaml;
     format = "yaml";
@@ -50,7 +60,7 @@
     environment = {
       STEP_CA_ADDRESS = "0.0.0.0";
       STEP_CA_PORT = "8443";
-      STEP_CA_DNS = "ca.homeworld.lan";
+      STEP_CA_DNS = domain;
       HOME = "%S/step-ca";
       STEPPATH = "%S/step-ca";
     };
@@ -114,7 +124,7 @@
       crt = "/var/lib/step-ca/certs/intermediate_ca.crt";
       key = "/var/lib/step-ca/secrets/intermediate_ca_key";
       insecureAddress = "";
-      dnsNames = ["ca.homeworld.lan"];
+      dnsNames = [domain];
       logger = {
         format = "text";
       };
@@ -125,7 +135,7 @@
       };
       authority = {
         enableAdmin = true;
-        certificateAuthority = "https://ca.homeworld.lan:8443";
+        certificateAuthority = "https://${domain}:8443";
         certificateAuthorityFingerprint = "295b225084a9a421b5c9190cd3347467bb722b72efb19052bb8dea895081e0db";
         certificateIssuer = {
           type = "jwk";

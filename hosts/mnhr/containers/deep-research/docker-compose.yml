@@ -9,12 +9,14 @@ services:
       proxy:
     labels:
      - traefik.enable=true
-     - traefik.http.routers.research.rule=Host(`research.homeworld.lan`)
+     - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+     - traefik.http.routers.research.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.research.tls=true
      - traefik.http.routers.research.entrypoints=websecure
      - traefik.http.routers.research.tls.certresolver=stepca
+      # Service Configuration
      - traefik.http.services.research.loadbalancer.server.port=3000
-     - traefik.docker.network=proxy
 
 networks:
   proxy:

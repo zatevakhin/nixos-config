@@ -20,12 +20,15 @@ services:
       proxy:
     labels:
      - traefik.enable=true
-     - traefik.http.routers.influxdb.rule=Host(`influxdb.homeworld.lan`)
+     - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+     - traefik.http.routers.influxdb.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.influxdb.tls=true
      - traefik.http.routers.influxdb.entrypoints=websecure
      - traefik.http.routers.influxdb.tls.certresolver=stepca
+      # Service Configuration
      - traefik.http.services.influxdb.loadbalancer.server.port=8086
-     - traefik.docker.network=proxy
+      # Watchtower Configuration
      - com.centurylinklabs.watchtower.enable=true
 
 networks:

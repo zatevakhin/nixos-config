@@ -8,10 +8,13 @@ services:
       network: host
     labels:
       - traefik.enable=true
-      - traefik.http.routers.variance.rule=Host(`va.homeworld.lan`)
+      - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+      - traefik.http.routers.variance.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.variance.tls=true
       - traefik.http.routers.variance.entrypoints=websecure
       - traefik.http.routers.variance.tls.certresolver=stepca
+      # Service Configuration
       - traefik.http.services.variance.loadbalancer.server.port=80
     restart: unless-stopped
     dns_search: proxy

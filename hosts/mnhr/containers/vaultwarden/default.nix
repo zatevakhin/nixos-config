@@ -1,8 +1,17 @@
 {
   pkgs,
   config,
+  hostname,
   ...
-}: {
+}: let
+  domain = "vw.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
   sops.secrets.vaultwarden-admin-token = {
     sopsFile = ../../secrets/vaultwarden.yaml;
     format = "yaml";
@@ -22,7 +31,7 @@
       SIGNUPS_ALLOWED = "false";
       INVITATIONS_ALLOWED = "false";
       ICON_SERVICE = "duckduckgo";
-      VAULTWARDEN_DOMAIN = "vw.homeworld.lan";
+      INTERNAL_DOMAIN_NAME = domain;
       VAULTWARDEN_DATA_LOCATION = "/storage/.services/vaultwarden/data";
     };
 

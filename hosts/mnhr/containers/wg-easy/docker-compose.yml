@@ -26,10 +26,12 @@ services:
     labels:
      - traefik.enable=true
      - traefik.docker.network=proxy
-     - traefik.http.routers.wg.rule=Host(`wg.homeworld.lan`)
+      # HTTPS Router Configuration
+     - traefik.http.routers.wg.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.wg.tls=true
      - traefik.http.routers.wg.entrypoints=websecure
      - traefik.http.routers.wg.tls.certresolver=stepca
+      # Service Configuration
      - traefik.http.services.wg.loadbalancer.server.port=51821
 
     dns_search: proxy

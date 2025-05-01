@@ -4,7 +4,7 @@ services:
     container_name: vaultwarden
     restart: unless-stopped
     environment:
-      DOMAIN: "https://${VAULTWARDEN_DOMAIN}"
+      DOMAIN: "https://${INTERNAL_DOMAIN_NAME}"
       ADMIN_TOKEN:
       ICON_SERVICE:
       SIGNUPS_ALLOWED:
@@ -13,12 +13,14 @@ services:
       - "${VAULTWARDEN_DATA_LOCATION}:/data/"
     labels:
      - traefik.enable=true
-     - traefik.http.routers.vaultwarden.rule=Host(`${VAULTWARDEN_DOMAIN}`)
+     - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+     - traefik.http.routers.vaultwarden.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.vaultwarden.tls=true
      - traefik.http.routers.vaultwarden.entrypoints=websecure
      - traefik.http.routers.vaultwarden.tls.certresolver=stepca
+      # Service Configuration
      - traefik.http.services.vaultwarden.loadbalancer.server.port=80
-     - traefik.docker.network=proxy
     dns_search: proxy
     networks:
       proxy:

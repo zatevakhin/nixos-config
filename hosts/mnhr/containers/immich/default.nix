@@ -1,6 +1,20 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  hostname,
+  ...
+}: let
+  domain = "immich.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   systemd.services.immich-compose = {
     environment = {
+      INTERNAL_DOMAIN_NAME = domain;
       IMMICH_VERSION = "release";
       IMMICH_HOST = "0.0.0.0";
       DB_PASSWORD = "postgres";

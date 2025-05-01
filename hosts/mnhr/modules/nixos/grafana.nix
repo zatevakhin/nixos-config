@@ -1,4 +1,15 @@
-{config, ...}: {
+{config, hostname, ...}: let
+
+  domain = "grafana.homeworld.lan";
+in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
+
   sops.secrets.influx_admin_token = {
     sopsFile = ../../secrets/influxdb.yaml;
     format = "yaml";
@@ -11,10 +22,10 @@
     settings = {
       server = {
         http_addr = "127.0.0.1";
-        http_port = 3000;
+        http_port = 3001;
         enforce_domain = true;
         enable_gzip = true;
-        domain = "grafana.homeworld.lan";
+        domain = domain;
 
         # Alternatively, if you want to server Grafana from a subpath:
         # domain = "your.domain";

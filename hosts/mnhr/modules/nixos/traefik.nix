@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: {
   systemd.services.traefik = {
@@ -99,33 +100,22 @@
             tls.certResolver = "stepca";
           };
           grafana = {
-            rule = "Host(`grafana.homeworld.lan`)";
+            rule = "Host(`${config.services.grafana.settings.server.domain}`)";
             service = "grafana";
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
           minio-api = {
-            # ISSUE: Seems wildcard certificates was not created using force sync path on client side for now.
-            rule = "HostRegexp(`{subdomain:[a-zA-Z0-9-]+}.minio.homeworld.lan`) || Host(`minio.homeworld.lan`)";
+            rule = "Host(`${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
             service = "minio-api";
             entryPoints = ["websecure"];
-            tls = {
-              certResolver = "stepca";
-              domains = [
-                {
-                  main = "minio.homeworld.lan";
-                  sans = ["*.minio.homeworld.lan"];
-                }
-              ];
-            };
+            tls.certResolver = "stepca";
           };
           minio-console = {
-            rule = "Host(`console-minio.homeworld.lan`)";
+            rule = "Host(`console-${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
             service = "console-minio";
             entryPoints = ["websecure"];
-            tls = {
-              certResolver = "stepca";
-            };
+            tls.certResolver = "stepca";
           };
         };
 
@@ -155,22 +145,26 @@
         services.grafana = {
           loadBalancer.servers = [
             {
-              url = "http://localhost:3000";
+              url = "http://localhost:${builtins.toString config.services.grafana.settings.server.http_port}";
             }
           ];
         };
         services.console-minio = {
           loadBalancer.servers = [
-            {
-              url = "http://localhost:9001";
-            }
+            (let
+              port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.consoleAddress) 1;
+            in {
+              url = "http://localhost:${port}";
+            })
           ];
         };
         services.minio-api = {
           loadBalancer.servers = [
-            {
-              url = "http://localhost:9000";
-            }
+            (let
+              port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.listenAddress) 1;
+            in {
+              url = "http://localhost:${port}";
+            })
           ];
         };
       };

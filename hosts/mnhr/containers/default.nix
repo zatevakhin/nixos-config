@@ -11,8 +11,8 @@
     ./deep-research
     ./audiobookshelf
 
-    ./grocy
-    ./kitchenowl
+    # ./grocy
+    # ./kitchenowl
     #./ntfy
     #./influxdb
     #./restreamer
@@ -22,9 +22,8 @@
     #        - https://github.com/jellyfin/jellyfin-ffmpeg/issues/34
     # ./jellyfin
 
-    # Shared containers
-    ../../../modules/docker/nodered
-    ../../../modules/docker/open-webui
+    ./nodered
+    ./open-webui
 
     # Services that don't need an IP
     ./watchtower

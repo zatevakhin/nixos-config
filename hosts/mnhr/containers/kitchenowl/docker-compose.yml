@@ -15,11 +15,11 @@ services:
      - traefik.enable=true
      - traefik.docker.network=proxy
      # HTTP Router Configuration
-     - traefik.http.routers.kitchenowl-http.rule=Host(`kitchenowl.homeworld.lan`)
+     - traefik.http.routers.kitchenowl-http.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.kitchenowl-http.entrypoints=web
      - traefik.http.routers.kitchenowl-http.service=kitchenowl-service
       # HTTPS Router Configuration
-     - traefik.http.routers.kitchenowl.rule=Host(`kitchenowl.homeworld.lan`)
+     - traefik.http.routers.kitchenowl.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.kitchenowl.tls=true
      - traefik.http.routers.kitchenowl.entrypoints=websecure
      - traefik.http.routers.kitchenowl.tls.certresolver=stepca

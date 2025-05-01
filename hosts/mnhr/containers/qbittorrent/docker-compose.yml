@@ -48,10 +48,13 @@ services:
         read_only: true
     labels:
       - traefik.enable=true
-      - traefik.http.routers.qb.rule=Host(`qb.homeworld.lan`)
+      - traefik.docker.network=proxy
+      # HTTPS Router Configuration
+      - traefik.http.routers.qb.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.qb.tls=true
       - traefik.http.routers.qb.entrypoints=websecure
       - traefik.http.routers.qb.tls.certresolver=stepca
+      # Service Configuration
       - traefik.http.services.qb.loadbalancer.server.port=8080
 
     dns_search: proxy

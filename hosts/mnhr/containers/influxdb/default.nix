@@ -1,38 +1,50 @@
-{pkgs, config, ...}: let
-    manage-influx-buckets = pkgs.writeShellScriptBin "manage-influx-buckets" ''
-      set -e
+{
+  pkgs,
+  config,
+  hostname,
+  ...
+}: let
+  domain = "influxdb.homeworld.lan";
 
-      create_bucket_if_missing() {
-        local bucket_name=$1
-        local retention=$2
+  manage-influx-buckets = pkgs.writeShellScriptBin "manage-influx-buckets" ''
+    set -e
 
-        # Check if bucket exists
-        if ! ${pkgs.influxdb2-cli}/bin/influx bucket list \
+    create_bucket_if_missing() {
+      local bucket_name=$1
+      local retention=$2
+
+      # Check if bucket exists
+      if ! ${pkgs.influxdb2-cli}/bin/influx bucket list \
+        --org HomeWorld \
+        --token "$DOCKER_INFLUXDB_INIT_ADMIN_TOKEN" | grep -q "^$bucket_name"; then
+
+        echo "Creating bucket: $bucket_name"
+        ${pkgs.influxdb2-cli}/bin/influx bucket create \
+          --name "$bucket_name" \
           --org HomeWorld \
-          --token "$DOCKER_INFLUXDB_INIT_ADMIN_TOKEN" | grep -q "^$bucket_name"; then
+          --retention "$retention" \
+          --token "$DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"
+      else
+        echo "Bucket $bucket_name already exists"
+      fi
+    }
 
-          echo "Creating bucket: $bucket_name"
-          ${pkgs.influxdb2-cli}/bin/influx bucket create \
-            --name "$bucket_name" \
-            --org HomeWorld \
-            --retention "$retention" \
-            --token "$DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"
-        else
-          echo "Bucket $bucket_name already exists"
-        fi
-      }
+    echo "Waiting for InfluxDB to be ready..."
+    until ${pkgs.curl}/bin/curl -s https://influxdb.homeworld.lan/ping > /dev/null; do
+      sleep 1
+    done
 
-      echo "Waiting for InfluxDB to be ready..."
-      until ${pkgs.curl}/bin/curl -s https://influxdb.homeworld.lan/ping > /dev/null; do
-        sleep 1
-      done
-
-      # NOTE: Additional buckets go here
-      # create_bucket_if_missing "telegraf" "30d"
-    '';
-
-
+    # NOTE: Additional buckets go here
+    # create_bucket_if_missing "telegraf" "30d"
+  '';
 in {
+  services.adguardhome.settings.filtering.rewrites = [
+    {
+      domain = domain;
+      answer = "${hostname}.lan";
+    }
+  ];
+
   sops.secrets.influx_default_password = {
     sopsFile = ../../secrets/influxdb.yaml;
     format = "yaml";
@@ -51,6 +63,10 @@ in {
   '';
 
   systemd.services.influxdb-compose = {
+    environment = {
+      INTERNAL_DOMAIN_NAME = domain;
+    };
+
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
     serviceConfig = {
       EnvironmentFile = config.sops.templates."influxdb.env".path;
@@ -65,8 +81,7 @@ in {
     };
 
     wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket" "traefik.service" "adguard-compose.service"];
-    requires = ["docker.service" "traefik.service" "adguard-compose.service"];
+    after = ["docker.service" "docker.socket" "traefik.service"];
   };
 
   systemd.services.influxdb-buckets = {
@@ -84,6 +99,3 @@ in {
     };
   };
 }
-
-
-
