@@ -1,9 +1,6 @@
-{...}: let
-  dns = "10.0.1.3";
-in {
+{...}: {
   imports = [
-    (args @ {pkgs, ...}: import ./adguard (args // {dns = dns;}))
-    (args @ {pkgs, ...}: import ./wg-easy (args // {dns = dns;}))
+    ./wg-easy
     ./immich
     ./forgejo
     ./vaultwarden

@@ -115,7 +115,7 @@ in {
                 {
                   type = "dns-stats";
                   service = "adguard";
-                  url = "http://adguard.homeworld.lan";
+                  url = "https://adguard.homeworld.lan";
                   username = "admin";
                   password = "\${ADGUARD_PASSWORD}";
                 }
@@ -158,37 +158,32 @@ in {
                     }
                     {
                       title = "AdGuard";
-                      url = "http://adguard.homeworld.lan";
+                      url = "https://adguard.homeworld.lan";
                       icon = "/assets/svg/adguard-home.svg";
                     }
                     {
                       title = "Wireguard UI";
                       url = "https://wg.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/wireguard.svg";
                     }
                     {
                       title = "NodeRed";
                       url = "https://nodered.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/node-red.svg";
                     }
                     {
                       title = "Grafana";
                       url = "https://grafana.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/grafana.svg";
                     }
                     {
                       title = "Influxdb";
                       url = "https://influxdb.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/influxdb.svg";
                     }
                     {
                       title = "MinIO";
                       url = "https://console-minio.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/minio-light.svg";
                     }
                     {
@@ -211,19 +206,16 @@ in {
                     {
                       title = "Audiobookshelf";
                       url = "https://abs.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/audiobookshelf.svg";
                     }
                     {
                       title = "Calibre Web";
                       url = "https://books.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/calibre-web.svg";
                     }
                     {
                       title = "qBittorrent";
                       url = "https://qb.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/qbittorrent.svg";
                     }
                   ];
@@ -236,19 +228,16 @@ in {
                     {
                       title = "Paperless NGX";
                       url = "https://paperless.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/paperless-ngx.svg";
                     }
                     {
                       title = "Syncthing";
                       url = "https://syncthing.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/syncthing.svg";
                     }
                     {
                       title = "Immich";
                       url = "https://immich.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/immich.svg";
                     }
                   ];
@@ -261,55 +250,46 @@ in {
                     {
                       title = "OpenWebUI (Ollama)";
                       url = "https://owu.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/ollama.svg";
                     }
                     {
                       title = "DeepResearch";
                       url = "https://research.homeworld.lan";
-                      allow-insecure = true;
                       icon = "si:onnx";
                     }
                     {
                       title = "SearxNG";
                       url = "https://searxng.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/searxng.svg";
                     }
                     {
                       title = "Vaultwarden";
                       url = "https://vw.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/vaultwarden.svg";
                     }
                     {
                       title = "Forgejo";
                       url = "https://forgejo.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/forgejo.svg";
                     }
                     {
                       title = "Linkding";
                       url = "https://linkding.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/linkding.svg";
                     }
                     {
                       title = "Variance Web";
                       url = "https://va.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/matrix.svg";
                     }
                     {
                       title = "Grocy";
                       url = "https://grocy.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/grocy.svg";
                     }
                     {
                       title = "Kitchen Own";
                       url = "https://kitchenowl.homeworld.lan";
-                      allow-insecure = true;
                       icon = "/assets/svg/kitchenowl.svg";
                     }
                   ];

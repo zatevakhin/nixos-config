@@ -72,6 +72,13 @@
     dynamicConfigOptions = {
       http = {
         routers = {
+          adguard = {
+            rule = "Host(`adguard.homeworld.lan`)";
+            service = "adguard";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           glance = {
             rule = "Host(`glance.homeworld.lan`)";
             service = "glance";
@@ -120,6 +127,14 @@
               certResolver = "stepca";
             };
           };
+        };
+
+        services.adguard = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.adguardhome.port}";
+            }
+          ];
         };
 
         services.glance = {

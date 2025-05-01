@@ -8,7 +8,7 @@ services:
       - PASSWORD_HASH
       - LANG=en
       - UI_TRAFFIC_STATS=true
-      - WG_DEFAULT_DNS=${DOCKER_DNS_IP}
+      - WG_DEFAULT_DNS=10.0.1.1 # host IP in proxy network (TODO: make configurable)
       - WG_DEFAULT_ADDRESS=10.8.0.x
       - UI_CHART_TYPE=1
     volumes:
