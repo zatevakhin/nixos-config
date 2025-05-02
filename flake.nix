@@ -108,23 +108,6 @@
       ];
     };
 
-    nixosConfigurations.raider = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        inherit pkgs-unstable;
-        username = "zatevakhin";
-        hostname = "raider";
-      };
-
-      modules = [
-        ./hosts/raider/configuration.nix
-
-        inputs.disko.nixosModules.disko
-        inputs.sops-nix.nixosModules.sops
-        inputs.home-manager.nixosModules.default
-      ];
-    };
-
     nixosConfigurations.nuke = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
