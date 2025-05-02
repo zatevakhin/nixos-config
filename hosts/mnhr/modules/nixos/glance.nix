@@ -303,6 +303,53 @@ in {
                     }
                   ];
                 }
+                {
+                  type = "monitor";
+                  cache = "1m";
+                  title = "Arr Stack";
+                  sites = [
+                    {
+                      title = "Radarr";
+                      url = "https://radarr.homeworld.lan";
+                      icon = "/assets/svg/radarr.svg";
+                    }
+                    {
+                      title = "Sonarr";
+                      url = "https://sonarr.homeworld.lan";
+                      icon = "/assets/svg/sonarr.svg";
+                    }
+                    {
+                      title = "Bazarr";
+                      url = "https://bazarr.homeworld.lan";
+                      icon = "/assets/svg/bazarr.svg";
+                    }
+                    {
+                      title = "Lidarr";
+                      url = "https://lidarr.homeworld.lan";
+                      icon = "/assets/svg/lidarr.svg";
+                    }
+                    {
+                      title = "Readarr";
+                      url = "https://readarr.homeworld.lan";
+                      icon = "/assets/svg/readarr.svg";
+                    }
+                    {
+                      title = "Prowlarr";
+                      url = "https://prowlarr.homeworld.lan";
+                      icon = "/assets/svg/prowlarr.svg";
+                    }
+                    {
+                      title = "Jellyseerr";
+                      url = "https://jellyseerr.homeworld.lan";
+                      icon = "/assets/svg/jellyseerr.svg";
+                    }
+                    {
+                      title = "qBittorrent";
+                      url = "https://qbittorrent.homeworld.lan";
+                      icon = "/assets/svg/qbittorrent.svg";
+                    }
+                  ];
+                }
               ];
             }
             {

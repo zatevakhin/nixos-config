@@ -7,7 +7,7 @@
     ./linkding
     ./variance
     ./searxng
-    ./qbittorrent
+    #./qbittorrent
     ./deep-research
     ./audiobookshelf
 
@@ -25,6 +25,7 @@
     ./nodered
     ./open-webui
     ./stump
+    ./arr-stack
 
     # Services that don't need an IP
     ./watchtower
