@@ -87,7 +87,7 @@
           }
           {
             domain = "jellyfin.homeworld.lan";
-            answer = "nuke.lan";
+            answer = "klbr.lan";
           }
           {
             domain = "paperless.homeworld.lan";
@@ -102,7 +102,7 @@
             answer = "192.168.1.224";
           }
           {
-            domain = "nuke.lan";
+            domain = "klbr.lan";
             answer = "192.168.1.102";
           }
           {

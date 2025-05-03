@@ -108,16 +108,17 @@
       ];
     };
 
-    nixosConfigurations.nuke = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
         username = "zatevakhin";
-        hostname = "nuke";
+        hostname = "klbr";
       };
 
       modules = [
-        ./hosts/nuke/configuration.nix
+        ./hosts/klbr/configuration.nix
 
+        inputs.disko.nixosModules.disko
         inputs.sops-nix.nixosModules.sops
       ];
     };
