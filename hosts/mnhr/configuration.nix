@@ -21,8 +21,10 @@ in {
     ./modules/nixos/glance.nix
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
+    ./modules/nixos/jellyseerr.nix
     #./modules/nixos/grafana.nix
     ./modules/nixos/minio.nix
+    ./modules/nixos/nfs.nix
     # All services in docker containers
     ./containers
   ];

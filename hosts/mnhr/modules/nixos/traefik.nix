@@ -87,6 +87,13 @@
             tls.certResolver = "stepca";
           };
 
+          jellyseerr = {
+            rule = "Host(`jellyseerr.homeworld.lan`)";
+            service = "jellyseerr";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           # HACK: Until OpenWebUI don't support self signed certificates for ollama URL.
           ollama-http = {
             rule = "Host(`ollama.homeworld.lan`)";
@@ -131,6 +138,14 @@
           loadBalancer.servers = [
             {
               url = "http://localhost:${builtins.toString config.services.glance.settings.server.port}";
+            }
+          ];
+        };
+
+        services.jellyseerr = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.jellyseerr.port}";
             }
           ];
         };

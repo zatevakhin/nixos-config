@@ -11,7 +11,6 @@
   lidarr_domain = "lidarr.${domain}";
   readarr_domain = "readarr.${domain}";
   prowlarr_domain = "prowlarr.${domain}";
-  jellyseerr_domain = "jellyseerr.${domain}";
   qbittorrent_domain = "qbittorrent.${domain}";
 in {
   services.adguardhome.settings.filtering.rewrites = [
@@ -40,10 +39,6 @@ in {
       answer = "${hostname}.lan";
     }
     {
-      domain = "${jellyseerr_domain}";
-      answer = "${hostname}.lan";
-    }
-    {
       domain = "${qbittorrent_domain}";
       answer = "${hostname}.lan";
     }
@@ -64,7 +59,6 @@ in {
       LIDARR_DOMAIN_NAME = lidarr_domain;
       READARR_DOMAIN_NAME = readarr_domain;
       PROWLARR_DOMAIN_NAME = prowlarr_domain;
-      JELLYSEERR_DOMAIN_NAME = jellyseerr_domain;
       QBITTORRENT_DOMAIN_NAME = qbittorrent_domain;
     };
 

@@ -107,23 +107,6 @@ services:
     depends_on:
       - protonwire2
 
-  jellyseerr:
-    container_name: jellyseerr
-    image: ghcr.io/hotio/jellyseerr
-    restart: unless-stopped
-    #ports:
-      #- 5055:5055
-    environment:
-      - PUID=1000
-      - PGID=100
-      - TZ=Europe/Lisbon
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - jellyseerr-config:/config
-    network_mode: service:protonwire2
-    depends_on:
-      - protonwire2
-
   qbittorrent-nox:
     image: qbittorrentofficial/qbittorrent-nox:latest
     restart: unless-stopped
@@ -215,13 +198,6 @@ services:
       - traefik.http.routers.prowlarr.tls.certresolver=stepca
       - traefik.http.routers.prowlarr.service=prowlarr
       - traefik.http.services.prowlarr.loadbalancer.server.port=9696
-      # # Jellyseerr
-      - traefik.http.routers.jellyseerr.rule=Host(`${JELLYSEERR_DOMAIN_NAME}`)
-      - traefik.http.routers.jellyseerr.tls=true
-      - traefik.http.routers.jellyseerr.entrypoints=websecure
-      - traefik.http.routers.jellyseerr.tls.certresolver=stepca
-      - traefik.http.routers.jellyseerr.service=jellyseerr
-      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
       # # qBittorrent
       - traefik.http.routers.qbittorrent.rule=Host(`${QBITTORRENT_DOMAIN_NAME}`)
       - traefik.http.routers.qbittorrent.tls=true
