@@ -1,23 +1,33 @@
 ---
 services:
   jellyfin:
-    image: jellyfin/jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Europe/Lisbon
     privileged: true
     labels:
-      - traefik.http.routers.jellyfin.rule=Host(`jellyfin.homeworld.lan`)
-      - traefik.http.services.jellyfin.loadbalancer.server.port=8096
+      - traefik.enable=true
+      # HTTP Router Configuration
+      - traefik.http.routers.jellyfin-http.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.jellyfin-http.entrypoints=web
+      - traefik.http.routers.jellyfin-http.service=jellyfin-service
+      # HTTPS Router Configuration
+      - traefik.http.routers.jellyfin.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.jellyfin.tls=true
+      - traefik.http.routers.jellyfin.entrypoints=websecure
+      - traefik.http.routers.jellyfin.tls.certresolver=stepca
+      - traefik.http.routers.jellyfin.service=jellyfin-service
+      # Service Configuration
+      - traefik.http.services.jellyfin-service.loadbalancer.server.port=8096
 
     volumes:
-      - "/mnt/storage/jellyfin/config/:/config"
-      - "/mnt/storage/jellyfin/cache/:/cache/"
-      - "/mnt/storage/jellyfin/media/:/media/"
+      - jellyfin-config:/config
+      - /mnt/nfs/media/:/media
     restart: unless-stopped
-    networks:
-      proxy:
-        ipv4_address: 10.0.1.5
 
-networks:
-  proxy:
-    external: true
+volumes:
+  jellyfin-config:
 

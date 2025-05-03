@@ -5,20 +5,19 @@
   username,
   hostname,
   ...
-}: let
-  me = import ./secrets/user.nix;
-in {
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-
+    # Shared modules
     ../../modules/nixos/base.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
-
+    ../../modules/nixos/zsh-mini.nix
+    # Machine specific modules
+    ./modules/nixos/traefik.nix
+    ./modules/nixos/nfs.nix
     # <containers>
-    # TODO: configure `traefik` service in nix instead of docker.
-    ./containers/traefik
     ./containers/jellyfin
     # </containers>
   ];
@@ -28,56 +27,74 @@ in {
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
-  sops.secrets."user/password/hashed" = {};
+  sops.secrets.user-password-hashed.key = "user/password/hashed";
+  sops.secrets.ssh-authorized-key-baseship.key = "ssh/authorized/baseship";
+  sops.secrets.ssh-authorized-key-archive.key = "ssh/authorized/archive";
   # </sops>
 
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
+  # <certificates>
+  security.pki.certificateFiles = [
+    (pkgs.fetchurl {
+      url = "https://ca.homeworld.lan:8443/roots.pem";
+      hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+      curlOpts = "--insecure";
+    })
   ];
+  # </certificates>
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  # <kernel>
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # </kernel>
 
+  # <networking>
   networking.hostName = hostname;
-
   networking.firewall.enable = lib.mkForce false;
+  # </networking>
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
 
+  # Users are immutable and managed by NixOS
+  users.mutableUsers = false;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     useDefaultShell = true;
-    hashedPasswordFile = config.sops.secrets."user/password/hashed".path;
-    openssh.authorizedKeys.keys = [
-      me.ssh.authorized.archive
-      me.ssh.authorized.baseship
-    ];
+    hashedPasswordFile = config.sops.secrets.user-password-hashed.path;
     isNormalUser = true;
     description = "Ivan Zatevakhin";
-    extraGroups = ["wheel" "docker"];
-    packages = with pkgs; [];
+    extraGroups = ["wheel"];
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    me.ssh.authorized.baseship
-  ];
+  # HACK: What and Why? Because I can't do something like this with sops-nix.
+  # ```nix
+  # users.users.root.openssh.authorizedKeys.keyFiles = [
+  #   sops.secrets.ssh-authorized-key-archive.path
+  # ];
+  # ```
+  # <hack>
+  services.openssh.authorizedKeysInHomedir = lib.mkForce false;
 
-  # List packages installed in system profile. To search, run:
-  environment.systemPackages = with pkgs; [];
+  sops.templates."ssh-authorized-keys-for-${username}".content = ''
+    ${config.sops.placeholder.ssh-authorized-key-baseship}
+    ${config.sops.placeholder.ssh-authorized-key-archive}
+  '';
 
-  nixpkgs.config.permittedInsecurePackages = [];
+  environment.etc."ssh-authorized-keys-for-${username}" = {
+    target = "ssh/authorized_keys.d/${username}";
+    source = config.sops.templates."ssh-authorized-keys-for-${username}".path;
+    mode = "0444"; # NOTE: or ${username} will not be able to enter trough ssh.
+  };
 
-  environment.sessionVariables = {};
+  sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".content = ''
+    ${config.sops.placeholder.ssh-authorized-key-baseship}
+  '';
 
-  services.locate.enable = true;
-  services.locate.interval = "daily";
-
-  boot.initrd.kernelModules = [];
+  environment.etc."ssh-authorized-keys-for-${config.users.users.root.name}" = {
+    target = "ssh/authorized_keys.d/${config.users.users.root.name}";
+    source = config.sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".path;
+  };
+  # </hack>
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
