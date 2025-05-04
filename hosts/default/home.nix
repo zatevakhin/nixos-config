@@ -14,7 +14,7 @@
     ./modules/home/emote.nix
     ./modules/home/dconf.nix
     ./modules/home/ghostty.nix
-    ./modules/home/extensions.nix
+    ./modules/home/extensions
     ./modules/home/associations.nix
     ./modules/home/helix.nix
   ];
