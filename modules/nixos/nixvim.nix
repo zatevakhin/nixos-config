@@ -97,19 +97,21 @@
 
     keymaps = [
       {
-        action = "<cmd>redo<CR>";
-        key = "r";
-        mode = "n";
+        action = "<Esc>";
+        key = "jj";
+        mode = "i";
         options = {
-          desc = "Redo";
+          desc = "Exit Insert mode with jj (alternative to <Esc>)";
+          noremap = false;
         };
       }
       {
-        action = "<cmd>redo<CR>";
-        key = "<C-r>";
+        action = "<Esc>";
+        key = "jk";
         mode = "i";
         options = {
-          desc = "Redo in I mode";
+          desc = "Exit Insert mode with jk (alternative to <Esc>)";
+          noremap = false;
         };
       }
       {
@@ -599,5 +601,12 @@
     # plugins.treesitter-refactor.highlightDefinitions.enable = true;
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>
+    plugins.hardtime = {
+      enable = true;
+    };
+
+    plugins.tmux-navigator = {
+      enable = true;
+    };
   };
 }
