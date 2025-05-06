@@ -11,11 +11,8 @@ hosts/falke/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 hosts/nuke/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/nuke/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/archive/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/archive/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/archive/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
-
-hosts/raider/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/arar/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+hosts/arar/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/mnhr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt

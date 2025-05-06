@@ -123,15 +123,15 @@
       ];
     };
 
-    nixosConfigurations.archive = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.arar = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
         username = "zatevakhin";
-        hostname = "archive";
+        hostname = "arar";
       };
 
       modules = [
-        ./hosts/archive/configuration.nix
+        ./hosts/arar/configuration.nix
 
         inputs.sops-nix.nixosModules.sops
       ];

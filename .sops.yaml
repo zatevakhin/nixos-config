@@ -4,7 +4,7 @@ keys:
   - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
   - &default_machine age13z0lq6rucrmmkntg6ww5ewtxsczg0q878ttslqzx0jwj5qxajvjsmldjyr
   - &klbr_machine age1zwzf8qudsj2g9xf2l84pmh45lcyck05fev99h6zc5j5pgsnlxqzqm8r4cl
-  - &archive_ssh age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
+  - &arar_machine age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
   - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
   - &mnhr_machine age1ustkwg4dht8hydkev74cdvp765aundsggutq66ndm5nmckuddqnqlcrv7v
   - &eulr_machine age17r8y3a9y0v6zcxzcstg3ypnq4skzc205umvsk63yrhuzw8z4zayqqeatcw
@@ -19,11 +19,11 @@ creation_rules:
     - age:
       - *default_ssh
       - *klbr_machine
-  - path_regex: hosts/archive/secrets/[^/]+\.(yaml)$
+  - path_regex: hosts/arar/secrets/[^/]+\.(yaml)$
     key_groups:
     - age:
       - *default_ssh
-      - *archive_ssh
+      - *arar_machine
   - path_regex: hosts/falke/secrets/[^/]+\.(yaml)$
     key_groups:
     - age:

@@ -3,7 +3,7 @@ http:
     syncthing:
       loadBalancer:
         servers:
-        - url: "http://archive.lan:8384/"
+        - url: "http://arar.lan:8384/"
   routers:
     to-syncthing:
       rule: "Host(`syncthing.homeworld.lan`)"

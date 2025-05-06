@@ -79,7 +79,7 @@
           }
           {
             domain = "books.homeworld.lan";
-            answer = "archive.lan";
+            answer = "arar.lan";
           }
           {
             domain = "mnhr.lan";
@@ -91,14 +91,14 @@
           }
           {
             domain = "paperless.homeworld.lan";
-            answer = "archive.lan";
+            answer = "arar.lan";
           }
           {
             domain = "syncthing.homeworld.lan";
-            answer = "archive.lan";
+            answer = "arar.lan";
           }
           {
-            domain = "archive.lan";
+            domain = "arar.lan";
             answer = "192.168.1.224";
           }
           {
