@@ -164,6 +164,15 @@
               xattr = "sa";
             };
           };
+          "syncthing" = {
+            type = "zfs_fs";
+            mountpoint = "/storage/syncthing";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
           "docker" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/docker";

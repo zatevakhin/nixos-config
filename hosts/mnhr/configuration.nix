@@ -25,6 +25,7 @@ in {
     #./modules/nixos/grafana.nix
     ./modules/nixos/minio.nix
     ./modules/nixos/nfs.nix
+    ./modules/nixos/syncthing.nix
     # All services in docker containers
     ./containers
   ];
