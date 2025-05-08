@@ -75,15 +75,17 @@
   # <hack>
   services.openssh.authorizedKeysInHomedir = lib.mkForce false;
 
-  sops.templates."ssh-authorized-keys-for-${username}".content = ''
-    ${config.sops.placeholder.ssh-authorized-key-baseship}
-    ${config.sops.placeholder.ssh-authorized-key-archive}
-  '';
+  sops.templates."ssh-authorized-keys-for-${username}" = {
+    content = ''
+      ${config.sops.placeholder.ssh-authorized-key-baseship}
+      ${config.sops.placeholder.ssh-authorized-key-archive}
+    '';
+    owner = username; # NOTE: or ${username} will not be able to enter trough ssh.
+  };
 
   environment.etc."ssh-authorized-keys-for-${username}" = {
     target = "ssh/authorized_keys.d/${username}";
     source = config.sops.templates."ssh-authorized-keys-for-${username}".path;
-    mode = "0444"; # NOTE: or ${username} will not be able to enter trough ssh.
   };
 
   sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".content = ''
