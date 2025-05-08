@@ -3,7 +3,7 @@
   username,
   ...
 }: let
-  cfg = import ../../secrets/syncthing.nix;
+  syncthing = import ../../secrets/syncthing.nix;
 in {
   sops.secrets.syncthing_private_key = {
     sopsFile = ../../secrets/syncthing.yaml;
@@ -27,35 +27,41 @@ in {
       user = username;
       dataDir = "/home/${username}/Documents";
       configDir = "/home/${username}/.config/syncthing";
+
       overrideDevices = true;
       overrideFolders = true;
+
       settings = {
         gui = {
-          user = cfg.gui.user;
-          password = cfg.gui.password;
+          user = syncthing.gui.user;
+          password = syncthing.gui.password;
         };
 
-        devices = {
-          "archive.lan" = {id = cfg.devices.archive.id;};
+        options = {
+          urAccepted = -1;
+          crashReportingEnabled = false;
         };
+
+        devices = syncthing.devices;
 
         folders = {
-          "Ivan's Obsidian" = {
-            id = cfg.folders.obsidian.id;
+          "${syncthing.folders.obsidian.id}" = {
+            label = "Ivan's Obsidian";
+            id = syncthing.folders.obsidian.id;
             path = "/home/${username}/Documents/Obsidian";
-            devices = ["archive.lan"];
+            devices = [syncthing.device.arar syncthing.device.mnhr];
           };
 
-          "Ivan's Private" = {
-            id = cfg.folders.private.id;
+          "${syncthing.folders.private.id}" = {
+            label = "Ivan's Private";
             path = "/home/${username}/Documents/Private";
-            devices = ["archive.lan"];
+            devices = [syncthing.device.arar syncthing.device.mnhr];
           };
 
-          "Ivan's Books" = {
-            id = cfg.folders.books.id;
+          "${syncthing.folders.books.id}" = {
+            label = "Ivan's Books";
             path = "/home/${username}/Documents/Books";
-            devices = ["archive.lan"];
+            devices = [syncthing.device.arar syncthing.device.mnhr];
           };
         };
       };
