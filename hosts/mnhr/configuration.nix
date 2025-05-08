@@ -108,8 +108,8 @@ in {
   # </ssh-over-tor>
 
   # <docker>
-  # BUG: Pinned docker version because v27.5.1 is dies randomly.
-  virtualisation.docker.package = pkgs.docker_26;
+  # BUG: Pinned docker versions because (v26.1.5, v27.5.1) are die randomly.
+  virtualisation.docker.package = pkgs.docker_28;
   # </docker>
 
   # List packages installed in system profile. To search, run:
