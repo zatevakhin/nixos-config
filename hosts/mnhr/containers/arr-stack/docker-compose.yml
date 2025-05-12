@@ -3,7 +3,7 @@ services:
   radarr:
     container_name: radarr
     image: ghcr.io/hotio/radarr:latest
-    restart: unless-stopped
+    restart: no
     # ports:
     #   - 7878:7878
     environment:
@@ -21,7 +21,7 @@ services:
   sonarr:
     container_name: sonarr
     image: ghcr.io/hotio/sonarr:latest
-    restart: unless-stopped
+    restart: no
     #ports:
       #- 8989:8989
     environment:
@@ -39,7 +39,7 @@ services:
   bazarr:
     container_name: bazarr
     image: ghcr.io/hotio/bazarr:latest
-    restart: unless-stopped
+    restart: no
     #ports:
       #- 6767:6767
     environment:
@@ -57,7 +57,7 @@ services:
   lidarr:
     container_name: lidarr
     image: ghcr.io/hotio/lidarr:latest
-    restart: unless-stopped
+    restart: no
     #ports:
       #- 8686:8686
     environment:
@@ -75,7 +75,7 @@ services:
   readarr:
     container_name: readarr
     image: ghcr.io/hotio/readarr:latest
-    restart: unless-stopped
+    restart: no
     #ports:
       #- 8787:8787
     environment:
@@ -93,7 +93,7 @@ services:
   prowlarr:
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
-    restart: unless-stopped
+    restart: no
     #ports:
       #- 9696:9696
     environment:
@@ -109,7 +109,7 @@ services:
 
   qbittorrent-nox:
     image: qbittorrentofficial/qbittorrent-nox:latest
-    restart: unless-stopped
+    restart: no
     container_name: qbittorrent
     read_only: true
     tmpfs:
@@ -128,7 +128,7 @@ services:
   protonwire2:
     container_name: protonwire2
     image: ghcr.io/tprasadtp/protonwire:latest
-    restart: unless-stopped
+    restart: no
     environment:
       # Quote this value as server name can contain '#'.
       PROTONVPN_SERVER: "UA#44"

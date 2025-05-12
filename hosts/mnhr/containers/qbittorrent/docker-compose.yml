@@ -2,7 +2,7 @@
 services:
   qbittorrent-nox:
     image: qbittorrentofficial/qbittorrent-nox:latest
-    restart: unless-stopped
+    restart: no
     container_name: qbittorrent
     read_only: true
     tmpfs:
@@ -21,7 +21,7 @@ services:
   protonwire:
     container_name: protonwire
     image: ghcr.io/tprasadtp/protonwire:latest
-    restart: unless-stopped
+    restart: no
     environment:
       # Quote this value as server name can contain '#'.
       PROTONVPN_SERVER: "UA#44"

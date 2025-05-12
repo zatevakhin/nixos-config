@@ -62,7 +62,16 @@ in {
       QBITTORRENT_DOMAIN_NAME = qbittorrent_domain;
     };
 
-    script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
+      ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
+      StandardOutput = "syslog";
+      Restart = "on-failure";
+      RestartSec = 5;
+      StartLimitIntervalSec = 60;
+      StartLimitBurst = 3;
+    };
 
     wantedBy = ["multi-user.target"];
     after = ["docker.service" "docker.socket" "traefik.service"];

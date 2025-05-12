@@ -7,7 +7,7 @@ services:
       - OLLAMA_BASE_URL="http://${INTERNAL_DOMAIN_NAME}"
     volumes:
       - open-webui:/app/backend/data
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

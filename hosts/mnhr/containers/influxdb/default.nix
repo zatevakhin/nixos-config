@@ -67,9 +67,16 @@ in {
       INTERNAL_DOMAIN_NAME = domain;
     };
 
-    script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
     serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
+      ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
       EnvironmentFile = config.sops.templates."influxdb.env".path;
+      StandardOutput = "syslog";
+      Restart = "on-failure";
+      RestartSec = 5;
+      StartLimitIntervalSec = 60;
+      StartLimitBurst = 3;
     };
 
     environment = {

@@ -15,7 +15,7 @@ services:
       - traefik.http.routers.linkding.tls.certresolver=stepca
       # Service Configuration
       - traefik.http.services.linkding.loadbalancer.server.port=9090
-    restart: unless-stopped
+    restart: no
     environment:
       - LD_SUPERUSER_NAME
       - LD_SUPERUSER_PASSWORD

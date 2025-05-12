@@ -12,7 +12,7 @@ services:
       # - "1935:1935"
       # - "1936:1936"
       # - "6000:6000/udp"
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

@@ -20,7 +20,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
-      # HTTPS Router Configuration
       - traefik.http.routers.abs.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.abs.tls=true
       - traefik.http.routers.abs.entrypoints=websecure
@@ -33,7 +32,7 @@ services:
       # Apply the middleware
       - traefik.http.routers.abs.middlewares=abs-websocket
 
-    restart: unless-stopped
+    restart: no
 
     dns_search: proxy
     networks:

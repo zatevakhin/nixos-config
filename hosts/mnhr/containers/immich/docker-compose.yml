@@ -43,7 +43,7 @@ services:
     depends_on:
       - redis
       - database
-    restart: always
+    restart: no
     healthcheck:
       disable: false
 
@@ -63,7 +63,7 @@ services:
     #   service: cpu # set to one of [armnn, cuda, openvino, openvino-wsl] for accelerated inference - use the `-wsl` version for WSL2 where applicable
     volumes:
       - model-cache:/cache
-    restart: always
+    restart: no
     healthcheck:
       disable: false
 
@@ -74,7 +74,7 @@ services:
       immich:
     healthcheck:
       test: redis-cli ping || exit 1
-    restart: always
+    restart: no
 
   database:
     container_name: immich_postgres
@@ -110,7 +110,7 @@ services:
         '-c',
         'wal_compression=on',
       ]
-    restart: always
+    restart: no
 
 volumes:
   model-cache:

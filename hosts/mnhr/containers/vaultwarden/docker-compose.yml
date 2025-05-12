@@ -2,7 +2,7 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    restart: unless-stopped
+    restart: no
     environment:
       DOMAIN: "https://${INTERNAL_DOMAIN_NAME}"
       ADMIN_TOKEN:

@@ -7,7 +7,7 @@ services:
       - JWT_SECRET_KEY=NOPE
     volumes:
       - kitchenowl-data:/data
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

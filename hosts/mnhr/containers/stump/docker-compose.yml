@@ -9,7 +9,7 @@ services:
     volumes:
       - stump-data:/data
       - stump-config:/config
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

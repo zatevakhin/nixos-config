@@ -3,7 +3,7 @@ services:
   deep-research:
     image: anotia/deep-research-web:latest
     container_name: deep-research
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

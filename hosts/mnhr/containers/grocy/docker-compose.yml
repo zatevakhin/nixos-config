@@ -9,7 +9,7 @@ services:
       - PGID=100
     volumes:
       - grocy-data:/config
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

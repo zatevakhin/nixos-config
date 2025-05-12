@@ -16,7 +16,7 @@ services:
       - NTFY_ATTACHMENT_CACHE_DIR=/var/lib/ntfy/attachments
     volumes:
       - data:/var/lib/ntfy
-    restart: unless-stopped
+    restart: no
     dns_search: proxy
     networks:
       proxy:

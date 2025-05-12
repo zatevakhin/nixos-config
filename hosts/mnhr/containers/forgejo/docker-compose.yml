@@ -6,7 +6,7 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=100
-    restart: always
+    restart: no
     volumes:
       - forgejo-data:/data
       - /etc/timezone:/etc/timezone:ro

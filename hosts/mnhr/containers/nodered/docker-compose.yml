@@ -15,7 +15,7 @@ services:
       - NODE_RED_SETTINGS_JS
       - NODE_RED_DOCKERFILE
     command: ["--settings", "/app/settings.js"]
-    restart: unless-stopped
+    restart: no
     volumes:
       - "${NODE_RED_SETTINGS_JS}:/app/settings.js"
       - "nodered-data:/data"
