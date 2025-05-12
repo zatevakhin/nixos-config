@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./fonts.nix
+    ./grayjay.nix
     ../../../../modules/nixos/xserver.nix
     ../../../../modules/nixos/opengl.nix
     ../../../../modules/nixos/audio.nix
