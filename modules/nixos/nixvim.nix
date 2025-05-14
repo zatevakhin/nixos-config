@@ -115,30 +115,6 @@
         };
       }
       {
-        action = "<cmd>vsplit<CR>";
-        key = "<leader>vv";
-        mode = "n";
-        options = {
-          desc = "Split vertically";
-        };
-      }
-      {
-        action = "<cmd>split<CR>";
-        key = "<leader>ss";
-        mode = "n";
-        options = {
-          desc = "Split horizontally";
-        };
-      }
-      {
-        action = "<cmd>Neotree toggle<CR>";
-        key = "<C-b>";
-        mode = "n";
-        options = {
-          desc = "Toggle Tree View.";
-        };
-      }
-      {
         action = "<cmd>Neogit<CR>";
         key = "<C-g>";
         mode = "n";
@@ -165,8 +141,8 @@
 
       {
         action = "<cmd>Neotree focus<CR>";
-        key = "<C-f>";
-        mode = ["n" "v" "i"];
+        key = "<space>fm";
+        mode = ["n"];
         options = {
           desc = "Focus Neotree";
         };
