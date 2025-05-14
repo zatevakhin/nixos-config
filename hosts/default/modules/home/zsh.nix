@@ -39,6 +39,7 @@
       plugins = [
         {name = "tcnksm/docker-alias";}
         {name = "wfxr/forgit";}
+        {name = "jeffreytse/zsh-vi-mode";}
       ];
     };
   };
