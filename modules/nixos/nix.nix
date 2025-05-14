@@ -3,15 +3,15 @@
     # NOTE: Use one (programs.nh.clean.enable or nix.gc.automatic) to avoid conflict.
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+      dates = "monthly";
+      options = "--delete-older-than 30d";
     };
 
     package = pkgs.lix;
 
     optimise = {
       automatic = true;
-      dates = ["weekly"];
+      dates = ["monthly"];
     };
 
     settings = {
