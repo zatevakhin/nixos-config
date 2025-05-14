@@ -1,0 +1,24 @@
+---
+services:
+  comfyui:
+    container_name: comfyui
+    image: yanwk/comfyui-boot:latest
+    pull_policy: always
+    ports:
+      - 8188:8188
+    restart: unless-stopped
+    environment:
+      - CLI_ARGS
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: cdi
+            capabilities: [gpu]
+            device_ids:
+            - nvidia.com/gpu=all
+    volumes:
+      - "comfyui-data:/home/runner"
+
+volumes:
+  comfyui-data:

@@ -106,6 +106,12 @@
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
+          comfyui = {
+            rule = "Host(`comfyui.homeworld.lan`)";
+            service = "comfyui";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
           grafana = {
             rule = "Host(`${config.services.grafana.settings.server.domain}`)";
             service = "grafana";
@@ -154,6 +160,13 @@
           loadBalancer.servers = [
             {
               url = "http://falke.lan:11434";
+            }
+          ];
+        };
+        services.comfyui = {
+          loadBalancer.servers = [
+            {
+              url = "http://falke.lan:8188";
             }
           ];
         };

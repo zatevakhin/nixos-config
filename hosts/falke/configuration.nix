@@ -26,6 +26,7 @@ in {
     ../../modules/nixos/nixvim.nix
     ../../modules/nixos/tmux.nix
     ../../modules/docker/ollama
+    ../../modules/docker/comfyui
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix

@@ -118,6 +118,10 @@
             answer = "mnhr.lan";
           }
           {
+            domain = "comfyui.homeworld.lan";
+            answer = "mnhr.lan";
+          }
+          {
             domain = "lstr.lan";
             answer = "192.168.1.229";
           }
