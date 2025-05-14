@@ -2,6 +2,7 @@
   imports = [
     ./nix.nix
     ./i18n.nix
+    ./sudo.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -18,7 +19,6 @@
     sops
 
     # utilities
-    sudo
     file
     man-pages
     rename
