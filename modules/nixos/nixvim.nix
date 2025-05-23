@@ -578,7 +578,7 @@
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>
     plugins.hardtime = {
-      enable = true;
+      enable = false;
     };
 
     plugins.tmux-navigator = {
