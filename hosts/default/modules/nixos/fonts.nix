@@ -34,10 +34,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      fira-code
-      fira-code-symbols
-      nerdfonts
-      fira-code-nerdfont
+      nerd-fonts.fira-code
       source-han-sans
       source-han-mono
       source-han-serif

@@ -3,7 +3,7 @@
   # https://github.com/ghostty-org/ghostty/discussions/2701
   # https://ghostty.org/docs/help/terminfo
   # https://gist.github.com/alexjsteffen/867c9688be84de4acacbbf18afe7dab1
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
   '';
 
   programs.ghostty = {

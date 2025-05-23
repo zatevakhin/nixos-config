@@ -8,7 +8,7 @@
     enableCompletion = true;
     autocd = true;
 
-    initExtra = ''
+    initContent = ''
       eval "$(${pkgs.micromamba}/bin/micromamba shell hook --shell zsh)"
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
     '';

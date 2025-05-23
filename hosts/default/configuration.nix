@@ -41,7 +41,6 @@ in {
     ./modules/nixos/telegraf.nix
     ./modules/nixos/stylix.nix
     # overlays
-    ../../modules/overlays/open-interpreter.nix
   ];
 
   # <sops>

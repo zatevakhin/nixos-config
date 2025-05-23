@@ -88,7 +88,7 @@
       };
     };
 
-    diagnostics = {
+    diagnostic.settings = {
       virtual_lines = {
         only_current_line = true;
       };
@@ -407,13 +407,14 @@
     plugins.image = {
       # BUG: Disabled due to markdown rendered incorrectly with images.
       enable = false;
-      extraOptions = {
+      settings = {
         markdown = {
           clear_in_insert_mode = true;
         };
+
+        tmux_show_only_in_active_window = true;
+        window_overlap_clear_enabled = true;
       };
-      tmuxShowOnlyInActiveWindow = true;
-      windowOverlapClearEnabled = true;
     };
 
     colorschemes.kanagawa.enable = true;
