@@ -42,5 +42,7 @@
     "org.tenacityaudio.Tenacity"
     "net.minetest.Minetest"
     "com.github.taiko2k.tauonmb"
+    "io.github.hakuneko.HakuNeko"
+    "app.grayjay.Grayjay"
   ];
 }
