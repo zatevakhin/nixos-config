@@ -14,9 +14,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - radarr-config:/config
       - /storage/media:/data
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   sonarr:
     container_name: sonarr
@@ -32,9 +32,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - sonarr-config:/config
       - /storage/media:/data
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   bazarr:
     container_name: bazarr
@@ -50,9 +50,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - bazarr-config:/config
       - /storage/media/library:/data/library
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   lidarr:
     container_name: lidarr
@@ -68,9 +68,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - lidarr-config:/config
       - /storage/media:/data
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   readarr:
     container_name: readarr
@@ -86,9 +86,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - readarr-config:/config
       - /storage/media:/data
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   prowlarr:
     container_name: prowlarr
@@ -103,9 +103,9 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - prowlarr-config:/config
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
   qbittorrent-nox:
     image: qbittorrentofficial/qbittorrent-nox:latest
@@ -121,17 +121,20 @@ services:
     volumes:
       - qbittorrent-config:/config
       - /storage/media:/data
-    network_mode: service:protonwire2
+    network_mode: service:protonwire
     depends_on:
-      - protonwire2
+      - protonwire
 
-  protonwire2:
-    container_name: protonwire2
+  protonwire:
+    container_name: protonwire
     image: ghcr.io/tprasadtp/protonwire:latest
     restart: no
     environment:
       # Quote this value as server name can contain '#'.
-      PROTONVPN_SERVER: "UA#44"
+      # PROTONVPN_SERVER: "UA#44"
+      PROTONVPN_SERVER: "node-ua-02.protonvpn.net"
+      # https://github.com/tprasadtp/protonvpn-docker/blob/master/docs/help.md#exit-ip-mismatch-even-though-vpn-connects
+      IPCHECK_INTERVAL: "0"
       # Set this to 1 to show debug logs for issue forms.
       DEBUG: "0"
       # Set this to 0 to disable kill-switch.
