@@ -8,6 +8,7 @@
       ${pkgs.direnv}/bin/direnv hook fish | source
 
       fish_vi_key_bindings
+      set fish_greeting # disable greeting
     '';
 
     shellAliases = {
@@ -27,6 +28,7 @@
     ];
   };
 
+  programs.starship.enableZshIntegration = true;
   programs.zoxide.enableFishIntegration = true;
   programs.fzf.enableFishIntegration = true;
 }
