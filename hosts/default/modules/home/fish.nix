@@ -1,16 +1,17 @@
 {pkgs, ...}: {
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    syntaxHighlighting.enable = true;
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    autocd = true;
 
-    initContent = ''
-      eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+    generateCompletions = true;
+
+    shellInit = ''
+      ${pkgs.direnv}/bin/direnv hook fish | source
+
+      fish_vi_key_bindings
     '';
 
     shellAliases = {
+      "..." = "cd ../..";
       ls = "${pkgs.eza}/bin/eza";
       cat = "${pkgs.bat}/bin/bat";
       gcs = "${pkgs.git}/bin/git commit -S";
@@ -22,22 +23,10 @@
       glg = "${pkgs.git}/bin/git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
     };
 
-    history.size = 10000;
-
-    oh-my-zsh = {
-      enable = true;
-    };
-
-    zplug = {
-      enable = true;
-      plugins = [
-        {name = "tcnksm/docker-alias";}
-        {name = "wfxr/forgit";}
-        {name = "jeffreytse/zsh-vi-mode";}
-      ];
-    };
+    plugins = [
+    ];
   };
 
-  programs.zoxide.enableZshIntegration = true;
-  programs.fzf.enableZshIntegration = true;
+  programs.zoxide.enableFishIntegration = true;
+  programs.fzf.enableFishIntegration = true;
 }

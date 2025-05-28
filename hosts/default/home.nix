@@ -6,8 +6,11 @@
   ...
 }: {
   imports = [
-    ./modules/home/git.nix
     ./modules/home/zsh.nix
+    ./modules/home/fish.nix
+    ./modules/home/git.nix
+    ./modules/home/fzf.nix
+    ./modules/home/zoxide.nix
     ./modules/home/starship.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
@@ -56,6 +59,7 @@
   # environment.
   home.packages = with pkgs; [
     bat
+    fastfetch
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
