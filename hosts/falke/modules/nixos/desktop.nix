@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./fonts.nix
+    ../../../../modules/nixos/fonts.nix
     ../../../../modules/nixos/xserver.nix
     ../../../../modules/nixos/opengl.nix
     ../../../../modules/nixos/audio.nix
