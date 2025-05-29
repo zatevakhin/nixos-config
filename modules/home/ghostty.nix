@@ -20,6 +20,7 @@
       mouse-scroll-multiplier = 0.5;
     };
   };
+
   dconf.settings = {
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [

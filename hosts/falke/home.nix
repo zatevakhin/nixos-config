@@ -5,13 +5,19 @@
 }: {
   imports = [
     ./modules/home/git.nix
-    ./modules/home/zsh.nix
-    ./modules/home/starship.nix
     ./modules/home/flameshot.nix
     ./modules/home/copyq.nix
     ./modules/home/dconf.nix
     ./modules/home/extensions.nix
     ./modules/home/associations.nix
+
+    ../../modules/home/zsh.nix
+    ../../modules/home/fish.nix
+    ../../modules/home/fzf.nix
+    ../../modules/home/helix.nix
+    ../../modules/home/zoxide.nix
+    ../../modules/home/ghostty.nix
+    ../../modules/home/starship.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
