@@ -220,29 +220,37 @@
         src = pkgs-unstable.fetchFromGitHub {
           owner = "yetone";
           repo = "avante.nvim";
-          rev = "110ba8a21fa407e5e01ee55e87015c9cc629ac8e";
-          hash = "sha256-w1KTciZHMel1PEKJkhmqJF1od26bl8UEV2NRChk/CV8=";
+          rev = "d44db1053550acdf56f0995144dc41368573f508";
+          hash = "sha256-DsV+2xWUGvkKEAl8r4RkHHCvxK03KqVpv+JEGgE5HyE=";
         };
         nvimSkipModule = [
           "avante.providers.ollama"
           "avante.providers.vertex_claude"
           "avante.providers.azure"
           "avante.providers.copilot"
+          "avante.providers.gemini"
+          "avante.providers.vertex"
         ];
       });
 
       settings = {
-        # auto_suggestions_provider = "llama3.2:1b";
-        # behaviour = {
-        #   auto_suggestions = true;
-        # };
+        mode = "agentic";
+        behaviour = {
+          # auto_suggestions = true;
+          enable_cursor_planning_mode = true;
+        };
+
+        windows = {
+          sidebar_header.enabled = false;
+          ask.start_insert = false;
+        };
 
         hints.enabled = false;
 
         provider = "ollama";
         ollama = {
           endpoint = "http://ollama.homeworld.lan";
-          model = "deepseek-r1:8b-llama-distill-q8_0";
+          model = "qwen3:14b";
           options = {
             num_ctx = 16384;
           };
@@ -259,6 +267,30 @@
         };
 
         vendors = {
+          "qwen3:4b" = {
+            __inherited_from = "ollama";
+            model = "qwen3:4b";
+          };
+          "qwen3:8b" = {
+            __inherited_from = "ollama";
+            model = "qwen3:8b";
+          };
+          "qwen3:14b" = {
+            __inherited_from = "ollama";
+            model = "qwen3:14b";
+          };
+          "qwen3:30b-a3b" = {
+            __inherited_from = "ollama";
+            model = "qwen3:30b-a3b";
+          };
+          "qwen3:32b" = {
+            __inherited_from = "ollama";
+            model = "qwen3:32b";
+          };
+          "devstral:24b" = {
+            __inherited_from = "ollama";
+            model = "devstral:24b";
+          };
           "llama3.2:1b" = {
             __inherited_from = "ollama";
             model = "llama3.2:1b";
