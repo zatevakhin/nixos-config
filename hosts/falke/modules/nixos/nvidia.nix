@@ -36,7 +36,15 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    # Package Override
+    package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs {
+      src = pkgs.fetchurl {
+        url = "https://download.nvidia.com/XFree86/Linux-x86_64/565.77/NVIDIA-Linux-x86_64-565.77.run";
+        hash = "sha256-CnqnQsRrzzTXZpgkAtF7PbH9s7wbiTRNcM0SPByzFHw=";
+      };
+    };
 
     # Screen Tearing Issues
     forceFullCompositionPipeline = true;
