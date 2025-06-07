@@ -55,7 +55,7 @@ in {
         folders = {
           "${syncthing.folders.ivan.obsidian.id}" = {
             label = "Ivan's Obsidian";
-            devices = [syncthing.device.arar syncthing.device.baseship];
+            devices = [syncthing.device.arar syncthing.device.baseship syncthing.device.lstr];
             path = "/storage/syncthing/ivan/obsidian/";
             versioning = {
               type = "trashcan";
@@ -65,7 +65,7 @@ in {
 
           "${syncthing.folders.ivan.private.id}" = {
             label = "Ivan's Private";
-            devices = [syncthing.device.arar syncthing.device.baseship syncthing.device.nothing];
+            devices = [syncthing.device.arar syncthing.device.baseship syncthing.device.lstr syncthing.device.nothing];
             path = "/storage/syncthing/ivan/private/";
             versioning = {
               type = "trashcan";
@@ -75,7 +75,7 @@ in {
 
           "${syncthing.folders.ivan.books.id}" = {
             label = "Ivan's Books";
-            devices = [syncthing.device.arar syncthing.device.baseship syncthing.device.nothing];
+            devices = [syncthing.device.arar syncthing.device.baseship syncthing.device.lstr syncthing.device.nothing];
             path = "/storage/syncthing/ivan/books/";
           };
 
