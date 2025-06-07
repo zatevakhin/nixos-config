@@ -14,6 +14,12 @@
 
     extraPlugins = [pkgs-unstable.vimPlugins.iron-nvim];
     extraConfigLua = ''
+      -- require("mcphub").setup({
+      --     port = 3000,
+      --     config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
+      --     cmd = "{mcp-hub}/bin/mcp-hub"
+      -- })
+
       local iron = require("iron.core")
       local view = require("iron.view")
       local common = require("iron.fts.common")
@@ -215,14 +221,35 @@
 
     plugins.avante = {
       enable = true;
-      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (old: {
-        version = "main";
-        src = pkgs-unstable.fetchFromGitHub {
+      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (old: let
+        # Define your new source and version
+        new-src = pkgs-unstable.fetchFromGitHub {
           owner = "yetone";
           repo = "avante.nvim";
-          rev = "d44db1053550acdf56f0995144dc41368573f508";
-          hash = "sha256-DsV+2xWUGvkKEAl8r4RkHHCvxK03KqVpv+JEGgE5HyE=";
+          rev = "b7a51842191d9a2b9df6d1c38a3e924244dd0a54";
+          hash = "sha256-uyBuqgZh7Z+aP5ifaZK8qC8RsMi6r7JKeYBtt46RtZU=";
         };
+        new-version = "main";
+
+        rebuilt-avante-nvim-lib = old.passthru.avante-nvim-lib.overrideAttrs (libOldAttrs: {
+          version = new-version;
+          src = new-src;
+          cargoHash = "";
+        });
+
+        new-post-install = let
+          ext = pkgs-unstable.stdenv.hostPlatform.extensions.sharedLibrary;
+        in ''
+          mkdir -p $out/build
+          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_repo_map${ext} $out/build/avante_repo_map${ext}
+          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_templates${ext} $out/build/avante_templates${ext}
+          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_tokenizers${ext} $out/build/avante_tokenizers${ext}
+          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_html2md${ext} $out/build/avante_html2md${ext}
+        '';
+      in {
+        version = new-version;
+        src = new-src;
+
         nvimSkipModule = [
           "avante.providers.ollama"
           "avante.providers.vertex_claude"
@@ -231,6 +258,13 @@
           "avante.providers.gemini"
           "avante.providers.vertex"
         ];
+
+        postInstall = new-post-install;
+        passthru =
+          (old.passthru or {})
+          // {
+            avante-nvim-lib = rebuilt-avante-nvim-lib;
+          };
       });
 
       settings = {
@@ -248,13 +282,6 @@
         hints.enabled = false;
 
         provider = "ollama";
-        ollama = {
-          endpoint = "http://ollama.homeworld.lan";
-          model = "qwen3:14b";
-          options = {
-            num_ctx = 16384;
-          };
-        };
 
         rag_service = {
           # FIXME: Something is wrong as for now.
@@ -266,11 +293,75 @@
           endpoint = "http://ollama.homeworld.lan";
         };
 
-        vendors = {
-          "qwen3:4b" = {
-            __inherited_from = "ollama";
-            model = "qwen3:4b";
+        providers = {
+          ollama = {
+            endpoint = "http://ollama.homeworld.lan";
+            model = "qwen3:14b";
+            extra_request_body = {
+              num_ctx = 16384;
+            };
           };
+
+          "openai-4o-mini" = {
+            __inherited_from = "openai";
+            model = "4o-mini";
+          };
+
+          "openai-gpt-4o" = {
+            __inherited_from = "openai";
+            model = "gpt-4o";
+          };
+
+          "gpt-4.1-nano" = {
+            __inherited_from = "openai";
+            model = "gpt-4.1-nano";
+          };
+
+          "gpt-4.1-mini" = {
+            __inherited_from = "openai";
+            model = "gpt-4.1-mini";
+          };
+
+          "claude-opus-4-0" = {
+            __inherited_from = "claude";
+            model = "claude-opus-4-0";
+          };
+
+          "claude-sonnet-4-0" = {
+            __inherited_from = "claude";
+            model = "claude-sonnet-4-0";
+          };
+
+          "claude-3-7-sonnet-latest" = {
+            __inherited_from = "claude";
+            model = "claude-3-7-sonnet-latest";
+          };
+
+          "claude-3-5-sonnet-latest" = {
+            __inherited_from = "claude";
+            model = "claude-3-5-sonnet-latest";
+          };
+
+          "claude-3-5-haiku-latest" = {
+            __inherited_from = "claude";
+            model = "claude-3-5-haiku-latest";
+          };
+
+          "gemini-2.5-flash-preview-05-20" = {
+            __inherited_from = "gemini";
+            model = "gemini-2.5-flash-preview-05-20";
+          };
+
+          "gemini-2.5-pro-preview-05-06" = {
+            __inherited_from = "gemini";
+            model = "gemini-2.5-pro-preview-05-06";
+          };
+
+          "gemini-2.5-pro-preview-06-05" = {
+            __inherited_from = "gemini";
+            model = "gemini-2.5-pro-preview-06-05";
+          };
+
           "qwen3:8b" = {
             __inherited_from = "ollama";
             model = "qwen3:8b";
@@ -291,10 +382,6 @@
             __inherited_from = "ollama";
             model = "devstral:24b";
           };
-          "llama3.2:1b" = {
-            __inherited_from = "ollama";
-            model = "llama3.2:1b";
-          };
           "llama3.2:3b" = {
             __inherited_from = "ollama";
             model = "llama3.2:3b";
@@ -302,30 +389,6 @@
           "llama3.1:8b" = {
             __inherited_from = "ollama";
             model = "llama3.1:8b";
-          };
-          "codellama:7b" = {
-            __inherited_from = "ollama";
-            model = "codellama:7b";
-          };
-          "codellama:13b" = {
-            __inherited_from = "ollama";
-            model = "codellama:13b";
-          };
-          "mistral:7b" = {
-            __inherited_from = "ollama";
-            model = "mistral:7b";
-          };
-          "deepseek-r1:1.5b" = {
-            __inherited_from = "ollama";
-            model = "deepseek-r1:1.5b";
-          };
-          "deepseek-r1:8b" = {
-            __inherited_from = "ollama";
-            model = "deepseek-r1:8b";
-          };
-          "deepseek-r1:8b-Q8" = {
-            __inherited_from = "ollama";
-            model = "deepseek-r1:8b-llama-distill-q8_0";
           };
           "deepseek-r1:14b" = {
             __inherited_from = "ollama";
@@ -335,28 +398,19 @@
             __inherited_from = "ollama";
             model = "deepseek-r1:32b";
           };
-          "qwq:32b" = {
-            __inherited_from = "ollama";
-            model = "qwq:32b";
-          };
           "phi4:14b" = {
             __inherited_from = "ollama";
             model = "phi4:14b";
           };
-          "gemma3:4b" = {
-            __inherited_from = "ollama";
-            model = "gemma3:4b";
-            options.num_ctx = 8192;
-          };
           "gemma3:12b" = {
             __inherited_from = "ollama";
             model = "gemma3:12b";
-            options.num_ctx = 8192;
+            extra_request_body.num_ctx = 8192;
           };
           "gemma3:27b" = {
             __inherited_from = "ollama";
             model = "gemma3:27b";
-            options.num_ctx = 8192;
+            extra_request_body.num_ctx = 8192;
           };
         };
       };
