@@ -28,7 +28,7 @@
     ];
   };
 
-  programs.starship.enableZshIntegration = true;
+  programs.starship.enableFishIntegration = true;
   programs.zoxide.enableFishIntegration = true;
   programs.fzf.enableFishIntegration = true;
 }
