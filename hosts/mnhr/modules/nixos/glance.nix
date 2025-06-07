@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   hostname,
@@ -206,28 +207,26 @@ in {
                   type = "monitor";
                   cache = "1m";
                   title = "Entertainment & Media";
-                  sites = [
-                    {
-                      title = "Jellyfin";
-                      url = "http://jellyfin.homeworld.lan";
-                      icon = "/assets/svg/jellyfin.svg";
-                    }
-                    {
-                      title = "Audiobookshelf";
-                      url = "https://abs.homeworld.lan";
-                      icon = "/assets/svg/audiobookshelf.svg";
-                    }
-                    {
-                      title = "Calibre Web";
-                      url = "https://books.homeworld.lan";
-                      icon = "/assets/svg/calibre-web.svg";
-                    }
-                    {
-                      title = "qBittorrent";
-                      url = "https://qb.homeworld.lan";
-                      icon = "/assets/svg/qbittorrent.svg";
-                    }
-                  ];
+                  sites =
+                    [
+                      {
+                        title = "Jellyfin";
+                        url = "http://jellyfin.homeworld.lan";
+                        icon = "/assets/svg/jellyfin.svg";
+                      }
+                      {
+                        title = "Calibre Web";
+                        url = "https://books.homeworld.lan";
+                        icon = "/assets/svg/calibre-web.svg";
+                      }
+                    ]
+                    ++ lib.flatten [
+                      (lib.optional config.services.audiobookshelf-compose.enable {
+                        title = "Audiobookshelf";
+                        url = "https://${config.services.audiobookshelf-compose.domain}";
+                        icon = "/assets/svg/audiobookshelf.svg";
+                      })
+                    ];
                 }
                 {
                   type = "monitor";

@@ -30,4 +30,10 @@
     # Services that don't need an IP
     ./watchtower
   ];
+
+  services.audiobookshelf-compose = {
+    enable = true;
+    domain = "abs.homeworld.lan";
+    compose_file = ./audiobookshelf/docker-compose.yml;
+  };
 }
