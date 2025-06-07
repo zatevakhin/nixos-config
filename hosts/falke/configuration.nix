@@ -49,7 +49,7 @@ in {
   # </nix-serve>
 
   # <nixvim>
-  programs.nixvim.plugins.avante.settings.ollama.endpoint = lib.mkForce "http://localhost:11434";
+  programs.nixvim.plugins.avante.settings.providers.ollama.endpoint = lib.mkForce "http://localhost:11434";
   # </nixvim>
 
   # <docker>
