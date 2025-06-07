@@ -164,6 +164,15 @@
               xattr = "sa";
             };
           };
+          "backups" = {
+            type = "zfs_fs";
+            mountpoint = "/storage/backups";
+            options = {
+              compression = "lz4";
+              atime = "off";
+              xattr = "sa";
+            };
+          };
           "syncthing" = {
             type = "zfs_fs";
             mountpoint = "/storage/syncthing";
