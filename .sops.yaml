@@ -3,6 +3,7 @@
 keys:
   - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
   - &default_machine age13z0lq6rucrmmkntg6ww5ewtxsczg0q878ttslqzx0jwj5qxajvjsmldjyr
+  - &lstr_machine age1fv4y2fnykau0xv6vaw57aw5cskyua26v2h63y6gvqjf530fc35fq9t6dp9
   - &klbr_machine age1zwzf8qudsj2g9xf2l84pmh45lcyck05fev99h6zc5j5pgsnlxqzqm8r4cl
   - &arar_machine age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
   - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
@@ -14,6 +15,12 @@ creation_rules:
     - age:
       - *default_ssh
       - *default_machine
+  - path_regex: hosts/lstr/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *lstr_machine
+
   - path_regex: hosts/klbr/secrets/[^/]+\.(yaml)$
     key_groups:
     - age:

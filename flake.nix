@@ -69,6 +69,7 @@
       system = "${system}";
       config.allowUnfree = true;
     };
+
   in {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -77,9 +78,28 @@
         inherit pkgs-unstable;
         hostname = "baseship";
       };
-
       modules = [
         ./hosts/default/configuration.nix
+
+        inputs.nixvim.nixosModules.nixvim
+        inputs.sops-nix.nixosModules.sops
+        inputs.disko.nixosModules.disko
+        inputs.home-manager.nixosModules.default
+        inputs.nix-flatpak.nixosModules.nix-flatpak
+        inputs.stylix.nixosModules.stylix
+      ];
+    };
+
+    nixosConfigurations.lstr = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        inherit username;
+        inherit pkgs-unstable;
+        hostname = "lstr";
+      };
+
+      modules = [
+        ./hosts/lstr/configuration.nix
 
         inputs.nixvim.nixosModules.nixvim
         inputs.sops-nix.nixosModules.sops

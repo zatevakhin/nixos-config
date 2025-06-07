@@ -3,6 +3,10 @@ hosts/default/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/default/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/default/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 
+hosts/lstr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+hosts/lstr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/lstr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+
 hosts/falke/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/falke/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/falke/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
