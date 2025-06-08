@@ -226,8 +226,8 @@
         new-src = pkgs-unstable.fetchFromGitHub {
           owner = "yetone";
           repo = "avante.nvim";
-          rev = "b7a51842191d9a2b9df6d1c38a3e924244dd0a54";
-          hash = "sha256-uyBuqgZh7Z+aP5ifaZK8qC8RsMi6r7JKeYBtt46RtZU=";
+          rev = "d3c93c0dabb4311d0af30940726fb0bff30a9676";
+          hash = "sha256-gZ4mrtoWN+ELEF5n5l/xE1MeXm7dfDCmXwbqIScjKaQ=";
         };
         new-version = "main";
 
@@ -272,6 +272,7 @@
         behaviour = {
           # auto_suggestions = true;
           enable_cursor_planning_mode = true;
+          jump_result_buffer_on_finish = false;
         };
 
         windows = {
@@ -283,25 +284,14 @@
 
         provider = "ollama";
 
-        rag_service = {
-          # FIXME: Something is wrong as for now.
-          enabled = false;
-          host_mount = "/projects";
-          provider = "ollama";
-          llm_model = "llama3.2:3b";
-          embed_model = "granite-embedding:278m";
-          endpoint = "http://ollama.homeworld.lan";
-        };
-
         providers = {
           ollama = {
             endpoint = "http://ollama.homeworld.lan";
-            model = "qwen3:14b";
+            model = "devstral:24b";
             extra_request_body = {
               num_ctx = 16384;
             };
           };
-
           "openai-4o-mini" = {
             __inherited_from = "openai";
             model = "4o-mini";
