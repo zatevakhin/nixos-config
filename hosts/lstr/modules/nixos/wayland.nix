@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   username,
   ...
@@ -15,16 +14,6 @@
 
   environment.variables = {
     XCURSOR_SIZE = lib.mkForce "12"; # BUG: Cursor oversized on Xwayland applications
-  };
-
-  boot.blacklistedKernelModules = ["i915"];
-
-  # NOTE: Use Intel GPU in Laptop mode on Wayland.
-  specialisation = {
-    laptop.configuration = {
-      system.nixos.tags = ["laptop"];
-      boot.blacklistedKernelModules = lib.mkForce (lib.filter (param: param != "i915") config.boot.blacklistedKernelModules);
-    };
   };
 
   programs.ydotool.enable = true;
