@@ -31,4 +31,6 @@
   programs.starship.enableFishIntegration = true;
   programs.zoxide.enableFishIntegration = true;
   programs.fzf.enableFishIntegration = true;
+
+  home.packages = with pkgs; [bat eza];
 }
