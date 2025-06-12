@@ -25,8 +25,6 @@
     "io.github.tdesktop_x64.TDesktop"
     "md.obsidian.Obsidian"
     "org.signal.Signal"
-    "im.riot.Riot"
-    "in.cinny.Cinny"
     "com.github.tchx84.Flatseal"
     "net.werwolv.ImHex"
     "fr.romainvigier.MetadataCleaner"
