@@ -39,6 +39,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
+    mcp-hub.url = "github:ravitemer/mcp-hub";
+
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
     };
@@ -69,7 +72,6 @@
       system = "${system}";
       config.allowUnfree = true;
     };
-
   in {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -95,6 +97,7 @@
         inherit inputs;
         inherit username;
         inherit pkgs-unstable;
+        inherit system;
         hostname = "lstr";
       };
 
@@ -115,6 +118,7 @@
         inherit inputs;
         inherit username;
         inherit pkgs-unstable;
+        inherit system;
         hostname = "falke";
       };
 

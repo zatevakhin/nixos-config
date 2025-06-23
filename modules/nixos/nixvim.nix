@@ -1,10 +1,19 @@
 {
   lib,
   pkgs-unstable,
+  inputs,
+  system,
   ...
-}: {
+}: let
+  mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
+  mcp-hub = inputs.mcp-hub.packages."${system}".default;
+in {
   # NOTE: Disable default neovim because it is enabled in `base.nix`
   programs.neovim.enable = lib.mkForce false;
+
+  environment.systemPackages = [
+    mcp-hub
+  ];
 
   programs.nixvim = {
     enable = true;
@@ -12,13 +21,13 @@
     # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
     nixpkgs.useGlobalPackages = false;
 
-    extraPlugins = [pkgs-unstable.vimPlugins.iron-nvim];
+    extraPlugins = [pkgs-unstable.vimPlugins.iron-nvim mcphub-nvim];
     extraConfigLua = ''
-      -- require("mcphub").setup({
-      --     port = 3000,
-      --     config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
-      --     cmd = "{mcp-hub}/bin/mcp-hub"
-      -- })
+      require("mcphub").setup({
+          port = 3000,
+          config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
+          cmd = "${mcp-hub}/bin/mcp-hub", -- "
+      })
 
       local iron = require("iron.core")
       local view = require("iron.view")
@@ -129,14 +138,6 @@
         };
       }
       {
-        action = "<cmd>Telescope projects<CR>";
-        key = "<C-p>";
-        mode = ["n" "v" "i"];
-        options = {
-          desc = "Show project select list.";
-        };
-      }
-      {
         action = "<cmd>Telescope buffers<CR>";
         key = "<C-b>";
         mode = ["n" "v" "i"];
@@ -217,6 +218,14 @@
           desc = "Undo history";
         };
       }
+      {
+        action = "<cmd>MCPHub<CR>";
+        key = "<leader>mh";
+        mode = "n";
+        options = {
+          desc = "Undo history";
+        };
+      }
     ];
 
     plugins.avante = {
@@ -226,8 +235,8 @@
         new-src = pkgs-unstable.fetchFromGitHub {
           owner = "yetone";
           repo = "avante.nvim";
-          rev = "d3c93c0dabb4311d0af30940726fb0bff30a9676";
-          hash = "sha256-gZ4mrtoWN+ELEF5n5l/xE1MeXm7dfDCmXwbqIScjKaQ=";
+          rev = "86743a1d7d6232a820709986e971b3c1de62d9a7";
+          hash = "sha256-7lLnC/tcl5yVM6zBIk41oJ3jhRTv8AqXwJdXF2yPjwk=";
         };
         new-version = "main";
 
@@ -275,6 +284,36 @@
           jump_result_buffer_on_finish = false;
         };
 
+        disabled_tools = [
+          "python"
+          "web_search"
+          "list_files"
+          "search_files"
+          "read_file"
+          "create_file"
+          "rename_file"
+          "delete_file"
+          "create_dir"
+          "rename_dir"
+          "delete_dir"
+          "bash"
+        ];
+
+        system_prompt.__raw = ''
+          function()
+            local hub = require("mcphub").get_hub_instance()
+            return hub and hub:get_active_servers_prompt() or ""
+          end
+        '';
+
+        custom_tools.__raw = ''
+          function()
+                 return {
+                   require("mcphub.extensions.avante").mcp_tool(),
+               }
+          end
+        '';
+
         windows = {
           sidebar_header.enabled = false;
           ask.start_insert = false;
@@ -282,7 +321,7 @@
 
         hints.enabled = false;
 
-        provider = "ollama";
+        provider = "gemini";
 
         providers = {
           ollama = {
@@ -337,6 +376,11 @@
             model = "claude-3-5-haiku-latest";
           };
 
+          "gemini-2.5-flash" = {
+            __inherited_from = "gemini";
+            model = "gemini-2.5-flash";
+          };
+
           "gemini-2.5-flash-preview-05-20" = {
             __inherited_from = "gemini";
             model = "gemini-2.5-flash-preview-05-20";
@@ -351,63 +395,28 @@
             __inherited_from = "gemini";
             model = "gemini-2.5-pro-preview-06-05";
           };
-
-          "qwen3:8b" = {
-            __inherited_from = "ollama";
-            model = "qwen3:8b";
-          };
-          "qwen3:14b" = {
-            __inherited_from = "ollama";
-            model = "qwen3:14b";
-          };
-          "qwen3:30b-a3b" = {
-            __inherited_from = "ollama";
-            model = "qwen3:30b-a3b";
-          };
-          "qwen3:32b" = {
-            __inherited_from = "ollama";
-            model = "qwen3:32b";
-          };
-          "devstral:24b" = {
-            __inherited_from = "ollama";
-            model = "devstral:24b";
-          };
-          "llama3.2:3b" = {
-            __inherited_from = "ollama";
-            model = "llama3.2:3b";
-          };
-          "llama3.1:8b" = {
-            __inherited_from = "ollama";
-            model = "llama3.1:8b";
-          };
-          "deepseek-r1:14b" = {
-            __inherited_from = "ollama";
-            model = "deepseek-r1:14b";
-          };
-          "deepseek-r1:32b" = {
-            __inherited_from = "ollama";
-            model = "deepseek-r1:32b";
-          };
-          "phi4:14b" = {
-            __inherited_from = "ollama";
-            model = "phi4:14b";
-          };
-          "gemma3:12b" = {
-            __inherited_from = "ollama";
-            model = "gemma3:12b";
-            extra_request_body.num_ctx = 8192;
-          };
-          "gemma3:27b" = {
-            __inherited_from = "ollama";
-            model = "gemma3:27b";
-            extra_request_body.num_ctx = 8192;
-          };
         };
       };
     };
 
     plugins.which-key.enable = true;
-    plugins.lualine.enable = true;
+    plugins.lualine = {
+      enable = true;
+      settings = {
+        sections.lualine_x = [
+          {
+            __unkeyed-1 = {
+              __raw = ''
+                require('mcphub.extensions.lualine')
+              '';
+            };
+          }
+          "encoding"
+          "fileformat"
+          "filetype"
+        ];
+      };
+    };
     plugins.bufferline.enable = true;
     plugins.direnv.enable = true;
     plugins.barbecue.enable = true;
@@ -415,8 +424,6 @@
     plugins.git-worktree.enableTelescope = true;
     plugins.todo-comments.enable = true;
     plugins.precognition.enable = true;
-    plugins.project-nvim.enable = true;
-    plugins.project-nvim.enableTelescope = true;
 
     plugins.telescope = {
       enable = true;
@@ -641,7 +648,7 @@
       enable = true;
       settings = {
         highlight.enable = true;
-        ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline"];
+        ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline" "gdscript" "godot_resource" "requirements" "gitattributes" "gitcommit" "gitignore" "ini"];
         incremental_selection.enable = true;
       };
     };
