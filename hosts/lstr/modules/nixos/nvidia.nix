@@ -4,29 +4,50 @@
   lib,
   ...
 }: let
-  nvidiaModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
-  # removeItems = items: list: lib.filter (x: !(lib.elem x items)) list;
+  nvidia_modules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
+  nvidia_specific_kernel_params = ["pcie_aspm=off"];
+  amd_modules = ["amdgpu"];
 in {
-  boot.initrd.kernelModules = nvidiaModules;
-  boot.blacklistedKernelModules = ["amdgpu"];
+  boot.initrd.kernelModules = nvidia_modules;
+  boot.blacklistedKernelModules = amd_modules;
+  boot.kernelParams = nvidia_specific_kernel_params;
 
-  boot.kernelParams = [
-    "pcie_aspm=off"
-  ];
+  specialisation = {
+    laptop.configuration = {
+      system.nixos.tags = ["laptop"];
 
-  # NOTE: Specialisation partially broken.
-  # TODO: Fix specialisation for Laptop/Docked mode. Docked mode is default.
-  # specialisation = {
-  #   laptop.configuration = {
-  #     system.nixos.tags = ["laptop"];
-  #     boot.blacklistedKernelModules = lib.mkForce (removeItems ["amdgpu"] config.boot.blacklistedKernelModules);
-  #     boot.initrd.kernelModules = lib.unique (removeItems nvidiaModules config.boot.kernelModules);
-  #     boot.kernelParams = removeItems ["pcie_aspm=off"] config.boot.kernelParams;
-  #     systemd.services.delayed-amdgpu.enable = lib.mkForce false;
-  #   };
-  # };
+      boot.initrd.kernelModules = lib.mkForce (lib.pipe config.boot.initrd.kernelModules [
+        lib.unique
+        (lib.subtractLists nvidia_modules)
+        lib.mkAfter
+      ]);
+
+      boot.blacklistedKernelModules = lib.mkForce (lib.pipe config.boot.blacklistedKernelModules [
+        lib.unique
+        (lib.subtractLists amd_modules)
+        lib.mkAfter
+      ]);
+
+      boot.kernelParams = lib.mkForce (lib.pipe config.boot.kernelParams [
+        (lib.subtractLists nvidia_specific_kernel_params)
+        (lib.filter (x: !(lib.hasInfix "nvidia" x)))
+        lib.mkAfter
+      ]);
+
+      services.xserver.videoDrivers = lib.mkForce amd_modules;
+
+      systemd.services.delayed-amdgpu.enable = lib.mkForce false;
+      hardware.nvidia.prime.sync.enable = lib.mkForce false;
+      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
+    };
+  };
 
   services.xserver.videoDrivers = ["nvidia"];
+
+  # NOTE: Now when running containers that require GPUs
+  #       use next syntax to add GPUs to container.
+  #       $ docker run --rm -it --device=nvidia.com/gpu=all nvidia/cuda...
+  hardware.nvidia-container-toolkit.enable = true;
 
   # NOTE: Not all display outputs are working if there is no `amdgpu` driver loaded.
   # Delayed loading after display manager is started to use proper driver.

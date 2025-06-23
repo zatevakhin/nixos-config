@@ -66,11 +66,6 @@ in {
 
   # <docker>
   virtualisation.docker.storageDriver = "btrfs";
-
-  # NOTE: Now when running containers that require GPUs
-  #       use next syntax to add GPUs to container.
-  #       $ docker run --rm -it --device=nvidia.com/gpu=all nvidia/cuda...
-  hardware.nvidia-container-toolkit.enable = lib.mkForce true;
   # </docker>
 
   nixpkgs.overlays = [
