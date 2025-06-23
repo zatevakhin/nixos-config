@@ -235,8 +235,8 @@ in {
         new-src = pkgs-unstable.fetchFromGitHub {
           owner = "yetone";
           repo = "avante.nvim";
-          rev = "86743a1d7d6232a820709986e971b3c1de62d9a7";
-          hash = "sha256-7lLnC/tcl5yVM6zBIk41oJ3jhRTv8AqXwJdXF2yPjwk=";
+          rev = "b6668e2e4c04afa7ab96e07710768fdbb5886cf8";
+          hash = "sha256-uHtOQuLb3mH1oTmLO2s2w6mruwdL13B26glHpmsN9aA=";
         };
         new-version = "main";
 
