@@ -25,6 +25,7 @@ in {
     ../../modules/nixos/firewall.nix
     ../../modules/nixos/nixvim.nix
     ../../modules/nixos/tmux.nix
+    ../../modules/nixos/searxng.nix
     ../../modules/docker/ollama
     ../../modules/docker/comfyui
     # Machine specific modules
