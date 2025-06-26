@@ -11,6 +11,7 @@
         appindicator.extensionUuid
         blur-my-shell.extensionUuid
         smart-home.extensionUuid
+        gsconnect.extensionUuid
       ];
     };
   };
@@ -20,5 +21,6 @@
     blur-my-shell
     # TODO: Add HomeAssistant configuration using `dconf`.
     smart-home
+    gsconnect
   ];
 }
