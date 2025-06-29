@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   lib,
   ...
 }: {
@@ -25,6 +26,13 @@
 
     # Thumbnailer for videos
     ffmpegthumbnailer
+
+    # Minecraft
+    atlauncher
+  ];
+
+  nixpkgs.overlays = [
+    (self: super: {atlauncher = pkgs-unstable.atlauncher;})
   ];
 
   # Enable the GNOME Desktop Environment.
