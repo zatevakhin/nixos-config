@@ -102,7 +102,11 @@ in {
     hashedPasswordFile = config.sops.secrets."user/password/hashed".path;
     isNormalUser = true;
     description = "Ivan Zatevakhin";
-    extraGroups = ["networkmanager" "wheel" "dialout"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "dialout"
+    ];
     openssh.authorizedKeys.keys = [me.ssh.eulr];
   };
 
