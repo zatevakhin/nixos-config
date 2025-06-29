@@ -39,5 +39,10 @@
     "com.github.taiko2k.tauonmb"
     "io.github.hakuneko.HakuNeko"
     "app.grayjay.Grayjay"
+    "io.github.nozwock.Packet"
+  ];
+
+  networking.firewall.allowedTCPPorts = [
+    9300 # Packet
   ];
 }
