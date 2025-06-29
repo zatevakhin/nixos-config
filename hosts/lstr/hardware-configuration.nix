@@ -112,4 +112,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # NOTE: Enable all firmware regardless of license.
+  hardware.enableAllFirmware = true;
 }
