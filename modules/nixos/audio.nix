@@ -1,5 +1,7 @@
-{...}: {
+{pkgs, ...}: {
   services.pulseaudio.enable = false;
+
+  environment.systemPackages = [pkgs.pulseaudioFull];
 
   services.pipewire = {
     enable = true;
