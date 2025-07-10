@@ -14,7 +14,6 @@
   environment.systemPackages = with pkgs; [
     # Basic applications
     mpv
-    youtube-music
     keepassxc
     obs-studio
     dconf-editor
