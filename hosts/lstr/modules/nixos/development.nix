@@ -4,5 +4,8 @@
     direnv
     godot
     gcc
+    bun
+    uv
+    nodejs
   ];
 }
