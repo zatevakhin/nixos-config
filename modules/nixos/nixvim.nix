@@ -21,7 +21,10 @@ in {
     # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
     nixpkgs.useGlobalPackages = false;
 
-    extraPlugins = [pkgs-unstable.vimPlugins.iron-nvim mcphub-nvim];
+    extraPlugins = [
+      pkgs-unstable.vimPlugins.iron-nvim
+      mcphub-nvim
+    ];
     extraConfigLua = ''
       require("mcphub").setup({
           port = 3000,
@@ -140,7 +143,11 @@ in {
       {
         action = "<cmd>Telescope buffers<CR>";
         key = "<C-b>";
-        mode = ["n" "v" "i"];
+        mode = [
+          "n"
+          "v"
+          "i"
+        ];
         options = {
           desc = "Show buffers select list.";
         };
@@ -230,51 +237,53 @@ in {
 
     plugins.avante = {
       enable = true;
-      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (old: let
-        # Define your new source and version
-        new-src = pkgs-unstable.fetchFromGitHub {
-          owner = "yetone";
-          repo = "avante.nvim";
-          rev = "9669e22ea95289e820cbe7e5294369ddb97ba0ed";
-          hash = "sha256-3Lbdls+w/l0VrthuM3OsAogtD8eMvNsqBqOUFNQMYLo=";
-        };
-        new-version = "main";
+      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (
+        old: let
+          # Define your new source and version
+          new-src = pkgs-unstable.fetchFromGitHub {
+            owner = "yetone";
+            repo = "avante.nvim";
+            rev = "8346d9b0058e2051a367a682f4459a789a0fa0ea";
+            hash = "sha256-wM5rrwgoFjk7GCNmbzVGQj2wjuo7MoTeEUej+DP89rw=";
+          };
+          new-version = "main";
 
-        rebuilt-avante-nvim-lib = old.passthru.avante-nvim-lib.overrideAttrs (libOldAttrs: {
+          rebuilt-avante-nvim-lib = old.passthru.avante-nvim-lib.overrideAttrs (libOldAttrs: {
+            version = new-version;
+            src = new-src;
+            cargoHash = "";
+          });
+
+          new-post-install = let
+            ext = pkgs-unstable.stdenv.hostPlatform.extensions.sharedLibrary;
+          in ''
+            mkdir -p $out/build
+            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_repo_map${ext} $out/build/avante_repo_map${ext}
+            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_templates${ext} $out/build/avante_templates${ext}
+            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_tokenizers${ext} $out/build/avante_tokenizers${ext}
+            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_html2md${ext} $out/build/avante_html2md${ext}
+          '';
+        in {
           version = new-version;
           src = new-src;
-          cargoHash = "";
-        });
 
-        new-post-install = let
-          ext = pkgs-unstable.stdenv.hostPlatform.extensions.sharedLibrary;
-        in ''
-          mkdir -p $out/build
-          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_repo_map${ext} $out/build/avante_repo_map${ext}
-          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_templates${ext} $out/build/avante_templates${ext}
-          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_tokenizers${ext} $out/build/avante_tokenizers${ext}
-          ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_html2md${ext} $out/build/avante_html2md${ext}
-        '';
-      in {
-        version = new-version;
-        src = new-src;
+          nvimSkipModule = [
+            "avante.providers.ollama"
+            "avante.providers.vertex_claude"
+            "avante.providers.azure"
+            "avante.providers.copilot"
+            "avante.providers.gemini"
+            "avante.providers.vertex"
+          ];
 
-        nvimSkipModule = [
-          "avante.providers.ollama"
-          "avante.providers.vertex_claude"
-          "avante.providers.azure"
-          "avante.providers.copilot"
-          "avante.providers.gemini"
-          "avante.providers.vertex"
-        ];
-
-        postInstall = new-post-install;
-        passthru =
-          (old.passthru or {})
-          // {
-            avante-nvim-lib = rebuilt-avante-nvim-lib;
-          };
-      });
+          postInstall = new-post-install;
+          passthru =
+            (old.passthru or {})
+            // {
+              avante-nvim-lib = rebuilt-avante-nvim-lib;
+            };
+        }
+      );
 
       settings = {
         mode = "agentic";
@@ -423,7 +432,8 @@ in {
     plugins.git-worktree.enable = true;
     plugins.git-worktree.enableTelescope = true;
     plugins.todo-comments.enable = true;
-    plugins.precognition.enable = true;
+    # https://github.com/tris203/precognition.nvim
+    plugins.precognition.enable = false;
 
     plugins.telescope = {
       enable = true;
@@ -483,7 +493,10 @@ in {
       enable = true;
       settings = {
         code.language_name = false;
-        file_types = ["markdown" "Avante"];
+        file_types = [
+          "markdown"
+          "Avante"
+        ];
       };
     };
 
@@ -607,7 +620,16 @@ in {
     plugins.lsp-status = {
       enable = true;
       settings = {
-        spinner_frames = ["⣾" "⣽" "⣻" "⢿" "⡿" "⣟" "⣯" "⣷"];
+        spinner_frames = [
+          "⣾"
+          "⣽"
+          "⣻"
+          "⢿"
+          "⡿"
+          "⣟"
+          "⣯"
+          "⣷"
+        ];
       };
     };
 
@@ -648,12 +670,36 @@ in {
       enable = true;
       settings = {
         highlight.enable = true;
-        ensure_installed = ["c" "cpp" "python" "rust" "vim" "regex" "lua" "bash" "markdown" "markdown_inline" "gdscript" "godot_resource" "requirements" "gitattributes" "gitcommit" "gitignore" "ini"];
+        ensure_installed = [
+          "c"
+          "cpp"
+          "python"
+          "rust"
+          "vim"
+          "regex"
+          "lua"
+          "bash"
+          "markdown"
+          "markdown_inline"
+          "gdscript"
+          "godot_resource"
+          "requirements"
+          "gitattributes"
+          "gitcommit"
+          "gitignore"
+          "ini"
+        ];
         incremental_selection.enable = true;
       };
     };
 
-    plugins.treesitter-context.enable = true;
+    # https://github.com/nvim-treesitter/nvim-treesitter-context
+    plugins.treesitter-context = {
+      enable = true;
+      settings = {
+        multiline_threshold = 3;
+      };
+    };
     plugins.treesitter-refactor.enable = true;
     plugins.treesitter-refactor.navigation.enable = true;
     plugins.treesitter-refactor.smartRename.enable = true;
