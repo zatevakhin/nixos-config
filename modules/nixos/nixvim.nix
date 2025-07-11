@@ -633,9 +633,20 @@ in {
       };
     };
 
-    plugins.lsp-format.enable = true;
-    plugins.none-ls.enable = true;
-    plugins.none-ls.sources.formatting.alejandra.enable = true;
+    plugins.conform-nvim = {
+      enable = true;
+      settings = {
+        notify_on_error = true;
+        formatters_by_ft = {
+          nix = [
+            "alejandra"
+          ];
+        };
+        format_on_save = {
+          lsp_format = "fallback";
+        };
+      };
+    };
 
     plugins.lsp.enable = true;
     plugins.lsp.keymaps.lspBuf = {
@@ -652,7 +663,6 @@ in {
     # plugins.lsp.servers.yamlls.enable = true;
     plugins.lsp.servers.pyright.enable = true;
     plugins.lsp.servers.ruff.enable = true;
-    plugins.lsp.servers.nil_ls.enable = true;
     plugins.lsp.servers.dockerls.enable = true;
     plugins.lsp.servers.docker_compose_language_service.enable = true;
     plugins.lsp.servers.rust_analyzer.enable = true;
@@ -688,6 +698,7 @@ in {
           "gitcommit"
           "gitignore"
           "ini"
+          "nix"
         ];
         incremental_selection.enable = true;
       };
