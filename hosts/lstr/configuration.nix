@@ -82,8 +82,8 @@ in {
     "aarch64-linux"
   ];
 
-  # NOTE: Using this kernel because latest does not support Nvidia 565.77 driver.
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  # NOTE: Yolo mode, going with latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
