@@ -584,7 +584,28 @@ in {
     };
 
     # <cmp>
-    plugins.cmp.enable = true;
+    plugins.cmp = {
+      enable = true;
+      settings = {
+        mapping = {
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+        };
+        sources = [
+          {name = "nvim_lsp";}
+          {name = "luasnip";}
+          {name = "path";}
+          {name = "vim-dadbod-completion";}
+          {name = "buffer";}
+        ];
+
+        snippet = {
+          expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+        };
+      };
+    };
+
     plugins.lspkind = {
       enable = true;
       cmp.enable = true;
@@ -596,23 +617,6 @@ in {
     plugins.cmp-treesitter.enable = true;
 
     plugins.cmp_luasnip.enable = true;
-    plugins.cmp.settings.mapping = {
-      "<CR>" = "cmp.mapping.confirm({ select = true })";
-      "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-      "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-    };
-
-    plugins.cmp.settings.sources = [
-      {name = "nvim_lsp";}
-      {name = "luasnip";}
-      {name = "path";}
-      {name = "vim-dadbod-completion";}
-      {name = "buffer";}
-    ];
-
-    plugins.cmp.settings.snippet = {
-      expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-    };
     # </cmp>
 
     # <lsp>
@@ -648,27 +652,33 @@ in {
       };
     };
 
-    plugins.lsp.enable = true;
-    plugins.lsp.keymaps.lspBuf = {
-      K = "hover";
-      gD = "references";
-      gd = "definition";
-      gi = "implementation";
-      gt = "type_definition";
-    };
-    plugins.lsp.servers.typos_lsp.enable = true;
-    plugins.lsp.servers.clangd.enable = true;
-    plugins.lsp.servers.jsonls.enable = true;
-    plugins.lsp.servers.helm_ls.enable = true;
-    # plugins.lsp.servers.yamlls.enable = true;
-    plugins.lsp.servers.pyright.enable = true;
-    plugins.lsp.servers.ruff.enable = true;
-    plugins.lsp.servers.dockerls.enable = true;
-    plugins.lsp.servers.docker_compose_language_service.enable = true;
-    plugins.lsp.servers.rust_analyzer.enable = true;
-    plugins.lsp.servers.rust_analyzer.installRustc = false;
-    plugins.lsp.servers.rust_analyzer.installCargo = false;
+    plugins.lsp = {
+      enable = true;
+      keymaps.lspBuf = {
+        K = "hover";
+        gD = "references";
+        gd = "definition";
+        gi = "implementation";
+        gt = "type_definition";
+      };
 
+      servers = {
+        typos_lsp.enable = true;
+        clangd.enable = true;
+        jsonls.enable = true;
+        helm_ls.enable = true;
+        yamlls.enable = true;
+        pyright.enable = true;
+        ruff.enable = true;
+        # https://github.com/oxalica/nil
+        nil_ls.enable = true;
+        dockerls.enable = true;
+        docker_compose_language_service.enable = true;
+        rust_analyzer.enable = true;
+        rust_analyzer.installRustc = false;
+        rust_analyzer.installCargo = false;
+      };
+    };
     # </lsp>
 
     plugins.vim-dadbod.enable = true;
@@ -698,7 +708,6 @@ in {
           "gitcommit"
           "gitignore"
           "ini"
-          "nix"
         ];
         incremental_selection.enable = true;
       };
