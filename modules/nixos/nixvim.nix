@@ -441,7 +441,9 @@ in {
       keymaps = {
         "<space>ff" = "find_files";
         "<space>fb" = "buffers";
+        "<space>fd" = "diagnostics";
         "<space>fg" = "live_grep";
+        "<space>fr" = "registers";
       };
 
       extensions = {
@@ -625,24 +627,7 @@ in {
     };
     # </cmp>
 
-    # <lsp>
-    plugins.lsp-lines.enable = true;
-    plugins.lsp-status = {
-      enable = true;
-      settings = {
-        spinner_frames = [
-          "⣾"
-          "⣽"
-          "⣻"
-          "⢿"
-          "⡿"
-          "⣟"
-          "⣯"
-          "⣷"
-        ];
-      };
-    };
-
+    # <format>
     plugins.conform-nvim = {
       enable = true;
       settings = {
@@ -657,7 +642,9 @@ in {
         };
       };
     };
+    # </format>
 
+    # <lsp>
     plugins.lsp = {
       enable = true;
       keymaps.lspBuf = {
@@ -685,6 +672,24 @@ in {
         rust_analyzer.installCargo = false;
       };
     };
+
+    plugins.lsp-lines.enable = true;
+    plugins.lsp-status = {
+      enable = true;
+      settings = {
+        spinner_frames = [
+          "⣾"
+          "⣽"
+          "⣻"
+          "⢿"
+          "⡿"
+          "⣟"
+          "⣯"
+          "⣷"
+        ];
+      };
+    };
+
     # </lsp>
 
     plugins.vim-dadbod.enable = true;
@@ -726,11 +731,13 @@ in {
         multiline_threshold = 3;
       };
     };
-    plugins.treesitter-refactor.enable = true;
-    plugins.treesitter-refactor.navigation.enable = true;
-    plugins.treesitter-refactor.smartRename.enable = true;
-    # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
-    # plugins.treesitter-refactor.highlightDefinitions.enable = true;
+    plugins.treesitter-refactor = {
+      enable = true;
+      navigation.enable = true;
+      smartRename.enable = true;
+      # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
+      highlightDefinitions.enable = true;
+    };
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>
     plugins.hardtime = {
