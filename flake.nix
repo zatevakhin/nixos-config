@@ -71,6 +71,7 @@
     pkgs-unstable = import nixpkgs-unstable {
       system = "${system}";
       config.allowUnfree = true;
+      overlays = [(import ./modules/overlays/avante-nvim.nix)];
     };
   in {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {

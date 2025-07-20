@@ -237,53 +237,7 @@ in {
 
     plugins.avante = {
       enable = true;
-      package = pkgs-unstable.vimPlugins.avante-nvim.overrideAttrs (
-        old: let
-          # Define your new source and version
-          new-src = pkgs-unstable.fetchFromGitHub {
-            owner = "yetone";
-            repo = "avante.nvim";
-            rev = "8346d9b0058e2051a367a682f4459a789a0fa0ea";
-            hash = "sha256-wM5rrwgoFjk7GCNmbzVGQj2wjuo7MoTeEUej+DP89rw=";
-          };
-          new-version = "main";
-
-          rebuilt-avante-nvim-lib = old.passthru.avante-nvim-lib.overrideAttrs (libOldAttrs: {
-            version = new-version;
-            src = new-src;
-            cargoHash = "";
-          });
-
-          new-post-install = let
-            ext = pkgs-unstable.stdenv.hostPlatform.extensions.sharedLibrary;
-          in ''
-            mkdir -p $out/build
-            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_repo_map${ext} $out/build/avante_repo_map${ext}
-            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_templates${ext} $out/build/avante_templates${ext}
-            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_tokenizers${ext} $out/build/avante_tokenizers${ext}
-            ln -s ${rebuilt-avante-nvim-lib}/lib/libavante_html2md${ext} $out/build/avante_html2md${ext}
-          '';
-        in {
-          version = new-version;
-          src = new-src;
-
-          nvimSkipModule = [
-            "avante.providers.ollama"
-            "avante.providers.vertex_claude"
-            "avante.providers.azure"
-            "avante.providers.copilot"
-            "avante.providers.gemini"
-            "avante.providers.vertex"
-          ];
-
-          postInstall = new-post-install;
-          passthru =
-            (old.passthru or {})
-            // {
-              avante-nvim-lib = rebuilt-avante-nvim-lib;
-            };
-        }
-      );
+      package = pkgs-unstable.vimPlugins.avante-nvim;
 
       settings = {
         mode = "agentic";
