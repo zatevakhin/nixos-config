@@ -233,6 +233,14 @@ in {
           desc = "Undo history";
         };
       }
+      {
+        action = "<cmd>Gitsigns stage_hunk<CR>";
+        key = "<space>gsh";
+        mode = "n";
+        options = {
+          desc = "Gitsigns stage hunk";
+        };
+      }
     ];
 
     plugins.avante = {
