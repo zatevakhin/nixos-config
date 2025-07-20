@@ -50,7 +50,7 @@ in {
           mkdir -p $out/build
           for n in avante_repo_map avante_templates avante_tokenizers avante_html2md; do
             if [ -f ${avanteLibNew}/lib/lib$n${ext} ]; then
-              ln -s ${avanteLibNew}/lib/lib$n${ext} $out/build/lib$n${ext}
+              ln -s ${avanteLibNew}/lib/lib$n${ext} $out/build/$n${ext}
             fi
           done
         '';
