@@ -7,10 +7,10 @@ hosts/lstr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/lstr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/lstr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/falke/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
-hosts/falke/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/falke/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/falke/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+hosts/fklr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+hosts/fklr/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+hosts/fklr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/fklr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/arar/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/arar/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
