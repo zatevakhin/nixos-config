@@ -33,6 +33,7 @@ in {
     ./modules/nixos/development.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
+    ./modules/nixos/telegraf.nix
     # NOTE: Removed as new network card arrived.
     # ./modules/nixos/keepalived.nix
   ];
@@ -44,6 +45,16 @@ in {
   sops.secrets."user/password/hashed" = {};
   sops.secrets."nix-cache/private_key" = {};
   # </sops>
+
+  # <certificates>
+  security.pki.certificateFiles = [
+    (pkgs.fetchurl {
+      url = "https://ca.homeworld.lan:8443/roots.pem";
+      hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
+      curlOpts = "--insecure";
+    })
+  ];
+  # </certificates>
 
   # <nix-serve>
   #services.nix-serve.secretKeyFile = config.sops.secrets."nix-cache/private_key".path;

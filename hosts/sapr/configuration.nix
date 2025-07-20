@@ -14,6 +14,8 @@
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/zsh-mini.nix
+    # Machine specific modules
+    ./modules/nixos/telegraf.nix
   ];
 
   # <sops>

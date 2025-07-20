@@ -16,6 +16,7 @@
     ../../modules/nixos/openssh.nix
     # Machine specific modules
     ./modules/nixos/syncthing.nix
+    ./modules/nixos/telegraf.nix
     # <containers>
     ./containers/traefik
     ./containers/calibre-web

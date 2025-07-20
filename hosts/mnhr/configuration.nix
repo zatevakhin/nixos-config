@@ -21,8 +21,9 @@ in {
     ./modules/nixos/glance.nix
     ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
+    ./modules/nixos/telegraf.nix
     ./modules/nixos/jellyseerr.nix
-    #./modules/nixos/grafana.nix
+    ./modules/nixos/grafana.nix
     ./modules/nixos/minio.nix
     ./modules/nixos/nfs.nix
     ./modules/nixos/syncthing.nix
@@ -62,7 +63,18 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_13;
+  boot.kernelPackages = pkgs.linuxPackages_6_15; # Touch carefully due to ZFS
+  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
+  #   argsOverride = rec {
+  #     src = pkgs.fetchurl {
+  #       url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+  #       sha256 = "0hhj49k3ksjcp0dg5yiahqzryjfdpr9c1a9ph6j9slzmkikbn7v1";
+  #     };
+  #     version = "6.13.12";
+  #     modDirVersion = "6.13.12";
+  #   };
+  # });
+
   networking.hostName = hostname; # Define your hostname.
   networking.hostId = "906df12d";
 

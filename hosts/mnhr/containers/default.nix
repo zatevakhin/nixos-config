@@ -14,7 +14,7 @@
     # ./grocy
     # ./kitchenowl
     #./ntfy
-    #./influxdb
+    ./influxdb
     #./restreamer
 
     # ISSUE: No hardware acceleration for video decoding in mainline ffmpeg.
