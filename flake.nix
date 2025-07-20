@@ -183,7 +183,21 @@
       ];
     };
 
-    # >> nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .#eulr
+    nixosConfigurations.sapr = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        username = "zatevakhin";
+        hostname = "sapr";
+      };
+
+      modules = [
+        ./hosts/sapr/configuration.nix
+
+        inputs.disko.nixosModules.disko
+        inputs.sops-nix.nixosModules.sops
+      ];
+    };
+
     darwinConfigurations.eulr = nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit self;
