@@ -18,7 +18,7 @@ in {
     ADGUARD_PASSWORD=${config.sops.placeholder.adguard-password}
   '';
 
-  systemd.services.glance.serviceConfig.EnvironmentFile = config.sops.templates."adguard-creds.env".path;
+  systemd.services.glance.serviceConfig.EnvironmentFile = lib.mkForce config.sops.templates."adguard-creds.env".path;
 
   services.adguardhome.settings.filtering.rewrites = [
     {
