@@ -25,53 +25,57 @@ in {
       pkgs-unstable.vimPlugins.iron-nvim
       mcphub-nvim
     ];
-    extraConfigLua = ''
-      require("mcphub").setup({
-          port = 3000,
-          config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
-          cmd = "${mcp-hub}/bin/mcp-hub", -- "
-      })
+    extraConfigLua =
+      /*
+      lua
+      */
+      ''
+        require("mcphub").setup({
+            port = 3000,
+            config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
+            cmd = "${mcp-hub}/bin/mcp-hub",
+        })
 
-      local iron = require("iron.core")
-      local view = require("iron.view")
-      local common = require("iron.fts.common")
+        local iron = require("iron.core")
+        local view = require("iron.view")
+        local common = require("iron.fts.common")
 
-      iron.setup {
-        config = {
-          scratch_repl = true,
-          repl_definition = {
-            sh = {
-              command = {"zsh"}
+        iron.setup {
+          config = {
+            scratch_repl = true,
+            repl_definition = {
+              sh = {
+                command = {"zsh"}
+              },
+              python = {
+                command = { "ipython", "--no-autoindent", "--colors=Linux" },
+                format = common.bracketed_paste_python,
+                block_dividers = { "# %%", "#%%" },
+              }
             },
-            python = {
-              command = { "ipython", "--no-autoindent", "--colors=Linux" },
-              format = common.bracketed_paste_python,
-              block_dividers = { "# %%", "#%%" },
-            }
+            repl_open_cmd = view.split.rightbelow("%25"),
+            repl_filetype = function(bufnr, ft)
+              return ft
+            end,
           },
-          repl_open_cmd = view.split.rightbelow("%25"),
-          repl_filetype = function(bufnr, ft)
-            return ft
-          end,
-        },
-        keymaps = {
-          toggle_repl = "<space>rr",
-          restart_repl = "<space>rR",
-          send_motion = "<space>sc",
-          visual_send = "<space>sc",
-          send_code_block = "<space>sb",
-          send_code_block_and_move = "<space>sn",
-          exit = "<space>sq",
-          clear = "<space>cl",
-          cr = "<space>s<cr>",
-          interrupt = "<space>s<space>",
-        },
-        highlight = {
-          italic = true,
-        },
-        ignore_blank_lines = true,
-      }
-    '';
+          keymaps = {
+            toggle_repl = "<space>rr",
+            restart_repl = "<space>rR",
+            send_motion = "<space>sc",
+            visual_send = "<space>sc",
+            send_code_block = "<space>sb",
+            send_code_block_and_move = "<space>sn",
+            exit = "<space>sq",
+            clear = "<space>cl",
+            cr = "<space>s<cr>",
+            interrupt = "<space>s<space>",
+          },
+          highlight = {
+            italic = true,
+          },
+          ignore_blank_lines = true,
+        }
+      '';
 
     opts = {
       list = true;
