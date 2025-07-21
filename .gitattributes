@@ -7,10 +7,6 @@ hosts/lstr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/lstr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
 hosts/lstr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/fklr/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/fklr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/fklr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
-
 hosts/arar/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/arar/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 
@@ -20,3 +16,8 @@ hosts/mnhr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/iso/secrets/iso.nix filter=git-agecrypt diff=git-agecrypt
+
+hosts/flkr/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
+hosts/flkr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
+hosts/flkr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+

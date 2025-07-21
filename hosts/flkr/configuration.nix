@@ -42,8 +42,10 @@ in {
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key" "/home/${username}/.ssh/id_ed25519"];
-  sops.secrets."user/password/hashed" = {};
-  sops.secrets."nix-cache/private_key" = {};
+
+  sops.secrets.user-password-hashed.key = "user/password/hashed";
+  sops.secrets.ssh-authorized-key-lstr.key = "ssh/authorized/lstr";
+  sops.secrets.ssh-authorized-key-eulr.key = "ssh/authorized/eulr";
   # </sops>
 
   # <certificates>
@@ -131,22 +133,46 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     useDefaultShell = true;
-    hashedPasswordFile = config.sops.secrets."user/password/hashed".path;
+    hashedPasswordFile = config.sops.secrets.user-password-hashed.path;
     isNormalUser = true;
     description = "Ivan Zatevakhin";
     extraGroups = ["networkmanager" "wheel" "docker" "kvm" "libvirtd"];
-    packages = with pkgs; [];
-    openssh.authorizedKeys.keys = [
-      me.ssh.authorized.baseship
-      me.ssh.authorized.eulr
-    ];
   };
 
   # <openssh>
   services.openssh.settings.X11Forwarding = lib.mkForce true;
-  users.users.root.openssh.authorizedKeys.keys = [
-    me.ssh.authorized.baseship
-  ];
+
+  # HACK: What and Why? Because I can't do something like this with sops-nix.
+  # ```nix
+  # users.users.root.openssh.authorizedKeys.keyFiles = [
+  #   sops.secrets.ssh-authorized-key-<key-name>.path
+  # ];
+  # ```
+  # <hack>
+  services.openssh.authorizedKeysInHomedir = lib.mkForce false;
+
+  sops.templates."ssh-authorized-keys-for-${username}" = {
+    content = ''
+      ${config.sops.placeholder.ssh-authorized-key-lstr}
+      ${config.sops.placeholder.ssh-authorized-key-eulr}
+    '';
+    owner = username; # NOTE: or ${username} will not be able to enter trough ssh.
+  };
+
+  environment.etc."ssh-authorized-keys-for-${username}" = {
+    target = "ssh/authorized_keys.d/${username}";
+    source = config.sops.templates."ssh-authorized-keys-for-${username}".path;
+  };
+
+  sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".content = ''
+    ${config.sops.placeholder.ssh-authorized-key-lstr}
+  '';
+
+  environment.etc."ssh-authorized-keys-for-${config.users.users.root.name}" = {
+    target = "ssh/authorized_keys.d/${config.users.users.root.name}";
+    source = config.sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".path;
+  };
+  # </hack>
   # </openssh>
 
   # <firewall>

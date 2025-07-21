@@ -1,5 +1,8 @@
 # INFO: Generate machine key using command below.
 # nix run nixpkgs#ssh-to-age -- ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+stores:
+  yaml:
+    indent: 2
 keys:
   - &default_ssh age140q4kedpqnf3jnpkhr6t4uq5ptp39mgvtn9pavdx3rj4vq5weasqnutaxp
   - &default_machine age13z0lq6rucrmmkntg6ww5ewtxsczg0q878ttslqzx0jwj5qxajvjsmldjyr
