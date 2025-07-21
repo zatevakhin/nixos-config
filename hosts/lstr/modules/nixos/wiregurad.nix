@@ -5,7 +5,7 @@ in {
     (builtins.listToAttrs (map (e: {
         name = "work-${e.name}";
         value = {
-          address = ["192.168.5.8/32"];
+          address = [wg.work.address];
           autostart = false;
           listenPort = 51820;
           privateKey = wg.work.private_key;

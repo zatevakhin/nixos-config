@@ -34,6 +34,7 @@ in {
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
     ./modules/nixos/telegraf.nix
+    ./modules/nixos/wiregurad.nix
     # NOTE: Removed as new network card arrived.
     # ./modules/nixos/keepalived.nix
   ];
@@ -70,33 +71,6 @@ in {
   virtualisation.docker.storageDriver = "btrfs";
   hardware.nvidia-container-toolkit.enable = lib.mkForce true;
   # </docker>
-
-  # <wireguard>
-  networking.wg-quick.interfaces = {
-    wg0 = {
-      address = ["192.168.5.164/32"];
-      dns = ["192.168.128.254"] ++ wg.work.search;
-      autostart = false;
-      listenPort = 51820;
-      privateKey = wg.work.private_key;
-
-      peers = [
-        {
-          publicKey = wg.work.public_key;
-          allowedIPs = [
-            "192.168.128.0/23"
-            "192.168.150.0/24"
-            "192.168.5.0/24"
-            "192.168.151.0/24"
-            "192.168.149.0/24" # HW and IGS
-          ];
-          endpoint = wg.work.endpoint;
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
-  # </wireguard>
 
   nixpkgs.overlays = [
     (self: super: {devenv = pkgs-unstable.devenv;})
