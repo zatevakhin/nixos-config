@@ -21,4 +21,7 @@
 "hosts/eulr/secrets/ssh.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 
 "hosts/iso/secrets/iso.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
+"hosts/iso/secrets/hs_ed25519_secret_key" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
+"hosts/iso/secrets/ssh_host_ed25519_key" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
+"hosts/iso/secrets/ssh_host_ed25519_public_key.pub" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 

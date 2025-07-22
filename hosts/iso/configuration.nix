@@ -14,26 +14,40 @@ in {
   nix.settings.experimental-features = ["nix-command" "flakes"];
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce ["multi-user.target"];
 
-  users.users.root.openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.baseship];
-  users.users.nixos.openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.baseship];
+  users.users.root.openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.lstr];
+  users.users.nixos = {
+    openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.lstr];
+  };
 
-  networking.wg-quick.interfaces = {
-    wg0 = {
-      address = ["10.8.0.4/24"];
-      dns = ["10.0.1.3"];
-      autostart = true;
-      listenPort = 51820;
-      privateKey = iso.wireguard.keys.private;
+  environment.etc."ssh-host-ed25519" = {
+    source = ./secrets/ssh_host_ed25519_key;
+    target = "ssh/ssh_host_ed25519_key";
+  };
+  environment.etc."ssh-host-ed25519-pub" = {
+    source = ./secrets/ssh_host_ed25519_public_key.pub;
+    target = "ssh/ssh_host_ed25519_key.pub";
+  };
 
-      peers = [
-        {
-          publicKey = iso.wireguard.keys.public;
-          presharedKey = iso.wireguard.keys.preshared;
-          allowedIPs = ["0.0.0.0/0" "::/0"];
-          endpoint = iso.wireguard.endpoint;
-          persistentKeepalive = 25;
-        }
-      ];
+  services.tor = {
+    enable = true;
+    relay.onionServices = {
+      ssh = {
+        version = 3;
+        secretKey = builtins.path {
+          name = "ssh-service";
+          path = ./secrets/hs_ed25519_secret_key;
+        };
+
+        map = [
+          {
+            port = 22;
+            target = {
+              addr = "127.0.0.1";
+              port = 22;
+            };
+          }
+        ];
+      };
     };
   };
 }

@@ -16,6 +16,9 @@ hosts/mnhr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/iso/secrets/iso.nix filter=git-agecrypt diff=git-agecrypt
+hosts/iso/secrets/hs_ed25519_secret_key filter=git-agecrypt diff=git-agecrypt
+hosts/iso/secrets/ssh_host_ed25519_key filter=git-agecrypt diff=git-agecrypt
+hosts/iso/secrets/ssh_host_ed25519_public_key.pub filter=git-agecrypt diff=git-agecrypt
 
 hosts/flkr/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
 hosts/flkr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
