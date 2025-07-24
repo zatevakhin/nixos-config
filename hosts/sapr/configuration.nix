@@ -16,6 +16,10 @@
     ../../modules/nixos/zsh-mini.nix
     # Machine specific modules
     ./modules/nixos/telegraf.nix
+    ./modules/nixos/traefik.nix
+    ./modules/nixos/nfs.nix
+    # Containers
+    ./containers/jellyfin
   ];
 
   # <sops>

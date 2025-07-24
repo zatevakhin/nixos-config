@@ -41,6 +41,41 @@
           };
         };
       };
+      storage = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "cryptnvme0";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/root/nvme.keyfile";
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-L" "nixos" "-f"];
+                  mountOptions = ["compress=zstd" "noatime"];
+                  subvolumes = {
+                    "/log" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/var/log";
+                    };
+                    "/docker" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/var/lib/docker";
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
     };
   };
 
@@ -50,6 +85,10 @@
   boot.initrd.kernelModules = ["mmc_block" "sdhci" "sdhci-pci"];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
+
+  boot.initrd.secrets = {
+    "/root/nvme.keyfile" = "/root/nvme.keyfile";
+  };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

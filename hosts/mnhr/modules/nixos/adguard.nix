@@ -87,7 +87,7 @@
           }
           {
             domain = "jellyfin.homeworld.lan";
-            answer = "klbr.lan";
+            answer = "sapr.lan";
           }
           {
             domain = "paperless.homeworld.lan";
@@ -128,6 +128,10 @@
           {
             domain = "falke.lan";
             answer = "192.168.1.246";
+          }
+          {
+            domain = "sapr.lan";
+            answer = "192.168.1.178";
           }
         ];
       };
