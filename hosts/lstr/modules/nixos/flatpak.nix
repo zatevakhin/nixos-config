@@ -40,6 +40,7 @@
     "io.github.hakuneko.HakuNeko"
     "app.grayjay.Grayjay"
     "io.github.nozwock.Packet"
+    "org.freecad.FreeCAD"
   ];
 
   networking.firewall.allowedTCPPorts = [
