@@ -1,7 +1,18 @@
-{...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   wg = import ../../secrets/wg.nix;
 in {
-  services.resolved.enable = false;
+  services.resolved.enable = lib.mkIf (!config.services.dnsmasq.enable) true;
+
+  specialisation = {
+    laptop.configuration = {
+      system.nixos.tags = ["laptop"];
+      services.dnsmasq.enable = lib.mkForce false;
+    };
+  };
 
   services.dnsmasq = {
     enable = true;
@@ -13,6 +24,8 @@ in {
           "/lan/192.168.1.191"
           "192.168.1.191"
           "9.9.9.10"
+          "1.1.1.1"
+          "1.0.0.1"
         ];
       no-resolv = true;
       no-poll = true;
@@ -21,8 +34,8 @@ in {
       dns-forward-max = 150;
 
       # Choose ONE of these behaviors:
-      # all-servers = true;  # Query all at once
-      strict-order = true; # Force strict ordering
+      all-servers = false; # Query all at once
+      # strict-order = false; # Force strict ordering
       # Default (neither): Try in order but skip known-bad servers
 
       # Detailed logging
