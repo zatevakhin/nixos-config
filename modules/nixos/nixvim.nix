@@ -21,8 +21,10 @@ in {
     # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
     nixpkgs.useGlobalPackages = false;
 
-    extraPlugins = [
-      pkgs-unstable.vimPlugins.iron-nvim
+    extraPlugins = with pkgs-unstable.vimPlugins; [
+      iron-nvim
+      blink-cmp-avante
+      blink-cmp-conventional-commits
       mcphub-nvim
     ];
     extraConfigLua =
@@ -581,13 +583,34 @@ in {
         signature = {
           enabled = true;
         };
+        cmdline = {
+          sources = ["cmdline" "buffer"];
+        };
         sources = {
-          cmdline = [];
+          default = ["lsp" "path" "buffer" "avante" "conventional_commits"];
           lsp = {
             fallbacks = [];
           };
           buffer = {};
           path = {};
+          providers = {
+            avante = {
+              enabled = true;
+              module = "blink-cmp-avante";
+              name = "Avante";
+              opts = {};
+            };
+            conventional_commits = {
+              name = "Conventional Commits";
+              module = "blink-cmp-conventional-commits";
+              enabled.__raw = ''
+                function()
+                  return vim.bo.filetype == 'gitcommit'
+                end
+              '';
+              opts = {};
+            };
+          };
         };
       };
     };
