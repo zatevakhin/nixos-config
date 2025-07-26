@@ -328,6 +328,20 @@ in {
             model = "gpt-4.1-mini";
           };
 
+          "grok-3" = {
+            __inherited_from = "openai";
+            endpoint = "https://api.x.ai/v1";
+            api_key_name = "XAI_API_KEY";
+            model = "grok-3";
+          };
+
+          "grok-3-mini" = {
+            __inherited_from = "openai";
+            endpoint = "https://api.x.ai/v1";
+            api_key_name = "XAI_API_KEY";
+            model = "grok-3-mini";
+          };
+
           "claude-opus-4-0" = {
             __inherited_from = "claude";
             model = "claude-opus-4-0";
