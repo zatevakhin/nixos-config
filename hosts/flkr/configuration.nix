@@ -29,6 +29,7 @@ in {
     ../../modules/docker/ollama
     ../../modules/docker/comfyui
     # Machine specific modules
+    ./modules/nixos/liquidctl.nix
     ./modules/nixos/desktop.nix
     ./modules/nixos/development.nix
     ./modules/nixos/nvidia.nix
