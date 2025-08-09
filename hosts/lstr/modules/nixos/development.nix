@@ -7,5 +7,6 @@
     bun
     uv
     nodejs
+    wl-clipboard
   ];
 }

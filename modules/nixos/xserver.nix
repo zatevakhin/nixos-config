@@ -3,7 +3,6 @@
   services.xserver.enable = true;
 
   environment.systemPackages = with pkgs; [
-    xclip
   ];
 
   # Configure keymap in X11
