@@ -308,63 +308,34 @@ in {
               num_ctx = 16384;
             };
           };
-          "openai-4o-mini" = {
+
+          "gpt-oss:20b" = {
+            __inherited_from = "ollama";
+            model = "gpt-oss:20b";
+            extra_request_body = {
+              num_ctx = 1024 * 128;
+            };
+          };
+
+          "openai-gpt-5-mini" = {
             __inherited_from = "openai";
-            model = "4o-mini";
+            model = "gpt-5-mini";
+            extra_request_body = {
+              temperature = 1;
+            };
           };
 
-          "openai-gpt-4o" = {
+          "openai-gpt-5-nano" = {
             __inherited_from = "openai";
-            model = "gpt-4o";
+            model = "gpt-5-nano";
+            extra_request_body = {
+              temperature = 1;
+            };
           };
 
-          "gpt-4.1-nano" = {
-            __inherited_from = "openai";
-            model = "gpt-4.1-nano";
-          };
-
-          "gpt-4.1-mini" = {
-            __inherited_from = "openai";
-            model = "gpt-4.1-mini";
-          };
-
-          "grok-3" = {
-            __inherited_from = "openai";
-            endpoint = "https://api.x.ai/v1";
-            api_key_name = "XAI_API_KEY";
-            model = "grok-3";
-          };
-
-          "grok-3-mini" = {
-            __inherited_from = "openai";
-            endpoint = "https://api.x.ai/v1";
-            api_key_name = "XAI_API_KEY";
-            model = "grok-3-mini";
-          };
-
-          "claude-opus-4-0" = {
-            __inherited_from = "claude";
-            model = "claude-opus-4-0";
-          };
-
-          "claude-sonnet-4-0" = {
-            __inherited_from = "claude";
-            model = "claude-sonnet-4-0";
-          };
-
-          "claude-3-7-sonnet-latest" = {
-            __inherited_from = "claude";
-            model = "claude-3-7-sonnet-latest";
-          };
-
-          "claude-3-5-sonnet-latest" = {
-            __inherited_from = "claude";
-            model = "claude-3-5-sonnet-latest";
-          };
-
-          "claude-3-5-haiku-latest" = {
-            __inherited_from = "claude";
-            model = "claude-3-5-haiku-latest";
+          "gemini-2.5-flash-lite" = {
+            __inherited_from = "gemini";
+            model = "gemini-2.5-flash-lite";
           };
 
           "gemini-2.5-flash" = {
@@ -372,19 +343,9 @@ in {
             model = "gemini-2.5-flash";
           };
 
-          "gemini-2.5-flash-preview-05-20" = {
+          "gemini-2.5-pro" = {
             __inherited_from = "gemini";
-            model = "gemini-2.5-flash-preview-05-20";
-          };
-
-          "gemini-2.5-pro-preview-05-06" = {
-            __inherited_from = "gemini";
-            model = "gemini-2.5-pro-preview-05-06";
-          };
-
-          "gemini-2.5-pro-preview-06-05" = {
-            __inherited_from = "gemini";
-            model = "gemini-2.5-pro-preview-06-05";
+            model = "gemini-2.5-pro";
           };
         };
       };

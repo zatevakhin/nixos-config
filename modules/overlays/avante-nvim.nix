@@ -3,8 +3,8 @@ final: prev: let
   newSrc = prev.fetchFromGitHub {
     owner = "yetone";
     repo = "avante.nvim";
-    rev = "9ccf721435215e240c80b9b52d3723014600587f";
-    hash = "sha256-o+p/5PL4q7SiBwTGsqef9x/6HG2EWqYa5heZ32DqJmM=";
+    rev = "5a4ed4ac924adb148075b461016078ac18792816";
+    hash = "sha256-X6pecjj1TtXQMzSr8fe2nRGcCmbFQ6XeY423JbKNt0s=";
   };
 
   avanteLibNew = prev.rustPlatform.buildRustPackage {
@@ -12,7 +12,6 @@ final: prev: let
     version = newVersion;
     src = newSrc;
 
-    useFetchCargoVendor = true;
     cargoHash = "sha256-8mBpzndz34RrmhJYezd4hLrJyhVL4S4IHK3plaue1k8=";
 
     nativeBuildInputs = [prev.pkg-config prev.makeWrapper prev.perl];
