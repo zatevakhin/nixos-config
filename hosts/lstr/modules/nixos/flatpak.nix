@@ -41,6 +41,9 @@
     "app.grayjay.Grayjay"
     "io.github.nozwock.Packet"
     "org.freecad.FreeCAD"
+    "net.sapples.LiveCaptions"
+    "dev.mariinkys.Oboete"
+    "net.ankiweb.Anki"
   ];
 
   networking.firewall.allowedTCPPorts = [

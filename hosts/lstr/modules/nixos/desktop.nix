@@ -20,6 +20,8 @@
     keepassxc
     dconf-editor
     mumble
+    rnote
+    foliate
 
     # Theming
     papirus-icon-theme
