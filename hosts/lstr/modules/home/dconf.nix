@@ -25,6 +25,7 @@
       icon-theme = "Papirus-Dark";
       enable-hot-corners = false;
       clock-show-seconds = true;
+      accent-color = "blue";
     };
 
     "org/gnome/desktop/calendar" = {
@@ -33,6 +34,8 @@
 
     "org/gnome/desktop/wm/preferences" = {
       button-layout = ":minimize,maximize,close";
+      # Activate windows on hover
+      focus-mode = "sloppy";
     };
 
     "org/gnome/desktop/input-sources" = {
@@ -61,6 +64,14 @@
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
+    };
+
+    "org/gnome/settings-daemon/plugins/color" = {
+      night-light-enabled = true;
+      night-light-temperature = 2700;
+      # TODO: Time of year/Location dependent
+      night-light-schedule-from = 21.0;
+      night-light-schedule-to = 7.0;
     };
 
     "org/virt-manager/virt-manager/connections" = {
