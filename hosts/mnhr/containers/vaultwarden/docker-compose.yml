@@ -8,6 +8,7 @@ services:
       ADMIN_TOKEN:
       ICON_SERVICE:
       SIGNUPS_ALLOWED:
+      ENABLE_WEBSOCKET:
       INVITATIONS_ALLOWED:
     volumes:
       - "${VAULTWARDEN_DATA_LOCATION}:/data/"
@@ -19,6 +20,10 @@ services:
      - traefik.http.routers.vaultwarden.tls=true
      - traefik.http.routers.vaultwarden.entrypoints=websecure
      - traefik.http.routers.vaultwarden.tls.certresolver=stepca
+      # WebSocket Headers
+     - traefik.http.routers.vaultwarden.middlewares=vaultwarden-websocket
+     - traefik.http.middlewares.vaultwarden-websocket.headers.customrequestheaders.Upgrade=websocket
+     - traefik.http.middlewares.vaultwarden-websocket.headers.customrequestheaders.Connection=Upgrade
       # Service Configuration
      - traefik.http.services.vaultwarden.loadbalancer.server.port=80
     dns_search: proxy

@@ -29,6 +29,7 @@ in {
 
     environment = {
       SIGNUPS_ALLOWED = "false";
+      ENABLE_WEBSOCKET = "true";
       INVITATIONS_ALLOWED = "false";
       ICON_SERVICE = "duckduckgo";
       INTERNAL_DOMAIN_NAME = domain;
