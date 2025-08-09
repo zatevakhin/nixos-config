@@ -12,6 +12,7 @@
     ../../../../modules/nixos/audio.nix
     ../../../../modules/nixos/bluetooth.nix
     ../../../../modules/nixos/printing.nix
+    ../../../../modules/nixos/opentabletdriver.nix
   ];
 
   environment.systemPackages = with pkgs; [
