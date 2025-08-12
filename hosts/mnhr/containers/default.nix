@@ -5,7 +5,7 @@
     ./forgejo
     ./vaultwarden
     ./linkding
-    ./variance
+    ./cinny
     ./searxng
     #./qbittorrent
     ./deep-research

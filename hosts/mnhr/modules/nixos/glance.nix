@@ -286,9 +286,9 @@ in {
                       icon = "/assets/svg/linkding.svg";
                     }
                     {
-                      title = "Variance Web";
-                      url = "https://va.homeworld.lan";
-                      icon = "/assets/svg/matrix.svg";
+                      title = "Cinny Web";
+                      url = "https://cinny.homeworld.lan";
+                      icon = "/assets/svg/cinny.svg";
                     }
                     {
                       title = "Grocy";
