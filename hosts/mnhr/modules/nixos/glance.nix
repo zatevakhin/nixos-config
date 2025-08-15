@@ -295,11 +295,6 @@ in {
                       url = "https://grocy.homeworld.lan";
                       icon = "/assets/svg/grocy.svg";
                     }
-                    {
-                      title = "Kitchen Own";
-                      url = "https://kitchenowl.homeworld.lan";
-                      icon = "/assets/svg/kitchenowl.svg";
-                    }
                   ];
                 }
                 {
