@@ -1,4 +1,4 @@
-{...}: let
+{config, ...}: let
   wg = import ../../secrets/wg.nix;
 in {
   networking.wg-quick.interfaces =
@@ -6,6 +6,11 @@ in {
         name = "work-${e.name}";
         value = {
           address = [wg.work.address];
+          dns = (
+            if !config.services.dnsmasq.enable
+            then ([wg.work.dns] ++ wg.work.search)
+            else []
+          );
           autostart = false;
           listenPort = 51820;
           privateKey = wg.work.private_key;
