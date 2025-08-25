@@ -25,9 +25,7 @@ services:
     container_name: searxng
     image: docker.io/searxng/searxng:latest
     restart: no
-    dns_search: proxy
     networks:
-      proxy:
       internal:
     volumes:
       - searxng-data:/etc/searxng:rw
@@ -44,7 +42,6 @@ services:
       - SETUID
     labels:
       - traefik.enable=true
-      - traefik.docker.network=proxy
       # HTTP Router Configuration
       - traefik.http.routers.searxng.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.searxng.entrypoints=web
@@ -58,53 +55,6 @@ services:
       # Shared Service Configuration
       - traefik.http.services.searxng-service.loadbalancer.server.port=8080
 
-      # Basic security headers
-      - traefik.http.middlewares.searxng-basic-headers.headers.stsSeconds=31536000
-      - traefik.http.middlewares.searxng-basic-headers.headers.stsIncludeSubdomains=true
-      - traefik.http.middlewares.searxng-basic-headers.headers.stsPreload=true
-      - traefik.http.middlewares.searxng-basic-headers.headers.customResponseHeaders.X-Robots-Tag=noindex,noarchive,nofollow
-      - traefik.http.middlewares.searxng-basic-headers.headers.browserXssFilter=true
-      - traefik.http.middlewares.searxng-basic-headers.headers.contentTypeNosniff=true
-      - traefik.http.middlewares.searxng-basic-headers.headers.referrerPolicy=no-referrer
-      - traefik.http.middlewares.searxng-basic-headers.headers.permissionsPolicy=accelerometer=(),ambient-light-sensor=(),autoplay=(),camera=(),encrypted-media=(),focus-without-user-activation=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),midi=(),payment=(),picture-in-picture=(),speaker=(),sync-xhr=(),usb=(),vr=()
-      - traefik.http.middlewares.searxng-basic-headers.headers.customResponseHeaders.Feature-Policy=accelerometer 'none';ambient-light-sensor 'none'; autoplay 'none';camera 'none';encrypted-media 'none';focus-without-user-activation 'none'; geolocation 'none';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';picture-in-picture 'none'; speaker 'none';sync-xhr 'none';usb 'none';vr 'none'
-      - traefik.http.middlewares.searxng-basic-headers.headers.customResponseHeaders.Server=""
-
-      # Static files middleware
-      - traefik.http.middlewares.searxng-static-cache.headers.customResponseHeaders.Cache-Control=public, max-age=31536000
-
-      # Non-static files middleware
-      - traefik.http.middlewares.searxng-notstatic-cache.headers.customResponseHeaders.Cache-Control=no-cache, no-store
-      - traefik.http.middlewares.searxng-notstatic-cache.headers.customResponseHeaders.Pragma=no-cache
-
-      # API endpoints middleware
-      - traefik.http.middlewares.searxng-api.headers.accessControlAllowMethods=GET,OPTIONS
-      - traefik.http.middlewares.searxng-api.headers.accessControlAllowOriginList=*
-
-      # Image proxy CSP
-      - traefik.http.middlewares.searxng-imageproxy-csp.headers.contentSecurityPolicy="default-src 'none'; img-src 'self' data:"
-
-      # Regular pages CSP
-      - "traefik.http.middlewares.searxng-default-csp.headers.contentSecurityPolicy=upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https://github.com/searxng/searxng/issues/new; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://overpass-api.de; img-src 'self' data: https://*.tile.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com https://www.deezer.com https://www.mixcloud.com https://w.soundcloud.com https://embed.spotify.com"
-
-      # Route-specific middleware chains
-      - traefik.http.routers.searxng-static.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && PathPrefix(`/static/`)
-      - traefik.http.routers.searxng-static.middlewares=searxng-basic-headers,searxng-static-cache
-
-      - traefik.http.routers.searxng-api.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && (PathPrefix(`/config`) || PathPrefix(`/healthz`) || PathPrefix(`/stats/errors`) || PathPrefix(`/stats/checker`))
-      - traefik.http.routers.searxng-api.middlewares=searxng-basic-headers,searxng-api
-
-      - traefik.http.routers.searxng-imageproxy.rule=Host(`${INTERNAL_DOMAIN_NAME}`) && PathPrefix(`/image_proxy`)
-      - traefik.http.routers.searxng-imageproxy.middlewares=searxng-basic-headers,searxng-imageproxy-csp
-
-      - traefik.http.routers.searxng-default.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
-      - traefik.http.routers.searxng-default.middlewares=searxng-basic-headers,searxng-notstatic-cache,searxng-default-csp
-
-      # Compression (if not already enabled globally in Traefik)
-      - traefik.http.middlewares.searxng-compress.compress=true
-      - traefik.http.routers.searxng.middlewares=searxng-compress
-      - traefik.http.routers.searxng-https.middlewares=searxng-compress
-
     logging:
       driver: "json-file"
       options:
@@ -112,8 +62,6 @@ services:
         max-file: "1"
 
 networks:
-  proxy:
-    external: true
   internal:
     name: searxng_internal
 

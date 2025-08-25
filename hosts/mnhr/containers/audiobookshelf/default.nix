@@ -25,7 +25,7 @@ in {
 
     enable_adguard_rewrite = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Whether to add AdGuard Home rewrite rule";
     };
 

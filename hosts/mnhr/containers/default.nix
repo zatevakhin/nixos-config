@@ -7,13 +7,12 @@
     ./linkding
     ./cinny
     ./searxng
-    #./qbittorrent
     ./deep-research
     ./audiobookshelf
 
-    # ./grocy
+    ./grocy
     # ./kitchenowl
-    #./ntfy
+    ./ntfy
     ./influxdb
     #./restreamer
 
@@ -33,7 +32,52 @@
 
   services.audiobookshelf-compose = {
     enable = true;
-    domain = "abs.homeworld.lan";
-    compose_file = ./audiobookshelf/docker-compose.yml;
+    enable_adguard_rewrite = true;
+  };
+
+  services.forgejo-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+  };
+
+  services.cinny-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+  };
+
+  services.grocy-compose = {
+    enable = false;
+    enable_adguard_rewrite = true;
+  };
+
+  services.deep-research-compose = {
+    enable = false;
+    enable_adguard_rewrite = true;
+  };
+
+  services.stump-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+  };
+
+  services.ntfy-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+  };
+
+  services.open-webui-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+  };
+
+  services.linkding-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
+    secrets_file = ../secrets/linkding.yaml;
+  };
+
+  services.nodered-compose = {
+    enable = true;
+    enable_adguard_rewrite = true;
   };
 }

@@ -15,14 +15,10 @@ services:
       - NTFY_AUTH_FILE=/var/lib/ntfy/auth.db
       - NTFY_ATTACHMENT_CACHE_DIR=/var/lib/ntfy/attachments
     volumes:
-      - data:/var/lib/ntfy
+      - ntfy_data:/var/lib/ntfy
     restart: no
-    dns_search: proxy
-    networks:
-      proxy:
     labels:
      - traefik.enable=true
-     - traefik.docker.network=proxy
       # HTTPS Router Configuration
      - traefik.http.routers.ntfy.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
      - traefik.http.routers.ntfy.tls=true
@@ -31,9 +27,5 @@ services:
       # Service Configuration
      - traefik.http.services.ntfy.loadbalancer.server.port=80
 
-networks:
-  proxy:
-    external: true
-
 volumes:
-  data:
+  ntfy_data:

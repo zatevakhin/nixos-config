@@ -226,6 +226,11 @@ in {
                         url = "https://${config.services.audiobookshelf-compose.domain}";
                         icon = "/assets/svg/audiobookshelf.svg";
                       })
+                      (lib.optional config.services.stump-compose.enable {
+                        title = "Stump";
+                        url = "https://${config.services.stump-compose.domain}";
+                        icon = "/assets/svg/stump.svg";
+                      })
                     ];
                 }
                 {
@@ -254,48 +259,51 @@ in {
                   type = "monitor";
                   cache = "1m";
                   title = "Productivity & Communication";
-                  sites = [
-                    {
-                      title = "OpenWebUI (Ollama)";
-                      url = "https://owu.homeworld.lan";
-                      icon = "/assets/svg/ollama.svg";
-                    }
-                    {
-                      title = "DeepResearch";
-                      url = "https://research.homeworld.lan";
-                      icon = "si:onnx";
-                    }
-                    {
-                      title = "SearxNG";
-                      url = "https://searxng.homeworld.lan";
-                      icon = "/assets/svg/searxng.svg";
-                    }
-                    {
-                      title = "Vaultwarden";
-                      url = "https://vw.homeworld.lan";
-                      icon = "/assets/svg/vaultwarden.svg";
-                    }
-                    {
-                      title = "Forgejo";
-                      url = "https://forgejo.homeworld.lan";
-                      icon = "/assets/svg/forgejo.svg";
-                    }
-                    {
-                      title = "Linkding";
-                      url = "https://linkding.homeworld.lan";
-                      icon = "/assets/svg/linkding.svg";
-                    }
-                    {
-                      title = "Cinny Web";
-                      url = "https://cinny.homeworld.lan";
-                      icon = "/assets/svg/cinny.svg";
-                    }
-                    {
-                      title = "Grocy";
-                      url = "https://grocy.homeworld.lan";
-                      icon = "/assets/svg/grocy.svg";
-                    }
-                  ];
+                  sites =
+                    [
+                      {
+                        title = "SearxNG";
+                        url = "https://searxng.homeworld.lan";
+                        icon = "/assets/svg/searxng.svg";
+                      }
+                      {
+                        title = "Vaultwarden";
+                        url = "https://vw.homeworld.lan";
+                        icon = "/assets/svg/vaultwarden.svg";
+                      }
+                    ]
+                    ++ lib.flatten [
+                      (lib.optional config.services.open-webui-compose.enable {
+                        title = "OpenWebUI";
+                        url = "https://${config.services.open-webui-compose.domain}";
+                        icon = "/assets/png/open-webui.png";
+                      })
+                      (lib.optional config.services.deep-research-compose.enable {
+                        title = "DeepResearch";
+                        url = "https://${config.services.deep-research-compose.domain}";
+                        icon = "si:onnx";
+                      })
+                      (lib.optional config.services.forgejo-compose.enable {
+                        title = "Forgejo";
+                        url = "https://${config.services.forgejo-compose.domain}";
+                        icon = "/assets/svg/forgejo.svg";
+                      })
+                      (lib.optional config.services.linkding-compose.enable {
+                        title = "Linkding";
+                        url = "https://${config.services.linkding-compose.domain}";
+                        icon = "/assets/svg/linkding.svg";
+                      })
+                      (lib.optional config.services.cinny-compose.enable {
+                        title = "Cinny Web";
+                        url = "https://${config.services.cinny-compose.domain}";
+                        icon = "/assets/svg/cinny.svg";
+                      })
+                      (lib.optional config.services.grocy-compose.enable {
+                        title = "Grocy";
+                        url = "https://${config.services.grocy-compose.domain}";
+                        icon = "/assets/svg/grocy.svg";
+                      })
+                    ];
                 }
                 {
                   type = "monitor";
