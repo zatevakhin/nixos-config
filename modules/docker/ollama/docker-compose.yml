@@ -20,6 +20,7 @@ services:
             - nvidia.com/gpu=all
     environment:
       - OLLAMA_HOST="0.0.0.0:11434"
+      - OLLAMA_ORIGINS="*"
       - OLLAMA_KEEP_ALIVE
       - OLLAMA_FLASH_ATTENTION
     volumes:
