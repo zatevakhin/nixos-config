@@ -33,6 +33,8 @@
         sendAnonymousUsage = false;
       };
 
+      accessLog = {};
+
       providers = {
         docker = {
           exposedByDefault = false;
