@@ -10,6 +10,7 @@
       StateDirectory = "traefik";
     };
     environment = {
+      TRAEFIK_DOMAIN = "tf.homeworld.lan";
       LEGO_CA_CERTIFICATES = pkgs.fetchurl {
         url = "https://ca.homeworld.lan:8443/roots.pem";
         hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
@@ -23,7 +24,7 @@
 
     staticConfigOptions = {
       api = {
-        insecure = true;
+        insecure = false;
         dashboard = true;
       };
 
@@ -73,6 +74,20 @@
     dynamicConfigOptions = {
       http = {
         routers = {
+          traefik = {
+            rule = "Host(`${config.systemd.services.traefik.environment.TRAEFIK_DOMAIN}`)";
+            service = "dashboard@internal";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
+          traefik-api = {
+            rule = "Host(`${config.systemd.services.traefik.environment.TRAEFIK_DOMAIN}`) && PathPrefix(`/api`)";
+            service = "api@internal";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           adguard = {
             rule = "Host(`adguard.homeworld.lan`)";
             service = "adguard";

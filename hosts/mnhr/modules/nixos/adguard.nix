@@ -74,6 +74,10 @@
         # TODO: Need to define services files and IP mapping somewhere.
         rewrites = [
           {
+            domain = "tf.homeworld.lan";
+            answer = "mnhr.lan";
+          }
+          {
             domain = "adguard.homeworld.lan";
             answer = "mnhr.lan";
           }

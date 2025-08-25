@@ -160,48 +160,56 @@ in {
                   type = "monitor";
                   cache = "1m";
                   title = "Network & Infrastructure";
-                  sites = [
-                    {
-                      title = "Home Assistant";
-                      url = "https://pixelpond-3114538102.duckdns.org:8124";
-                      icon = "/assets/svg/home-assistant-alt.svg";
-                    }
-                    {
-                      title = "AdGuard";
-                      url = "https://adguard.homeworld.lan";
-                      icon = "/assets/svg/adguard-home.svg";
-                    }
-                    {
-                      title = "Wireguard UI";
-                      url = "https://wg.homeworld.lan";
-                      icon = "/assets/svg/wireguard.svg";
-                    }
-                    {
-                      title = "NodeRed";
-                      url = "https://nodered.homeworld.lan";
-                      icon = "/assets/svg/node-red.svg";
-                    }
-                    {
-                      title = "Grafana";
-                      url = "https://grafana.homeworld.lan";
-                      icon = "/assets/svg/grafana.svg";
-                    }
-                    {
-                      title = "Influxdb";
-                      url = "https://influxdb.homeworld.lan";
-                      icon = "/assets/svg/influxdb.svg";
-                    }
-                    {
-                      title = "MinIO";
-                      url = "https://console-minio.homeworld.lan";
-                      icon = "/assets/svg/minio-light.svg";
-                    }
-                    {
-                      title = "Vodafone Router";
-                      url = "http://192.168.1.1";
-                      icon = "si:vodafone";
-                    }
-                  ];
+                  sites =
+                    [
+                      {
+                        title = "Home Assistant";
+                        url = "https://pixelpond-3114538102.duckdns.org:8124";
+                        icon = "/assets/svg/home-assistant-alt.svg";
+                      }
+                      {
+                        title = "AdGuard";
+                        url = "https://adguard.homeworld.lan";
+                        icon = "/assets/svg/adguard-home.svg";
+                      }
+                      {
+                        title = "Wireguard UI";
+                        url = "https://wg.homeworld.lan";
+                        icon = "/assets/svg/wireguard.svg";
+                      }
+                      {
+                        title = "NodeRed";
+                        url = "https://nodered.homeworld.lan";
+                        icon = "/assets/svg/node-red.svg";
+                      }
+                      {
+                        title = "Grafana";
+                        url = "https://grafana.homeworld.lan";
+                        icon = "/assets/svg/grafana.svg";
+                      }
+                      {
+                        title = "Influxdb";
+                        url = "https://influxdb.homeworld.lan";
+                        icon = "/assets/svg/influxdb.svg";
+                      }
+                      {
+                        title = "MinIO";
+                        url = "https://console-minio.homeworld.lan";
+                        icon = "/assets/svg/minio-light.svg";
+                      }
+                      {
+                        title = "Vodafone Router";
+                        url = "http://192.168.1.1";
+                        icon = "si:vodafone";
+                      }
+                    ]
+                    ++ lib.flatten [
+                      (lib.optional config.services.traefik.enable {
+                        title = "Traefik (main)";
+                        url = "https://${config.systemd.services.traefik.environment.TRAEFIK_DOMAIN}";
+                        icon = "/assets/svg/traefik.svg";
+                      })
+                    ];
                 }
                 {
                   type = "monitor";
