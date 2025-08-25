@@ -44,6 +44,7 @@
     "net.sapples.LiveCaptions"
     "dev.mariinkys.Oboete"
     "net.ankiweb.Anki"
+    "org.onlyoffice.desktopeditors"
   ];
 
   networking.firewall.allowedTCPPorts = [
