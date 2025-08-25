@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./gsconnect.nix
+    ./virtual-camera.nix
     ../../../../modules/nixos/fonts.nix
     ../../../../modules/nixos/xserver.nix
     ../../../../modules/nixos/opengl.nix
