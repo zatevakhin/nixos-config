@@ -8,5 +8,6 @@
     uv
     nodejs
     wl-clipboard
+    jujutsu
   ];
 }
