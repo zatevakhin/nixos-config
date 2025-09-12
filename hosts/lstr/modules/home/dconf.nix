@@ -62,6 +62,10 @@
       "keybindings/show-screenshot-ui" = [];
     };
 
+    "org/gnome/GWeather4" = {
+      temperature-unit = "centigrade";
+    };
+
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
     };
