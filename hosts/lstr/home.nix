@@ -16,6 +16,7 @@
     ../../modules/home/zoxide.nix
     ../../modules/home/ghostty.nix
     ../../modules/home/starship.nix
+    ../../modules/home/touchpad.nix
     ../../modules/home/flameshot.nix
     ../../modules/home/copyq.nix
     ../../modules/home/emote.nix
