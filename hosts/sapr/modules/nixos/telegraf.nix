@@ -22,6 +22,11 @@
     lm_sensors
   ];
 
+  users.users.telegraf = {
+    isSystemUser = true;
+    extraGroups = ["docker"];
+  };
+
   services.telegraf = {
     enable = true;
     extraConfig = {
@@ -43,7 +48,10 @@
         net = {
           interfaces = ["eth*" "en*"];
         };
-        #sensors = {};
+        docker = {
+          endpoint = "unix:///var/run/docker.sock";
+          container_state_include = ["created" "restarting" "running" "removing" "paused" "exited" "dead"];
+        };
       };
 
       outputs = {
