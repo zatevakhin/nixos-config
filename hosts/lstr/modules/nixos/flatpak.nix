@@ -23,6 +23,7 @@
     "org.mozilla.firefox"
     "org.torproject.torbrowser-launcher"
     "io.github.tdesktop_x64.TDesktop"
+    "in.cinny.Cinny"
     "md.obsidian.Obsidian"
     "org.signal.Signal"
     "com.github.tchx84.Flatseal"
