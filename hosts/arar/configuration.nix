@@ -17,6 +17,7 @@
     # Machine specific modules
     ./modules/nixos/syncthing.nix
     ./modules/nixos/telegraf.nix
+    ./modules/nixos/step-ca.nix
     # <containers>
     ./containers/traefik
     ./containers/calibre-web
