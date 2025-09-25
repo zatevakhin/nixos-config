@@ -77,6 +77,12 @@ in {
           },
           ignore_blank_lines = true,
         }
+
+        vim.lsp.config('natural_ls', {
+            cmd       = {"${pkgs-unstable.netcat}/bin/nc", "localhost", "6969"},
+            filetypes = { 'text', 'markdown' },
+            root_markers = {'.git'},
+        })
       '';
 
     opts = {
