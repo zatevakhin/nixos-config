@@ -14,12 +14,15 @@
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
+    ../../modules/nixos/high-availability/adguard.nix
+    ../../modules/nixos/high-availability/glance.nix
     # Machine specific modules
     ./modules/nixos/syncthing.nix
     ./modules/nixos/telegraf.nix
     ./modules/nixos/step-ca.nix
+    ./modules/nixos/keepalived.nix
+    ./modules/nixos/traefik.nix
     # <containers>
-    ./containers/traefik
     ./containers/calibre-web
     ./containers/paperless-ngx
     # </containers>
@@ -30,6 +33,7 @@
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
+  sops.secrets.user-password-hashed.neededForUsers = true;
   sops.secrets.user-password-hashed.key = "user/password/hashed";
   sops.secrets.ssh-authorized-key-baseship.key = "ssh/authorized/baseship";
   # </sops>

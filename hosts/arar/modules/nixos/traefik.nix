@@ -30,7 +30,7 @@ in {
 
     staticConfigOptions = {
       api = {
-        insecure = true;
+        insecure = false;
         dashboard = true;
       };
 
@@ -38,6 +38,8 @@ in {
         checkNewVersion = true;
         sendAnonymousUsage = false;
       };
+
+      accessLog = {};
 
       providers = {
         docker = {
@@ -108,6 +110,27 @@ in {
             tls.certResolver = "stepca";
           };
 
+          adguard = {
+            rule = "Host(`adguard.homeworld.lan`)";
+            service = "adguard";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
+          step-ca = {
+            rule = "Host(`step-ca.homeworld.lan`)";
+            service = "step-ca";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
+          glance = {
+            rule = "Host(`glance.homeworld.lan`)";
+            service = "glance";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           syncthing = {
             rule = "Host(`syncthing-${hostname}.homeworld.lan`)";
             service = "syncthing";
@@ -116,6 +139,29 @@ in {
           };
         };
 
+        services.adguard = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.adguardhome.port}";
+            }
+          ];
+        };
+
+        services.step-ca = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.step-ca.port}";
+            }
+          ];
+        };
+
+        services.glance = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:${builtins.toString config.services.glance.settings.server.port}";
+            }
+          ];
+        };
         services.syncthing = {
           loadBalancer.servers = [
             {

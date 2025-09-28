@@ -14,10 +14,15 @@
     ../../modules/nixos/docker.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/zsh-mini.nix
+    ../../modules/nixos/tor.nix
+    ../../modules/nixos/high-availability/adguard.nix
+    ../../modules/nixos/high-availability/glance.nix
     # Machine specific modules
+    ./modules/nixos/keepalived.nix
     ./modules/nixos/telegraf.nix
     ./modules/nixos/traefik.nix
     ./modules/nixos/nfs.nix
+    ./modules/nixos/step-ca.nix
     # Containers
     ./containers/jellyfin
   ];
@@ -96,6 +101,31 @@
     source = config.sops.templates."ssh-authorized-keys-for-${config.users.users.root.name}".path;
   };
   # </hack>
+
+  # <ssh-over-tor>
+  sops.secrets.secret_key = {
+    sopsFile = ./secrets/tor.yaml;
+    format = "yaml";
+    key = "services/ssh/secret_key";
+    owner = config.systemd.services.tor.serviceConfig.User;
+  };
+
+  services.tor.relay.onionServices = {
+    ssh = {
+      version = 3;
+      secretKey = config.sops.secrets.secret_key.path;
+      map = [
+        {
+          port = 22;
+          target = {
+            addr = "127.0.0.1";
+            port = 22;
+          };
+        }
+      ];
+    };
+  };
+  # </ssh-over-tor>
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
