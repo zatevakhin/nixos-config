@@ -417,7 +417,17 @@ in {
     plugins.barbecue.enable = true;
     plugins.git-worktree.enable = true;
     plugins.git-worktree.enableTelescope = true;
-    plugins.todo-comments.enable = true;
+    plugins.todo-comments = {
+      enable = true;
+      settings = {
+        keywords = {
+          QUESTION = {
+            color = "hint";
+            icon = "";
+          };
+        };
+      };
+    };
     # https://github.com/tris203/precognition.nvim
     plugins.precognition.enable = false;
 
