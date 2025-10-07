@@ -101,7 +101,7 @@ in {
             }
             {
               domain = "flkr.lan";
-              answer = "192.168.1.246";
+              answer = "192.168.1.105";
             }
             {
               domain = "lstr.lan";
