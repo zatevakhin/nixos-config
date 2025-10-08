@@ -1,10 +1,10 @@
 final: prev: let
-  newVersion = "unstable-2025-07-19";
+  newVersion = "unstable-2025-09-29";
   newSrc = prev.fetchFromGitHub {
     owner = "yetone";
     repo = "avante.nvim";
-    rev = "5a4ed4ac924adb148075b461016078ac18792816";
-    hash = "sha256-X6pecjj1TtXQMzSr8fe2nRGcCmbFQ6XeY423JbKNt0s=";
+    rev = "1947025ad3d6fddbaf7bee9e51bbadf1bc644e50";
+    hash = "sha256-rhn7eC/Be5HjnKHJsH/ggFtIDcnkNw7htlPLPbLVHW4=";
   };
 
   avanteLibNew = prev.rustPlatform.buildRustPackage {
@@ -12,7 +12,7 @@ final: prev: let
     version = newVersion;
     src = newSrc;
 
-    cargoHash = "sha256-8mBpzndz34RrmhJYezd4hLrJyhVL4S4IHK3plaue1k8=";
+    cargoHash = "sha256-pTWCT2s820mjnfTscFnoSKC37RE7DAPKxP71QuM+JXQ=";
 
     nativeBuildInputs = [prev.pkg-config prev.makeWrapper prev.perl];
     buildInputs = [prev.openssl];
