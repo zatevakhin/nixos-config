@@ -50,6 +50,8 @@
       captions = ["size" "none" "none"];
     };
 
+    "org/gnome/desktop/notifications/application/org-gnome-console".enable = false;
+
     "org/gnome/shell" = {
       last-selected-power-profile = "performance";
 
