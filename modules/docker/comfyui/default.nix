@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   systemd.services.comfyui-compose = {
     script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
 
@@ -6,7 +10,7 @@
       CLI_ARGS = "--listen 0.0.0.0";
     };
 
-    wantedBy = ["multi-user.target"];
+    wantedBy = lib.mkForce [];
     after = ["docker.service" "docker.socket"];
   };
 

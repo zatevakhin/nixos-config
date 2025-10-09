@@ -2,7 +2,7 @@
 services:
   comfyui:
     container_name: comfyui
-    image: yanwk/comfyui-boot:latest
+    image: yanwk/comfyui-boot:cu126-megapak
     pull_policy: always
     ports:
       - 8188:8188
@@ -13,12 +13,12 @@ services:
       resources:
         reservations:
           devices:
-          - driver: cdi
-            capabilities: [gpu]
-            device_ids:
-            - nvidia.com/gpu=all
+            - driver: cdi
+              capabilities: [gpu]
+              device_ids:
+                - nvidia.com/gpu=all
     volumes:
-      - "comfyui-data:/home/runner"
+      - "comfyui-data:/root"
 
 volumes:
   comfyui-data:
