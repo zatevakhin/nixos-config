@@ -40,7 +40,6 @@ in {
     ./modules/nixos/wiregurad.nix
     ./modules/nixos/dnsmasq.nix
     ./modules/nixos/stylix.nix
-    ./modules/nixos/pipewire.nix
     # overlays
   ];
 
