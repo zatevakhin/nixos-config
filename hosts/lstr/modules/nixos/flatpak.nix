@@ -46,6 +46,7 @@
     "dev.mariinkys.Oboete"
     "net.ankiweb.Anki"
     "org.onlyoffice.desktopeditors"
+    "com.valvesoftware.SteamLink"
   ];
 
   networking.firewall.allowedTCPPorts = [
