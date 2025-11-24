@@ -176,14 +176,14 @@
         services.ollama = {
           loadBalancer.servers = [
             {
-              url = "http://falke.lan:11434";
+              url = "http://flkr.lan:11434";
             }
           ];
         };
         services.comfyui = {
           loadBalancer.servers = [
             {
-              url = "http://falke.lan:8188";
+              url = "http://flkr.lan:8188";
             }
           ];
         };
