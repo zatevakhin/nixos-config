@@ -72,7 +72,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_15; # Touch carefully due to ZFS
+  boot.kernelPackages = pkgs.linuxPackages_6_16; # Touch carefully due to ZFS
   # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
   #   argsOverride = rec {
   #     src = pkgs.fetchurl {
