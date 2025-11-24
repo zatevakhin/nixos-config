@@ -213,6 +213,21 @@
       ];
     };
 
+    nixosConfigurations.stcr = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        username = "zatevakhin";
+        hostname = "stcr";
+      };
+
+      modules = [
+        ./hosts/stcr/configuration.nix
+
+        inputs.disko.nixosModules.disko
+        inputs.sops-nix.nixosModules.sops
+      ];
+    };
+
     darwinConfigurations.eulr = nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit self;

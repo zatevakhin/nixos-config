@@ -12,6 +12,7 @@ keys:
   - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
   - &mnhr_machine age1ustkwg4dht8hydkev74cdvp765aundsggutq66ndm5nmckuddqnqlcrv7v
   - &sapr_machine age1jsh9t5wfjv9extwpmwcwmv9gwdyw3z69lu67es2ttcl7mr58zdlsdpe7ju
+  - &stcr_machine age1fjalfd7re6v27pfuxxxmg5cfvc2xavctmake59r293k80acvea2sdf086j
   - &eulr_machine age17r8y3a9y0v6zcxzcstg3ypnq4skzc205umvsk63yrhuzw8z4zayqqeatcw
 creation_rules:
   - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
@@ -49,6 +50,11 @@ creation_rules:
     - age:
       - *default_ssh
       - *sapr_machine
+  - path_regex: hosts/stcr/secrets/[^/]+\.(yaml)$
+    key_groups:
+    - age:
+      - *default_ssh
+      - *stcr_machine
   - path_regex: hosts/eulr/secrets/[^/]+\.(yaml)$
     key_groups:
     - age:
