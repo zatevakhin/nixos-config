@@ -8,41 +8,45 @@
   nvidia_specific_kernel_params = ["pcie_aspm=off"];
   amd_modules = ["amdgpu"];
 in {
-  boot.initrd.kernelModules = nvidia_modules;
-  boot.blacklistedKernelModules = amd_modules;
-  boot.kernelParams = nvidia_specific_kernel_params;
+  # boot.initrd.kernelModules = nvidia_modules;
+  # boot.blacklistedKernelModules = amd_modules;
+  # boot.kernelParams = nvidia_specific_kernel_params;
 
-  specialisation = {
-    laptop.configuration = {
-      system.nixos.tags = ["laptop"];
+  boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" "amdgpu"];
+  # boot.blacklistedKernelModules = amd_modules;
+  # boot.kernelParams = nvidia_specific_kernel_params;
 
-      boot.initrd.kernelModules = lib.mkForce (lib.pipe config.boot.initrd.kernelModules [
-        lib.unique
-        (lib.subtractLists nvidia_modules)
-        lib.mkAfter
-      ]);
+  # specialisation = {
+  #   laptop.configuration = {
+  #     system.nixos.tags = ["laptop"];
+  #
+  #     boot.initrd.kernelModules = lib.mkForce (lib.pipe config.boot.initrd.kernelModules [
+  #       lib.unique
+  #       (lib.subtractLists nvidia_modules)
+  #       lib.mkAfter
+  #     ]);
+  #
+  #     boot.blacklistedKernelModules = lib.mkForce (lib.pipe config.boot.blacklistedKernelModules [
+  #       lib.unique
+  #       (lib.subtractLists amd_modules)
+  #       lib.mkAfter
+  #     ]);
+  #
+  #     boot.kernelParams = lib.mkForce (lib.pipe config.boot.kernelParams [
+  #       (lib.subtractLists nvidia_specific_kernel_params)
+  #       (lib.filter (x: !(lib.hasInfix "nvidia" x)))
+  #       lib.mkAfter
+  #     ]);
+  #
+  #     services.xserver.videoDrivers = lib.mkForce amd_modules;
+  #
+  #     systemd.services.delayed-amdgpu.enable = lib.mkForce false;
+  #     hardware.nvidia.prime.sync.enable = lib.mkForce false;
+  #     hardware.nvidia-container-toolkit.enable = lib.mkForce false;
+  #   };
+  # };
 
-      boot.blacklistedKernelModules = lib.mkForce (lib.pipe config.boot.blacklistedKernelModules [
-        lib.unique
-        (lib.subtractLists amd_modules)
-        lib.mkAfter
-      ]);
-
-      boot.kernelParams = lib.mkForce (lib.pipe config.boot.kernelParams [
-        (lib.subtractLists nvidia_specific_kernel_params)
-        (lib.filter (x: !(lib.hasInfix "nvidia" x)))
-        lib.mkAfter
-      ]);
-
-      services.xserver.videoDrivers = lib.mkForce amd_modules;
-
-      systemd.services.delayed-amdgpu.enable = lib.mkForce false;
-      hardware.nvidia.prime.sync.enable = lib.mkForce false;
-      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
-    };
-  };
-
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["nvidia" "amdgpu"];
 
   # NOTE: Now when running containers that require GPUs
   #       use next syntax to add GPUs to container.
@@ -52,17 +56,17 @@ in {
   # NOTE: Not all display outputs are working if there is no `amdgpu` driver loaded.
   # Delayed loading after display manager is started to use proper driver.
   # - Need to try to start after gdm.service mb will be better. coz some times need to re-plug display.
-  systemd.services.delayed-amdgpu = {
-    description = "Delayed loading of amdgpu kernel module";
-    after = ["display-manager.service"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStartPre = "/run/current-system/sw/bin/sleep 2";
-      ExecStart = "/run/current-system/sw/bin/modprobe amdgpu";
-      RemainAfterExit = true;
-    };
-  };
+  # systemd.services.delayed-amdgpu = {
+  #   description = "Delayed loading of amdgpu kernel module";
+  #   after = ["display-manager.service"];
+  #   wantedBy = ["multi-user.target"];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStartPre = "/run/current-system/sw/bin/sleep 2";
+  #     ExecStart = "/run/current-system/sw/bin/modprobe amdgpu";
+  #     RemainAfterExit = true;
+  #   };
+  # };
 
   hardware.nvidia.prime = {
     sync.enable = true;
