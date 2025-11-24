@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   username,
   hostname,
   ...
@@ -18,18 +19,26 @@ in {
     ../../modules/nixos/tor.nix
     # Machine specific modules
     ./modules/nixos/adguard.nix
-    ./modules/nixos/glance.nix
-    ./modules/nixos/step-ca.nix
+    # ./modules/nixos/duckdns.nix
+    # ./modules/nixos/mosquitto.nix
+    # ./modules/nixos/glance.nix
+    # ./modules/nixos/step-ca.nix
     ./modules/nixos/traefik.nix
     ./modules/nixos/telegraf.nix
     ./modules/nixos/jellyseerr.nix
-    ./modules/nixos/grafana.nix
-    ./modules/nixos/minio.nix
+    # ./modules/nixos/grafana.nix
+    # ./modules/nixos/minio.nix
     ./modules/nixos/nfs.nix
     ./modules/nixos/syncthing.nix
+    # ./modules/nixos/home-assistant
     # All services in docker containers
     ./containers
   ];
+
+  # <nix>
+  nix.package = lib.mkForce pkgs.nix;
+  nix.settings.experimental-features = lib.mkForce ["nix-command" "flakes"];
+  # </nix>
 
   # <sops>
   sops.defaultSopsFormat = "yaml";

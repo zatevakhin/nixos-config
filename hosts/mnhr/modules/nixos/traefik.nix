@@ -135,18 +135,24 @@
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
-          minio-api = {
-            rule = "Host(`${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
-            service = "minio-api";
-            entryPoints = ["websecure"];
-            tls.certResolver = "stepca";
-          };
-          minio-console = {
-            rule = "Host(`console-${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
-            service = "console-minio";
-            entryPoints = ["websecure"];
-            tls.certResolver = "stepca";
-          };
+          # minio-api = {
+          #   rule = "Host(`${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
+          #   service = "minio-api";
+          #   entryPoints = ["websecure"];
+          #   tls.certResolver = "stepca";
+          # };
+          # minio-console = {
+          #   rule = "Host(`console-${config.systemd.services.minio.environment.MINIO_DOMAIN}`)";
+          #   service = "console-minio";
+          #   entryPoints = ["websecure"];
+          #   tls.certResolver = "stepca";
+          # };
+          # home-assistant = {
+          #   rule = "Host(`ha.homeworld.lan`)";
+          #   service = "home-assistant";
+          #   entryPoints = ["websecure"];
+          #   tls.certResolver = "stepca";
+          # };
         };
 
         services.adguard = {
@@ -164,6 +170,12 @@
             }
           ];
         };
+
+        # services.home-assistant.loadBalancer.servers = [
+        #   {
+        #     url = "http://localhost:${builtins.toString config.services.home-assistant.config.http.server_port}";
+        #   }
+        # ];
 
         services.jellyseerr = {
           loadBalancer.servers = [
@@ -194,24 +206,24 @@
             }
           ];
         };
-        services.console-minio = {
-          loadBalancer.servers = [
-            (let
-              port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.consoleAddress) 1;
-            in {
-              url = "http://localhost:${port}";
-            })
-          ];
-        };
-        services.minio-api = {
-          loadBalancer.servers = [
-            (let
-              port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.listenAddress) 1;
-            in {
-              url = "http://localhost:${port}";
-            })
-          ];
-        };
+        # services.console-minio = {
+        #   loadBalancer.servers = [
+        #     (let
+        #       port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.consoleAddress) 1;
+        #     in {
+        #       url = "http://localhost:${port}";
+        #     })
+        #   ];
+        # };
+        # services.minio-api = {
+        #   loadBalancer.servers = [
+        #     (let
+        #       port = builtins.elemAt (lib.strings.splitString ":" config.services.minio.listenAddress) 1;
+        #     in {
+        #       url = "http://localhost:${port}";
+        #     })
+        #   ];
+        # };
       };
     };
   };
