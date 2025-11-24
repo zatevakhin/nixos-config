@@ -12,7 +12,7 @@
     environment = {
       TRAEFIK_DOMAIN = "tf.homeworld.lan";
       LEGO_CA_CERTIFICATES = pkgs.fetchurl {
-        url = "https://ca.homeworld.lan:8443/roots.pem";
+        url = "https://step-ca.homeworld.lan:8443/roots.pem";
         hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
         curlOpts = "--insecure";
       };
@@ -64,7 +64,7 @@
 
       certificatesResolvers.stepca = {
         acme = {
-          caServer = "https://ca.homeworld.lan:8443/acme/acme/directory";
+          caServer = "https://step-ca.homeworld.lan:8443/acme/acme/directory";
           certificatesDuration = 24;
           keyType = "EC256";
           storage = "/var/lib/traefik/acme.json";
