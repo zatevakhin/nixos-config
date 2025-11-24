@@ -93,6 +93,9 @@
     * 3. Nix-Darwin Installation (for macOS systems like eulr):
     *    - Switch to the nix-darwin configuration:
     *      nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .#eulr
+    *
+    * 4. SSH Options (might be needed when working with long hostnames):
+    *    - export NIX_SSHOPTS="-o ControlPath=~/.ssh/cm-%r@%h:%p -o ControlMaster=auto -o ControlPersist=10m"
     */
 
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
@@ -154,6 +157,7 @@
       ];
     };
 
+    # Disposed
     nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
@@ -260,7 +264,7 @@
         }
       ];
     };
-
+    # qemu-system-x86_64 -m 2048M --drive "media=cdrom,file=${NIXOS_CONFIG_ISO},format=raw,readonly=on" -net nic -net user -nographic -monitor pty -serial stdio -drive file=nixos-test.qcow2,format=qcow2,if=virtio -smp 4
     nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
       system = "${system}";
       modules = [
