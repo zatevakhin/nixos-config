@@ -72,17 +72,17 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_16; # Touch carefully due to ZFS
-  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
-  #   argsOverride = rec {
-  #     src = pkgs.fetchurl {
-  #       url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-  #       sha256 = "0hhj49k3ksjcp0dg5yiahqzryjfdpr9c1a9ph6j9slzmkikbn7v1";
-  #     };
-  #     version = "6.13.12";
-  #     modDirVersion = "6.13.12";
-  #   };
-  # });
+  # boot.kernelPackages = pkgs.linuxPackages_6_16; # Touch carefully due to ZFS
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
+    argsOverride = rec {
+      src = pkgs.fetchurl {
+        url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+        sha256 = "sha256-XzBPDEU9h6x2Ugc1naT1pzOTnRWV7yWPGAkZT6GNuns=";
+      };
+      version = "6.16.11";
+      modDirVersion = "6.16.11";
+    };
+  });
 
   networking.hostName = hostname; # Define your hostname.
   networking.hostId = "906df12d";
