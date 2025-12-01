@@ -1,18 +1,24 @@
 {
   pkgs,
   config,
-  lib,
+  hostname,
   ...
-}: {
+}: let
+  TRAEFIK_DOMAIN = "traefik.homeworld.lan";
+  TRAEFIK_DOMAIN_HOST_SPECIFIC = "traefik-${hostname}.homeworld.lan";
+  TRAEFIK_HTTP_PORT = 80;
+  TRAEFIK_HTTPS_PORT = 443;
+in {
   systemd.services.traefik = {
     serviceConfig = {
       SupplementaryGroups = ["docker"];
       StateDirectory = "traefik";
     };
     environment = {
-      TRAEFIK_DOMAIN = "tf.homeworld.lan";
+      TRAEFIK_DOMAIN = TRAEFIK_DOMAIN;
+      TRAEFIK_DOMAIN_HOST_SPECIFIC = TRAEFIK_DOMAIN_HOST_SPECIFIC;
       LEGO_CA_CERTIFICATES = pkgs.fetchurl {
-        url = "https://step-ca.homeworld.lan:8443/roots.pem";
+        url = "https://localhost:8443/roots.pem";
         hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
         curlOpts = "--insecure";
       };
@@ -44,7 +50,7 @@
 
       entryPoints = {
         web = {
-          address = ":80";
+          address = ":${toString TRAEFIK_HTTP_PORT}";
           transport.respondingTimeouts = {
             readTimeout = "600s";
             idleTimeout = "600s";
@@ -53,7 +59,7 @@
         };
 
         websecure = {
-          address = ":443";
+          address = ":${toString TRAEFIK_HTTPS_PORT}";
           transport.respondingTimeouts = {
             readTimeout = "600s";
             idleTimeout = "600s";
@@ -90,6 +96,20 @@
             tls.certResolver = "stepca";
           };
 
+          traefik-host-specific = {
+            rule = "Host(`${config.systemd.services.traefik.environment.TRAEFIK_DOMAIN_HOST_SPECIFIC}`)";
+            service = "dashboard@internal";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
+          traefik-api-host-specific = {
+            rule = "Host(`${config.systemd.services.traefik.environment.TRAEFIK_DOMAIN_HOST_SPECIFIC}`) && PathPrefix(`/api`)";
+            service = "api@internal";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
           adguard = {
             rule = "Host(`adguard.homeworld.lan`)";
             service = "adguard";
@@ -100,6 +120,13 @@
           glance = {
             rule = "Host(`glance.homeworld.lan`)";
             service = "glance";
+            entryPoints = ["websecure"];
+            tls.certResolver = "stepca";
+          };
+
+          syncthing = {
+            rule = "Host(`syncthing-${hostname}.homeworld.lan`)";
+            service = "syncthing";
             entryPoints = ["websecure"];
             tls.certResolver = "stepca";
           };
@@ -171,6 +198,14 @@
           ];
         };
 
+        services.syncthing = {
+          loadBalancer.servers = [
+            {
+              url = "http://localhost:8384";
+            }
+          ];
+        };
+
         # services.home-assistant.loadBalancer.servers = [
         #   {
         #     url = "http://localhost:${builtins.toString config.services.home-assistant.config.http.server_port}";
@@ -228,5 +263,5 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [80 443];
+  networking.firewall.allowedTCPPorts = [TRAEFIK_HTTP_PORT TRAEFIK_HTTPS_PORT];
 }
