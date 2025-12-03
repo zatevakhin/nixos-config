@@ -4,6 +4,7 @@
 in {
   networking.firewall.allowedUDPPorts = [ADGUARD_DNS_PORT];
 
+  # TODO: Limit or Move query log.
   services.adguardhome = {
     enable = true;
     mutableSettings = false;
@@ -146,6 +147,7 @@ in {
               "forgejo"
               "minio"
               "console-minio"
+              "traefik-mnhr"
               # *arr
               "radarr"
               "sonarr"

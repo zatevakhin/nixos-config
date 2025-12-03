@@ -27,6 +27,9 @@
     ./containers/paperless-ngx
     # </containers>
   ];
+  # <nix>
+  programs.nix-ld.package = lib.mkForce pkgs.nix-ld-rs;
+  # </nix>
 
   # <sops>
   sops.defaultSopsFormat = "yaml";
