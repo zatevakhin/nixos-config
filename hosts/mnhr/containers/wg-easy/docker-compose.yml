@@ -1,16 +1,10 @@
 ---
 services:
   wg-easy:
-    image: ghcr.io/wg-easy/wg-easy:latest
+    image: ghcr.io/wg-easy/wg-easy:15
     container_name: wg-easy
     environment:
-      - WG_HOST
-      - PASSWORD_HASH
-      - LANG=en
-      - UI_TRAFFIC_STATS=true
-      - WG_DEFAULT_DNS=10.0.1.1 # host IP in proxy network (TODO: make configurable)
-      - WG_DEFAULT_ADDRESS=10.8.0.x
-      - UI_CHART_TYPE=1
+      - DISABLE_IPV6=true
     volumes:
       - wg-easy-config:/etc/wireguard
     ports:
@@ -20,35 +14,30 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
     restart: no
     labels:
-     - traefik.enable=true
-     - traefik.docker.network=proxy
+      - traefik.enable=true
       # HTTPS Router Configuration
-     - traefik.http.routers.wg.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
-     - traefik.http.routers.wg.tls=true
-     - traefik.http.routers.wg.entrypoints=websecure
-     - traefik.http.routers.wg.tls.certresolver=stepca
-      # Service Configuration
-     - traefik.http.services.wg.loadbalancer.server.port=51821
+      - traefik.http.routers.wg.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.wg.tls=true
+      - traefik.http.routers.wg.entrypoints=websecure
+      - traefik.http.routers.wg.tls.certresolver=stepca
+        # Service Configuration
+      - traefik.http.services.wg.loadbalancer.server.port=51821
 
-    dns_search: proxy
     networks:
-      wg-easy:
-      proxy:
+      wg:
+        ipv4_address: 10.10.0.2
 
 volumes:
   wg-easy-config:
 
 networks:
-  wg-easy:
+  wg:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: "10.8.1.0/24"
-  proxy:
-    external: true
-
+        - subnet: 10.10.0.0/24
