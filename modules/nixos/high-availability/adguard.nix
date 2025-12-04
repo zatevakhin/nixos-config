@@ -148,6 +148,7 @@ in {
               "minio"
               "console-minio"
               "traefik-mnhr"
+              "navidrome"
               # *arr
               "radarr"
               "sonarr"

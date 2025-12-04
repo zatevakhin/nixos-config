@@ -313,6 +313,11 @@ in {
                           url = "https://stump.homeworld.lan";
                           icon = "/assets/svg/stump.svg";
                         }
+                        {
+                          title = "Navidrome";
+                          url = "https://navidrome.homeworld.lan";
+                          icon = "/assets/svg/navidrome.svg";
+                        }
                       ];
                     }
                     {

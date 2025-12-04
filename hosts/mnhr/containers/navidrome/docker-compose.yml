@@ -1,0 +1,27 @@
+---
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: 1000:100
+    restart: no
+    volumes:
+      - "navidrome-data:/data"
+      - "/storage/media/library/music:/music:ro"
+    labels:
+      - traefik.enable=true
+      # HTTP Router Configuration
+      - traefik.http.routers.navidrome.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.navidrome.entrypoints=web
+      - traefik.http.routers.navidrome.service=navidrome-service
+      # HTTPS Router Configuration
+      - traefik.http.routers.navidrome-https.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.navidrome-https.tls=true
+      - traefik.http.routers.navidrome-https.entrypoints=websecure
+      - traefik.http.routers.navidrome-https.tls.certresolver=stepca
+      - traefik.http.routers.navidrome-https.service=navidrome-service
+        # Service Configuration
+      - traefik.http.services.navidrome-service.loadbalancer.server.port=4533
+
+volumes:
+  navidrome-data:

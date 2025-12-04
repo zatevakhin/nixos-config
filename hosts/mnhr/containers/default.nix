@@ -9,6 +9,7 @@
     ./searxng
     ./deep-research
     ./audiobookshelf
+    ./navidrome
 
     ./grocy
     # ./kitchenowl
