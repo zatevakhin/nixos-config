@@ -39,6 +39,7 @@ in {
     ./modules/nixos/wayland.nix
     ./modules/nixos/wiregurad.nix
     ./modules/nixos/dnsmasq.nix
+    ./modules/nixos/routes.nix
     ./modules/nixos/stylix.nix
     # overlays
   ];

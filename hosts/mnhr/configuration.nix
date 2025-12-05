@@ -60,8 +60,12 @@ in {
   nixpkgs.overlays = [
   ];
 
-  networking.nftables.enable = false;
-  networking.firewall.enable = false;
+  # <firewall>
+  networking.firewall = {
+    enable = true;
+    checkReversePath = "loose";
+  };
+  # </firewall>
 
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs

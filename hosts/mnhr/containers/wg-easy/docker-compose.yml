@@ -4,6 +4,7 @@ services:
     image: ghcr.io/wg-easy/wg-easy:15
     container_name: wg-easy
     environment:
+      - INSECURE=true
       - DISABLE_IPV6=true
     volumes:
       - wg-easy-config:/etc/wireguard
@@ -37,6 +38,8 @@ volumes:
 networks:
   wg:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-wg-easy
     ipam:
       driver: default
       config:
