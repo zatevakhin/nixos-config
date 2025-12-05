@@ -28,6 +28,11 @@ in {
     target = "ssh/ssh_host_ed25519_key.pub";
   };
 
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+  };
+
   services.tor = {
     enable = true;
     relay.onionServices = {
