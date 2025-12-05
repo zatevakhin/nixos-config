@@ -26,6 +26,7 @@
     "in.cinny.Cinny"
     "md.obsidian.Obsidian"
     "org.signal.Signal"
+    "chat.simplex.simplex"
     "com.github.tchx84.Flatseal"
     "net.werwolv.ImHex"
     "fr.romainvigier.MetadataCleaner"
