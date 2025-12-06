@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs-unstable, ...}: {
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
@@ -10,7 +10,7 @@
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
     gnomeExtensions.tiling-assistant

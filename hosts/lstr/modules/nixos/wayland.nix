@@ -3,7 +3,7 @@
   username,
   ...
 }: {
-  services.xserver.displayManager.gdm.wayland = lib.mkForce true;
+  services.displayManager.gdm.wayland = lib.mkForce true;
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -16,6 +16,7 @@
     XCURSOR_SIZE = lib.mkForce "12"; # BUG: Cursor oversized on Xwayland applications
   };
 
+  # TODO: Remove coz it is unused.
   programs.ydotool.enable = true;
   users.users.${username}.extraGroups = ["ydotool"];
 }

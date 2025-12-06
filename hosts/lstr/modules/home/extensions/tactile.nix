@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{pkgs-unstable, ...}: {
   dconf.settings = {
     "org/gnome/shell" = {
-      enabled-extensions = with pkgs.gnomeExtensions; [
+      enabled-extensions = with pkgs-unstable.gnomeExtensions; [
         tactile.extensionUuid
       ];
     };
@@ -24,7 +24,7 @@
     };
   };
 
-  home.packages = with pkgs.gnomeExtensions; [
+  home.packages = with pkgs-unstable.gnomeExtensions; [
     tactile
   ];
 }

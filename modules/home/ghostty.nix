@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
+  # NOTE: (06-12-2025): Ghosty fails with `https://github.com/ghostty-org/ghostty/discussions/8219`, set as unstable for now.
+  nixpkgs.overlays = [
+    (self: super: {ghostty = pkgs-unstable.ghostty;})
+  ];
+
   # NOTE: Not used due to issues with terminfo
   # https://github.com/ghostty-org/ghostty/discussions/2701
   # https://ghostty.org/docs/help/terminfo
@@ -16,7 +25,6 @@
       font-family = "FiraCode Nerd Font";
       window-decoration = true;
       gtk-titlebar = false;
-      gtk-adwaita = false;
       mouse-scroll-multiplier = 0.5;
     };
   };

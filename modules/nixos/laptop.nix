@@ -1,8 +1,8 @@
 {...}: {
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "lock";
-    extraConfig = "HandlePowerKey=suspend";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "lock";
+    HandleLidSwitchDocked = "lock";
+    HandleLidSwitchExternalPower = "lock";
+    HandlePowerKey = "suspend";
   };
 }

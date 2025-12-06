@@ -538,32 +538,25 @@ in {
 
     plugins.neo-tree = {
       enable = true;
-      enableGitStatus = true;
-      enableModifiedMarkers = true;
-      gitStatusAsync = true;
-      extraOptions = {
-        use_libuv_file_watcher = true;
-      };
+      settings = {
+        enable_git_status = true;
+        enable_modified_markers = true;
+        git_status_async = true;
+        git_status_async_options.batch_delay = 10;
 
-      gitStatusAsyncOptions = {
-        batchDelay = 10;
-      };
-      sourceSelector = {
-        statusline = true;
-        winbar = true;
-      };
-
-      filesystem.filteredItems.hideDotfiles = false;
-
-      sources = ["filesystem"];
-
-      window = {
-        # width = 35;
-        position = "float";
-
-        popup = {
-          position = "50%";
+        source_selector = {
+          statusline = true;
+          winbar = true;
         };
+        window = {
+          position = "float";
+          popup.position = "50%";
+        };
+
+        filesystem.filtered_items.hide_dotfiles = false;
+
+        sources = ["filesystem"];
+        use_libuv_file_watcher = true;
       };
     };
 
@@ -750,10 +743,12 @@ in {
     };
     plugins.treesitter-refactor = {
       enable = true;
-      navigation.enable = true;
-      smartRename.enable = true;
-      # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
-      highlightDefinitions.enable = true;
+      settings = {
+        navigation.enable = true;
+        smart_rename.enable = true;
+        # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
+        highlight_definitions.enable = true;
+      };
     };
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>

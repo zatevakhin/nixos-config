@@ -6,5 +6,5 @@
     gamescopeSession.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [mangohud];
+  environment.systemPackages = with pkgs; [mangohud protonup-rs];
 }

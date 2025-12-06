@@ -34,7 +34,7 @@ in {
     ./modules/nixos/development.nix
     ./modules/nixos/nvidia.nix
     ./modules/nixos/flatpak.nix
-    ./modules/nixos/telegraf.nix
+    # ./modules/nixos/telegraf.nix
     ./modules/nixos/wiregurad.nix
     # NOTE: Removed as new network card arrived.
     # ./modules/nixos/keepalived.nix
@@ -159,7 +159,7 @@ in {
 
   home-manager = {
     # also pass inputs to home-manager modules
-    extraSpecialArgs = {inherit inputs username;};
+    extraSpecialArgs = {inherit inputs username pkgs-unstable;};
     users = {
       "${username}" = import ./home.nix;
     };

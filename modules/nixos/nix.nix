@@ -15,7 +15,7 @@
     };
 
     settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      experimental-features = ["nix-command" "flakes"];
       trusted-users = ["@wheel"];
     };
   };
@@ -24,7 +24,7 @@
 
   programs.nix-ld = {
     enable = true;
-    package = pkgs.nix-ld-rs;
+    package = pkgs.nix-ld;
   };
 
   nixpkgs.config = {
