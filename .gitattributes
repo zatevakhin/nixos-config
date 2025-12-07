@@ -13,6 +13,8 @@ hosts/arar/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 hosts/mnhr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 hosts/mnhr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 
+hosts/stcr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+
 hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
 
 hosts/iso/secrets/iso.nix filter=git-agecrypt diff=git-agecrypt

@@ -13,7 +13,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sdb";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {
@@ -54,27 +54,9 @@
     };
   };
 
-  environment.etc."luks.keyfile" = {
-    enable = true;
-    user = "root";
-    group = "root";
-    mode = "0600";
-    source = ./luks.keyfile;
-  };
-
   # Ensure encrypted devices are mounted at boot
-  boot.initrd = {
-    secrets = {
-      "/root/luks.keyfile" = "/etc/luks.keyfile";
-    };
-
-    luks.devices = {
-      root = {
-        device = "/dev/disk/by-partlabel/disk-main-root";
-        keyFile = "/root/luks.keyfile";
-        allowDiscards = true;
-      };
-    };
+  boot.initrd.secrets = {
+    "/root/luks.keyfile" = "/root/luks.keyfile";
   };
 
   environment.systemPackages = with pkgs; [cryptsetup];
