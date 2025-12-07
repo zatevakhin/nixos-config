@@ -14,29 +14,14 @@
     ../../modules/nixos/zsh-mini.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/tor.nix
+    # Machine specific modules
+    ./modules/nixos/wiregurad.nix
   ];
 
   # <sops>
   sops.defaultSopsFormat = "yaml";
   sops.defaultSopsFile = ./secrets/default.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-  # <ssh-key>
-  # NOTE: Use only on build-vm
-  # sops.age.sshKeyPaths = [../../extra-files/stcr/etc/ssh/ssh_host_ed25519_key];
-  # environment.etc."/etc/ssh/ssh_host_ed25519_key" = {
-  #   source = ../../extra-files/stcr/etc/ssh/ssh_host_ed25519_key;
-  #   mode = "0600";
-  #   user = "root";
-  #   group = "root";
-  # };
-  # environment.etc."/etc/ssh/ssh_host_ed25519_key.pub" = {
-  #   source = ../../extra-files/stcr/etc/ssh/ssh_host_ed25519_key.pub;
-  #   mode = "0600";
-  #   user = "root";
-  #   group = "root";
-  # };
-
-  # </ssh-key>
 
   sops.secrets.user-password-hashed.key = "user/password/hashed";
   sops.secrets.ssh-authorized-key-lstr.key = "ssh/authorized/lstr";
@@ -48,8 +33,13 @@
 
   # <networking>
   networking.hostName = hostname;
-  networking.firewall.enable = lib.mkForce false;
+  networking.firewall.enable = lib.mkForce true;
   # </networking>
+
+  # <console>
+  # Disable TTY
+  console.enable = false;
+  # </console>
 
   # Set your time zone.
   time.timeZone = "Europe/Kyiv";
@@ -78,7 +68,7 @@
   services.tor.relay.onionServices = {
     ssh = {
       version = 3;
-      secretKey = ./hs_ed25519_secret_key;
+      secretKey = config.sops.secrets.secret_key.path;
       map = [
         {
           port = 22;
