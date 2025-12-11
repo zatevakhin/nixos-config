@@ -48,7 +48,6 @@
     "net.ankiweb.Anki"
     "org.onlyoffice.desktopeditors"
     "com.valvesoftware.SteamLink"
-    "org.squidowl.halloy"
   ];
 
   networking.firewall.allowedTCPPorts = [
