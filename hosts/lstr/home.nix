@@ -14,10 +14,10 @@
     ../../modules/home/fzf.nix
     ../../modules/home/helix.nix
     ../../modules/home/zoxide.nix
+    ../../modules/home/gradia.nix
     ../../modules/home/ghostty.nix
     ../../modules/home/starship.nix
     ../../modules/home/touchpad.nix
-    ../../modules/home/flameshot.nix
     ../../modules/home/copyq.nix
     ../../modules/home/emote.nix
     ../../modules/home/associations.nix
