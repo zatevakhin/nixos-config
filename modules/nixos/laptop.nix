@@ -3,6 +3,6 @@
     HandleLidSwitch = "lock";
     HandleLidSwitchDocked = "lock";
     HandleLidSwitchExternalPower = "lock";
-    HandlePowerKey = "suspend";
+    HandlePowerKey = "lock";
   };
 }

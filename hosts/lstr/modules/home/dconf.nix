@@ -70,6 +70,8 @@
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
+      power-button-action = "nothing";
+      sleep-inactive-battery-type = "nothing";
     };
 
     "org/gnome/settings-daemon/plugins/color" = {
