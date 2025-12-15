@@ -12,7 +12,7 @@ in {
   # boot.blacklistedKernelModules = amd_modules;
   # boot.kernelParams = nvidia_specific_kernel_params;
 
-  boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" "amdgpu"];
+  boot.initrd.kernelModules = ["amdgpu"];
   # boot.blacklistedKernelModules = amd_modules;
   # boot.kernelParams = nvidia_specific_kernel_params;
 
@@ -46,7 +46,10 @@ in {
   #   };
   # };
 
-  services.xserver.videoDrivers = ["nvidia" "amdgpu"];
+  services.xserver.videoDrivers = [
+    "amdgpu"
+    "nvidia"
+  ];
 
   # NOTE: Now when running containers that require GPUs
   #       use next syntax to add GPUs to container.
