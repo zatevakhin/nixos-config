@@ -50,6 +50,14 @@ in {
   sops.secrets.ssh-authorized-key-eulr.key = "ssh/authorized/eulr";
   # </sops>
 
+  # <gaming>
+  # StarCitizen
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 1048576;
+    "fs.file-max" = 524288;
+  };
+  # </gaming>
+
   # <certificates>
   security.pki.certificateFiles = [
     (pkgs.fetchurl {
