@@ -65,7 +65,13 @@
 
     # filemanagers
     mc
+
+    # ghostty terminfo
+    ghostty.terminfo
   ];
+
+  # NOTE: In addition to `ghostty.terminfo`
+  environment.enableAllTerminfo = true;
 
   # Default shell
   programs.zsh.enable = true;
