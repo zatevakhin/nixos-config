@@ -84,7 +84,7 @@ in {
   ];
 
   # NOTE: Yolo mode, going with latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
