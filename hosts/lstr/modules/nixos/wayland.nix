@@ -1,8 +1,4 @@
-{
-  lib,
-  username,
-  ...
-}: {
+{lib, ...}: {
   services.displayManager.gdm.wayland = lib.mkForce true;
 
   environment.sessionVariables = {
@@ -15,8 +11,4 @@
   environment.variables = {
     XCURSOR_SIZE = lib.mkForce "12"; # BUG: Cursor oversized on Xwayland applications
   };
-
-  # TODO: Remove coz it is unused.
-  programs.ydotool.enable = true;
-  users.users.${username}.extraGroups = ["ydotool"];
 }
