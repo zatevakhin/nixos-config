@@ -40,9 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
-    mcp-hub.url = "github:ravitemer/mcp-hub";
-
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
     };
@@ -51,6 +48,9 @@
       url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # MCPs
+    searxng-mcp.url = "github:zatevakhin/searxng-mcp";
   };
 
   outputs = {
@@ -136,6 +136,7 @@
         inputs.home-manager.nixosModules.default
         inputs.nix-flatpak.nixosModules.nix-flatpak
         inputs.stylix.nixosModules.stylix
+        inputs.searxng-mcp.nixosModules.searxng-mcp
       ];
     };
 

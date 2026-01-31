@@ -28,6 +28,7 @@ in {
     ../../modules/nixos/tmux.nix
     ../../modules/nixos/languagetool.nix
     ../../modules/nixos/searxng.nix
+    ../../modules/nixos/searxng-mcp.nix
     # Machine specific modules
     ./modules/nixos/desktop.nix
     ./modules/nixos/syncthing.nix
