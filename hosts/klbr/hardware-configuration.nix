@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   modulesPath,
   ...
@@ -7,16 +8,17 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              size = "1024M";
+              size = "2048M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -30,12 +32,56 @@
             root = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
-                mountOptions = [
-                  "noatime"
-                ];
+                type = "luks";
+                name = "crypted";
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    "/rootfs" = {
+                      mountpoint = "/";
+                    };
+                    "/home" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/home";
+                    };
+                    "/projects" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/projects";
+                    };
+                    "/log" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/var/log";
+                    };
+                    "/libvirt" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/var/lib/libvirt";
+                    };
+                    "/docker" = {
+                      mountOptions = ["compress=zstd"];
+                      mountpoint = "/var/lib/docker";
+                    };
+                    "/nix" = {
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                      mountpoint = "/nix";
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      swap = {
+                        swapfile.size = "20M";
+                      };
+                    };
+                  };
+                  mountOptions = [
+                    "noatime"
+                  ];
+                };
               };
             };
           };
@@ -44,11 +90,18 @@
     };
   };
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+  };
+
+  environment.systemPackages = with pkgs; [cryptsetup sbctl];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = [];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -58,5 +111,10 @@
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # NOTE: Enable all firmware regardless of license.
+  hardware.enableAllFirmware = true;
+
+  hardware.amdgpu.initrd.enable = true;
+  hardware.amdgpu.opencl.enable = true;
 }
