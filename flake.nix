@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -157,11 +158,12 @@
       ];
     };
 
-    # Disposed
     nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
-        username = "zatevakhin";
+        inherit system;
+        inherit username;
+        inherit pkgs-unstable;
         hostname = "klbr";
       };
 
@@ -170,6 +172,11 @@
 
         inputs.disko.nixosModules.disko
         inputs.sops-nix.nixosModules.sops
+        inputs.nixvim.nixosModules.nixvim
+        inputs.stylix.nixosModules.stylix
+        inputs.home-manager.nixosModules.default
+        inputs.nix-flatpak.nixosModules.nix-flatpak
+        inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
       ];
     };
 

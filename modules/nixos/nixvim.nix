@@ -1,19 +1,10 @@
 {
   lib,
   pkgs-unstable,
-  inputs,
-  system,
   ...
-}: let
-  mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
-  mcp-hub = inputs.mcp-hub.packages."${system}".default;
-in {
+}: {
   # NOTE: Disable default neovim because it is enabled in `base.nix`
   programs.neovim.enable = lib.mkForce false;
-
-  environment.systemPackages = [
-    mcp-hub
-  ];
 
   programs.nixvim = {
     enable = true;
@@ -25,19 +16,12 @@ in {
       iron-nvim
       blink-cmp-avante
       blink-cmp-conventional-commits
-      mcphub-nvim
     ];
     extraConfigLua =
       /*
       lua
       */
       ''
-        require("mcphub").setup({
-            port = 3000,
-            config = vim.fn.expand("~/.config/mcp-hub/mcp-servers.json"),
-            cmd = "${mcp-hub}/bin/mcp-hub",
-        })
-
         local iron = require("iron.core")
         local view = require("iron.view")
         local common = require("iron.fts.common")
@@ -238,14 +222,6 @@ in {
         };
       }
       {
-        action = "<cmd>MCPHub<CR>";
-        key = "<leader>mh";
-        mode = "n";
-        options = {
-          desc = "Undo history";
-        };
-      }
-      {
         action = "<cmd>Gitsigns stage_hunk<CR>";
         key = "<space>gsh";
         mode = "n";
@@ -255,157 +231,11 @@ in {
       }
     ];
 
-    plugins.avante = {
-      enable = true;
-      package = pkgs-unstable.vimPlugins.avante-nvim;
-
-      settings = {
-        mode = "agentic";
-        behaviour = {
-          # auto_suggestions = true;
-          enable_cursor_planning_mode = true;
-          jump_result_buffer_on_finish = false;
-        };
-
-        disabled_tools = [
-          "python"
-          "web_search"
-          "list_files"
-          "search_files"
-          "read_file"
-          "create_file"
-          "rename_file"
-          "delete_file"
-          "create_dir"
-          "rename_dir"
-          "delete_dir"
-          "bash"
-        ];
-
-        system_prompt.__raw = ''
-          function()
-            local hub = require("mcphub").get_hub_instance()
-            return hub and hub:get_active_servers_prompt() or ""
-          end
-        '';
-
-        custom_tools.__raw = ''
-          function()
-                 return {
-                   require("mcphub.extensions.avante").mcp_tool(),
-               }
-          end
-        '';
-
-        windows = {
-          sidebar_header.enabled = false;
-          ask.start_insert = false;
-        };
-
-        hints.enabled = false;
-
-        provider = "gemini";
-
-        providers = {
-          ollama = {
-            endpoint = "http://ollama.homeworld.lan";
-            model = "devstral:24b";
-            extra_request_body = {
-              num_ctx = 16384;
-            };
-          };
-
-          "gpt-oss:20b" = {
-            __inherited_from = "ollama";
-            model = "gpt-oss:20b";
-            extra_request_body = {
-              num_ctx = 1024 * 128;
-            };
-          };
-
-          "openai-gpt-5-mini" = {
-            __inherited_from = "openai";
-            model = "gpt-5-mini";
-            extra_request_body = {
-              temperature = 1;
-            };
-          };
-
-          "openai-gpt-5-nano" = {
-            __inherited_from = "openai";
-            model = "gpt-5-nano";
-            extra_request_body = {
-              temperature = 1;
-            };
-          };
-
-          "gemini-2.5-flash-lite" = {
-            __inherited_from = "gemini";
-            model = "gemini-2.5-flash-lite";
-          };
-
-          "gemini-2.5-flash" = {
-            __inherited_from = "gemini";
-            model = "gemini-2.5-flash";
-          };
-
-          "gemini-2.5-pro" = {
-            __inherited_from = "gemini";
-            model = "gemini-2.5-pro";
-          };
-        };
-      };
-    };
-
     plugins.which-key.enable = true;
     plugins.lualine = {
       enable = true;
       settings = {
         sections.lualine_x = [
-          {
-            __unkeyed-1 = {
-              __raw = ''
-                function()
-                    -- Check if MCPHub is loaded
-                    if not vim.g.loaded_mcphub then
-                        return "󰐻 -"
-                    end
-
-                    local count = vim.g.mcphub_servers_count or 0
-                    local status = vim.g.mcphub_status or "stopped"
-                    local executing = vim.g.mcphub_executing
-
-                    -- Show "-" when stopped
-                    if status == "stopped" then
-                        return "󰐻 -"
-                    end
-
-                    -- Show spinner when executing, starting, or restarting
-                    if executing or status == "starting" or status == "restarting" then
-                        local frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-                        local frame = math.floor(vim.loop.now() / 100) % #frames + 1
-                        return "󰐻 " .. frames[frame]
-                    end
-
-                    return "󰐻 " .. count
-                end,
-                color = function()
-                    if not vim.g.loaded_mcphub then
-                        return { fg = "#6c7086" } -- Gray for not loaded
-                    end
-
-                    local status = vim.g.mcphub_status or "stopped"
-                    if status == "ready" or status == "restarted" then
-                        return { fg = "#50fa7b" } -- Green for connected
-                    elseif status == "starting" or status == "restarting" then
-                        return { fg = "#ffb86c" } -- Orange for connecting
-                    else
-                        return { fg = "#ff5555" } -- Red for error/stopped
-                    end
-                end
-              '';
-            };
-          }
           "encoding"
           "fileformat"
           "filetype"
@@ -711,6 +541,9 @@ in {
       enable = true;
       settings = {
         highlight.enable = true;
+        indent.enable = true;
+        folding.enable = true;
+
         ensure_installed = [
           "c"
           "cpp"
@@ -741,15 +574,15 @@ in {
         multiline_threshold = 3;
       };
     };
-    plugins.treesitter-refactor = {
-      enable = true;
-      settings = {
-        navigation.enable = true;
-        smart_rename.enable = true;
-        # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
-        highlight_definitions.enable = true;
-      };
-    };
+    # plugins.treesitter-refactor = {
+    #   enable = true;
+    #   settings = {
+    #     navigation.enable = true;
+    #     smart_rename.enable = true;
+    #     # BUG: Neovim hangs sometimes on line deletion and other cases when this option is enabled.
+    #     highlight_definitions.enable = true;
+    #   };
+    # };
     plugins.treesitter-textobjects.enable = true;
     # </treesitter>
     plugins.hardtime = {

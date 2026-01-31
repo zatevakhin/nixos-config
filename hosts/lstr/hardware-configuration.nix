@@ -101,8 +101,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
+  boot.kernelModules = ["kvm-amd" "uvcvideo"];
   boot.extraModulePackages = [];
+  boot.blacklistedKernelModules = ["nouveau"];
+  boot.extraModprobeConfig = ''
+    options uvcvideo quirks=512
+  '';
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -114,4 +118,7 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # NOTE: Enable all firmware regardless of license.
   hardware.enableAllFirmware = true;
+
+  hardware.amdgpu.initrd.enable = true;
+  hardware.amdgpu.opencl.enable = true;
 }

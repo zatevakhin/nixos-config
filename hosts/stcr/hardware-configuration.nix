@@ -59,7 +59,7 @@
     "/root/luks.keyfile" = "/root/luks.keyfile";
   };
 
-  environment.systemPackages = with pkgs; [cryptsetup];
+  environment.systemPackages = with pkgs; [cryptsetup smartmontools];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid"];
   boot.initrd.kernelModules = [];

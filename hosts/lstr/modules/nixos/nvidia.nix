@@ -12,9 +12,9 @@ in {
   # boot.blacklistedKernelModules = amd_modules;
   # boot.kernelParams = nvidia_specific_kernel_params;
 
-  boot.initrd.kernelModules = ["amdgpu"];
+  # boot.initrd.kernelModules = ["amdgpu"];
   # boot.blacklistedKernelModules = amd_modules;
-  # boot.kernelParams = nvidia_specific_kernel_params;
+  #boot.kernelParams = ["pcie_aspm=off"];
 
   # specialisation = {
   #   laptop.configuration = {

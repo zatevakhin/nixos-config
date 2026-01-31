@@ -7,10 +7,7 @@
   username,
   hostname,
   ...
-}: let
-  wg = import ./secrets/wg.nix;
-  me = import ./secrets/user.nix;
-in {
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

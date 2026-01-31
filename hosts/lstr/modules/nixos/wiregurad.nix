@@ -34,7 +34,7 @@ in {
     // {
       home = {
         address = ["10.8.0.5/24"];
-        dns = ["10.0.1.3"] ++ wg.home.search;
+        dns = ["192.168.1.100"] ++ wg.home.search;
         autostart = false;
         listenPort = 51820;
         privateKey = wg.home.private_key;
@@ -43,7 +43,7 @@ in {
           {
             publicKey = wg.home.public_key;
             presharedKey = wg.home.preshared_key;
-            allowedIPs = ["0.0.0.0/0" "::/0"];
+            allowedIPs = ["10.8.0.5/32" "192.168.1.0/24"];
             endpoint = wg.home.endpoint;
             persistentKeepalive = 25;
           }
