@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  lib,
   username,
   hostname,
   ...
@@ -84,7 +83,7 @@ in {
   ];
 
   # NOTE: Yolo mode, going with latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
