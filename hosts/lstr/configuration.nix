@@ -83,8 +83,8 @@ in {
     "aarch64-linux"
   ];
 
-  # NOTE: Yolo mode, going with latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # NOTE: Laptop display stops working on higher version of kernel.
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # <networking>
   networking.hostName = hostname; # Define your hostname.
