@@ -6,6 +6,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
@@ -53,232 +56,234 @@
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
   };
 
-  outputs = {
+  outputs = inputs@{
     self,
     nixpkgs,
-    nix-darwin,
     nixpkgs-unstable,
+    nix-darwin,
+    flake-parts,
     ...
-  } @ inputs: let
-    username = "ivan";
-    system = "x86_64-linux";
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
+      username = "ivan";
 
-    pkgs = import nixpkgs {
-      system = "${system}";
-      config.allowUnfree = true;
-    };
+      x86Linux = "x86_64-linux";
+      armLinux = "aarch64-linux";
+      armDarwin = "aarch64-darwin";
 
-    pkgs-unstable = import nixpkgs-unstable {
-      system = "${system}";
-      config.allowUnfree = true;
-      overlays = [(import ./modules/overlays/avante-nvim.nix)];
-    };
-  in {
-    /*
-    * Installation Instructions:
-    *
-    * 1. NixOS Installation (using nixos-anywhere for most systems):
-    *    - Generate an ISO image if needed:
-    *      nix build .#nixosConfigurations.iso.config.system.build.isoImage
-    *    - Boot from the generated ISO.
-    *    - Prepare extra files with generated SSH keys for the target machine in 'extra-files' directory.
-    *    - Run nixos-anywhere for remote installation:
-    *      nix run github:nix-community/nixos-anywhere -- --flake .#<machine-id> --target-host root@<machine-ip> --extra-files extra-files
-    *
-    * 2. NixOS Installation (using disko for specific devices like mnhr):
-    *    - Ensure all necessary tools are present in your shell:
-    *      nix shell -- nixpkgs#{coreutils-full,dosfstools,f2fs-tools,fscrypt-experimental,gptfdisk,nixos-install-tools,util-linux,neovim}
-    *    - Install on the chosen device (e.g., for 'mnhr' on '/dev/mmcblk0'):
-    *      nix run 'github:nix-community/disko#disko-install' -- --flake .#mnhr --disk main /dev/mmcblk0
-    *
-    * 3. Nix-Darwin Installation (for macOS systems like eulr):
-    *    - Switch to the nix-darwin configuration:
-    *      nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .#eulr
-    *
-    * 4. SSH Options (might be needed when working with long hostnames):
-    *    - export NIX_SSHOPTS="-o ControlPath=~/.ssh/cm-%r@%h:%p -o ControlMaster=auto -o ControlPersist=10m"
-    */
+      pkgsUnstableFor = system:
+        import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [(import ./modules/overlays/avante-nvim.nix)];
+        };
+    in {
+      systems = [x86Linux armLinux armDarwin];
 
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        inherit username;
-        inherit pkgs-unstable;
-        hostname = "baseship";
-      };
-      modules = [
-        ./hosts/default/configuration.nix
+      flake = {
+        /*
+        * Installation Instructions:
+        *
+        * 1. NixOS Installation (using nixos-anywhere for most systems):
+        *    - Generate an ISO image if needed:
+        *      nix build .#nixosConfigurations.iso.config.system.build.isoImage
+        *    - Boot from the generated ISO.
+        *    - Prepare extra files with generated SSH keys for the target machine in 'extra-files' directory.
+        *    - Run nixos-anywhere for remote installation:
+        *      nix run github:nix-community/nixos-anywhere -- --flake .#<machine-id> --target-host root@<machine-ip> --extra-files extra-files
+        *
+        * 2. NixOS Installation (using disko for specific devices like mnhr):
+        *    - Ensure all necessary tools are present in your shell:
+        *      nix shell -- nixpkgs#{coreutils-full,dosfstools,f2fs-tools,fscrypt-experimental,gptfdisk,nixos-install-tools,util-linux,neovim}
+        *    - Install on the chosen device (e.g., for 'mnhr' on '/dev/mmcblk0'):
+        *      nix run 'github:nix-community/disko#disko-install' -- --flake .#mnhr --disk main /dev/mmcblk0
+        *
+        * 3. Nix-Darwin Installation (for macOS systems like eulr):
+        *    - Switch to the nix-darwin configuration:
+        *      nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .#eulr
+        *
+        * 4. SSH Options (might be needed when working with long hostnames):
+        *    - export NIX_SSHOPTS="-o ControlPath=~/.ssh/cm-%r@%h:%p -o ControlMaster=auto -o ControlPersist=10m"
+        */
 
-        inputs.nixvim.nixosModules.nixvim
-        inputs.sops-nix.nixosModules.sops
-        inputs.disko.nixosModules.disko
-        inputs.home-manager.nixosModules.default
-        inputs.nix-flatpak.nixosModules.nix-flatpak
-        inputs.stylix.nixosModules.stylix
-      ];
-    };
-
-    nixosConfigurations.lstr = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        inherit username;
-        inherit pkgs-unstable;
-        inherit system;
-        hostname = "lstr";
-      };
-
-      modules = [
-        ./hosts/lstr/configuration.nix
-
-        inputs.nixvim.nixosModules.nixvim
-        inputs.sops-nix.nixosModules.sops
-        inputs.disko.nixosModules.disko
-        inputs.home-manager.nixosModules.default
-        inputs.nix-flatpak.nixosModules.nix-flatpak
-        inputs.stylix.nixosModules.stylix
-        inputs.searxng-mcp.nixosModules.searxng-mcp
-      ];
-    };
-
-    nixosConfigurations.flkr = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        inherit username;
-        inherit pkgs-unstable;
-        inherit system;
-        hostname = "flkr";
-      };
-
-      modules = [
-        ./hosts/flkr/configuration.nix
-
-        inputs.sops-nix.nixosModules.sops
-        inputs.home-manager.nixosModules.default
-        inputs.nix-flatpak.nixosModules.nix-flatpak
-        inputs.nixvim.nixosModules.nixvim
-      ];
-    };
-
-    nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        inherit system;
-        inherit username;
-        inherit pkgs-unstable;
-        hostname = "klbr";
-      };
-
-      modules = [
-        ./hosts/klbr/configuration.nix
-
-        inputs.disko.nixosModules.disko
-        inputs.sops-nix.nixosModules.sops
-        inputs.nixvim.nixosModules.nixvim
-        inputs.stylix.nixosModules.stylix
-        inputs.home-manager.nixosModules.default
-        inputs.nix-flatpak.nixosModules.nix-flatpak
-        inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
-      ];
-    };
-
-    nixosConfigurations.arar = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        username = "zatevakhin";
-        hostname = "arar";
-      };
-
-      modules = [
-        ./hosts/arar/configuration.nix
-
-        inputs.sops-nix.nixosModules.sops
-      ];
-    };
-
-    nixosConfigurations.mnhr = nixpkgs-unstable.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        username = "zatevakhin";
-        hostname = "mnhr";
-      };
-
-      modules = [
-        ./hosts/mnhr/configuration.nix
-
-        inputs.disko.nixosModules.disko
-        inputs.sops-nix.nixosModules.sops
-      ];
-    };
-
-    nixosConfigurations.sapr = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        username = "zatevakhin";
-        hostname = "sapr";
-      };
-
-      modules = [
-        ./hosts/sapr/configuration.nix
-
-        inputs.disko.nixosModules.disko
-        inputs.sops-nix.nixosModules.sops
-      ];
-    };
-
-    nixosConfigurations.stcr = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-        username = "zatevakhin";
-        hostname = "stcr";
-      };
-
-      modules = [
-        ./hosts/stcr/configuration.nix
-
-        inputs.disko.nixosModules.disko
-        inputs.sops-nix.nixosModules.sops
-      ];
-    };
-
-    darwinConfigurations.eulr = nix-darwin.lib.darwinSystem {
-      specialArgs = {
-        inherit self;
-        inherit inputs;
-        inherit username;
-        hostname = "eulr";
-      };
-
-      modules = [
-        ./hosts/eulr/configuration.nix
-
-        inputs.nixvim.nixDarwinModules.nixvim
-        inputs.sops-nix-unstable.darwinModules.sops
-        inputs.home-manager-next.darwinModules.home-manager
-        inputs.nix-homebrew.darwinModules.nix-homebrew
-        {
-          nix-homebrew = {
-            # Install Homebrew under the default prefix
-            enable = true;
-
-            # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-            enableRosetta = true;
-
-            # User owning the Homebrew prefix
-            user = username;
-
-            # Automatically migrate existing Homebrew installations
-            autoMigrate = true;
+        nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs username;
+            pkgs-unstable = pkgsUnstableFor x86Linux;
+            hostname = "baseship";
           };
-        }
-      ];
-    };
-    # qemu-system-x86_64 -m 2048M --drive "media=cdrom,file=${NIXOS_CONFIG_ISO},format=raw,readonly=on" -net nic -net user -nographic -monitor pty -serial stdio -drive file=nixos-test.qcow2,format=qcow2,if=virtio -smp 4
-    nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
-      system = "${system}";
-      modules = [
-        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-        ./hosts/iso/configuration.nix
-      ];
-    };
-  };
+          modules = [
+            ./hosts/default/configuration.nix
+
+            inputs.nixvim.nixosModules.nixvim
+            inputs.sops-nix.nixosModules.sops
+            inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.stylix.nixosModules.stylix
+          ];
+        };
+
+        nixosConfigurations.lstr = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs username;
+            pkgs-unstable = pkgsUnstableFor x86Linux;
+            system = x86Linux;
+            hostname = "lstr";
+          };
+
+          modules = [
+            ./hosts/lstr/configuration.nix
+
+            inputs.nixvim.nixosModules.nixvim
+            inputs.sops-nix.nixosModules.sops
+            inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.stylix.nixosModules.stylix
+            inputs.searxng-mcp.nixosModules.searxng-mcp
+          ];
+        };
+
+        nixosConfigurations.flkr = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs username;
+            pkgs-unstable = pkgsUnstableFor x86Linux;
+            system = x86Linux;
+            hostname = "flkr";
+          };
+
+          modules = [
+            ./hosts/flkr/configuration.nix
+
+            inputs.sops-nix.nixosModules.sops
+            inputs.home-manager.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.nixvim.nixosModules.nixvim
+          ];
+        };
+
+        nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs username;
+            pkgs-unstable = pkgsUnstableFor x86Linux;
+            system = x86Linux;
+            hostname = "klbr";
+          };
+
+          modules = [
+            ./hosts/klbr/configuration.nix
+
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+            inputs.nixvim.nixosModules.nixvim
+            inputs.stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+          ];
+        };
+
+        nixosConfigurations.arar = nixpkgs.lib.nixosSystem {
+          system = armLinux;
+          specialArgs = {
+            inherit inputs;
+            username = "zatevakhin";
+            hostname = "arar";
+          };
+
+          modules = [
+            ./hosts/arar/configuration.nix
+
+            inputs.sops-nix.nixosModules.sops
+          ];
+        };
+
+        nixosConfigurations.mnhr = nixpkgs-unstable.lib.nixosSystem {
+          system = armLinux;
+          specialArgs = {
+            inherit inputs;
+            username = "zatevakhin";
+            hostname = "mnhr";
+          };
+
+          modules = [
+            ./hosts/mnhr/configuration.nix
+
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+          ];
+        };
+
+        nixosConfigurations.sapr = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs;
+            username = "zatevakhin";
+            hostname = "sapr";
+          };
+
+          modules = [
+            ./hosts/sapr/configuration.nix
+
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+          ];
+        };
+
+        nixosConfigurations.stcr = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          specialArgs = {
+            inherit inputs;
+            username = "zatevakhin";
+            hostname = "stcr";
+          };
+
+          modules = [
+            ./hosts/stcr/configuration.nix
+
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+          ];
+        };
+
+        darwinConfigurations.eulr = nix-darwin.lib.darwinSystem {
+          system = armDarwin;
+          specialArgs = {
+            inherit self inputs username;
+            hostname = "eulr";
+          };
+
+          modules = [
+            ./hosts/eulr/configuration.nix
+
+            inputs.nixvim.nixDarwinModules.nixvim
+            inputs.sops-nix-unstable.darwinModules.sops
+            inputs.home-manager-next.darwinModules.home-manager
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = username;
+                autoMigrate = true;
+              };
+            }
+          ];
+        };
+
+        # qemu-system-x86_64 -m 2048M --drive "media=cdrom,file=${NIXOS_CONFIG_ISO},format=raw,readonly=on" -net nic -net user -nographic -monitor pty -serial stdio -drive file=nixos-test.qcow2,format=qcow2,if=virtio -smp 4
+        nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
+          system = x86Linux;
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./hosts/iso/configuration.nix
+          ];
+        };
+      };
+    });
 }
