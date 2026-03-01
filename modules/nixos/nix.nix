@@ -7,8 +7,6 @@
       options = "--delete-older-than 30d";
     };
 
-    package = pkgs.lix;
-
     optimise = {
       automatic = true;
       dates = ["monthly"];

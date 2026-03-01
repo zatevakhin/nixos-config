@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
+  inputs,
   ...
 }: {
   environment.systemPackages =
@@ -11,6 +12,7 @@
       gcc
       bun
       uv
+      gh
       nodejs
       wl-clipboard
       jujutsu
@@ -19,5 +21,8 @@
       codex
       cursor-cli
       claude-code
-    ]);
+    ])
+    ++ [
+      inputs.beads.packages.${pkgs.system}.default
+    ];
 }

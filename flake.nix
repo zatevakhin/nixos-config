@@ -54,9 +54,15 @@
 
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
+
+    # Tools
+    beads = {
+      url = "github:steveyegge/beads?ref=v0.49.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{
+  outputs = inputs @ {
     self,
     nixpkgs,
     nixpkgs-unstable,
@@ -248,31 +254,6 @@
 
             inputs.disko.nixosModules.disko
             inputs.sops-nix.nixosModules.sops
-          ];
-        };
-
-        darwinConfigurations.eulr = nix-darwin.lib.darwinSystem {
-          system = armDarwin;
-          specialArgs = {
-            inherit self inputs username;
-            hostname = "eulr";
-          };
-
-          modules = [
-            ./hosts/eulr/configuration.nix
-
-            inputs.nixvim.nixDarwinModules.nixvim
-            inputs.sops-nix-unstable.darwinModules.sops
-            inputs.home-manager-next.darwinModules.home-manager
-            inputs.nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = username;
-                autoMigrate = true;
-              };
-            }
           ];
         };
 
