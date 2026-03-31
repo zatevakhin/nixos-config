@@ -50,9 +50,14 @@ in {
     key = "private-key";
   };
 
+  sops.templates.arr-stack-env-creds = {
+    content = ''
+      WIREGUARD_PRIVATE_KEY=${config.sops.placeholder.proton-vpn-private-key}
+    '';
+  };
+
   systemd.services.arr-stack-compose = {
     environment = {
-      PROTON_VPN_PRIVATE_KEY_PATH = config.sops.secrets.proton-vpn-private-key.path;
       RADARR_DOMAIN_NAME = radarr_domain;
       SONARR_DOMAIN_NAME = sonarr_domain;
       BAZARR_DOMAIN_NAME = bazarr_domain;
@@ -64,12 +69,10 @@ in {
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose --env-file ${config.sops.templates.arr-stack-env-creds.path} --file ${./docker-compose.yml} up";
       ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
-      StandardOutput = "syslog";
       Restart = "on-failure";
       RestartSec = 5;
-      StartLimitIntervalSec = 60;
       StartLimitBurst = 3;
     };
 
