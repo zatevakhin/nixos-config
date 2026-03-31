@@ -78,6 +78,11 @@ in {
 
   # boot.kernelPackages = pkgs.linuxPackages_6_16; # Touch carefully due to ZFS
   boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
+    structuredExtraConfig = with pkgs.lib.kernel; {
+      NOVA_CORE = pkgs.lib.mkForce unset;
+      DRM_NOVA = pkgs.lib.mkForce unset;
+    };
+
     argsOverride = rec {
       src = pkgs.fetchurl {
         url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
