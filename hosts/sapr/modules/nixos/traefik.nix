@@ -18,7 +18,7 @@ in {
       TRAEFIK_DOMAIN = TRAEFIK_DOMAIN;
       TRAEFIK_DOMAIN_HOST_SPECIFIC = TRAEFIK_DOMAIN_HOST_SPECIFIC;
       LEGO_CA_CERTIFICATES = pkgs.fetchurl {
-        url = "https://localhost:8443/roots.pem";
+        url = "https://step-ca.homeworld.lan:8443/roots.pem";
         hash = "sha256-+EsQqEb+jaLKq4/TOUTEwF/9lwU5mETu4MY4GTN1V+A=";
         curlOpts = "--insecure";
       };
