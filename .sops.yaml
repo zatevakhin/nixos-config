@@ -15,47 +15,47 @@ keys:
   - &stcr_machine age1fjalfd7re6v27pfuxxxmg5cfvc2xavctmake59r293k80acvea2sdf086j
   - &eulr_machine age17r8y3a9y0v6zcxzcstg3ypnq4skzc205umvsk63yrhuzw8z4zayqqeatcw
 creation_rules:
-  - path_regex: hosts/default/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/dflt/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *default_machine
-  - path_regex: hosts/lstr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/lstr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *lstr_machine
-  - path_regex: hosts/klbr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/klbr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *klbr_machine
-  - path_regex: hosts/arar/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/arar/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *arar_machine
-  - path_regex: hosts/falke/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/flkr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *falke_machine
-  - path_regex: hosts/mnhr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/mnhr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *mnhr_machine
-  - path_regex: hosts/sapr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/sapr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *sapr_machine
-  - path_regex: hosts/stcr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/stcr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh
           - *stcr_machine
-  - path_regex: hosts/eulr/secrets/[^/]+\.(yaml)$
+  - path_regex: secrets/eulr/[^/]+\.(yaml)$
     key_groups:
       - age:
           - *default_ssh

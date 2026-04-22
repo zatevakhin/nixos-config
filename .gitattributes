@@ -1,28 +1,28 @@
-hosts/default/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
-hosts/default/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/default/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/default/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+secrets/dflt/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+secrets/dflt/devices.nix filter=git-agecrypt diff=git-agecrypt
+secrets/dflt/user.nix filter=git-agecrypt diff=git-agecrypt
+secrets/dflt/wg.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/lstr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
-hosts/lstr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/lstr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+secrets/lstr/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+secrets/lstr/user.nix filter=git-agecrypt diff=git-agecrypt
+secrets/lstr/wg.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/arar/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/arar/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+secrets/arar/devices.nix filter=git-agecrypt diff=git-agecrypt
+secrets/arar/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/mnhr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
-hosts/mnhr/secrets/syncthing.nix filter=git-agecrypt diff=git-agecrypt
+secrets/mnhr/ssh.nix filter=git-agecrypt diff=git-agecrypt
+secrets/mnhr/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/stcr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+secrets/stcr/wg.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/eulr/secrets/ssh.nix filter=git-agecrypt diff=git-agecrypt
+secrets/eulr/ssh.nix filter=git-agecrypt diff=git-agecrypt
 
-hosts/iso/secrets/iso.nix filter=git-agecrypt diff=git-agecrypt
-hosts/iso/secrets/hs_ed25519_secret_key filter=git-agecrypt diff=git-agecrypt
-hosts/iso/secrets/ssh_host_ed25519_key filter=git-agecrypt diff=git-agecrypt
-hosts/iso/secrets/ssh_host_ed25519_public_key.pub filter=git-agecrypt diff=git-agecrypt
+secrets/iso/iso.nix filter=git-agecrypt diff=git-agecrypt
+secrets/iso/hs_ed25519_secret_key filter=git-agecrypt diff=git-agecrypt
+secrets/iso/ssh_host_ed25519_key filter=git-agecrypt diff=git-agecrypt
+secrets/iso/ssh_host_ed25519_public_key.pub filter=git-agecrypt diff=git-agecrypt
 
-hosts/flkr/secrets/devices.nix filter=git-agecrypt diff=git-agecrypt
-hosts/flkr/secrets/user.nix filter=git-agecrypt diff=git-agecrypt
-hosts/flkr/secrets/wg.nix filter=git-agecrypt diff=git-agecrypt
+secrets/flkr/devices.nix filter=git-agecrypt diff=git-agecrypt
+secrets/flkr/user.nix filter=git-agecrypt diff=git-agecrypt
+secrets/flkr/wg.nix filter=git-agecrypt diff=git-agecrypt
 
