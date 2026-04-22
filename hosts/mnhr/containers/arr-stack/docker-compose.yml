@@ -109,7 +109,7 @@ services:
       - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - qbittorrent-config:/config
-      - /storage/media:/downloads
+      - /storage/media:/data
     network_mode: service:gluetun
     depends_on:
       gluetun:
