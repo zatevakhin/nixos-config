@@ -8,6 +8,8 @@
           ./hosts
           ./modules
         ])
+
+        inputs.home-manager.flakeModules.home-manager
       ];
       systems = ["x86_64-linux"];
     };
@@ -40,6 +42,10 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";

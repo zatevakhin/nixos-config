@@ -5,8 +5,11 @@
     ...
   }: {
     environment.systemPackages = with pkgs; [
+      jujutsu
       devenv
       direnv
+      bun
+      uv
     ];
   };
 }
