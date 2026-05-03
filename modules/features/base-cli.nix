@@ -18,6 +18,18 @@
       VISUAL = "nvim";
     };
 
+    # Htop with configuration
+    programs.htop = {
+      enable = true;
+      settings = {
+        tree_view = 0;
+        highlight_base_name = 1;
+        shadow_other_users = 1;
+        hide_userland_threads = 1;
+        hide_kernel_threads = 1;
+      };
+    };
+
     # cli tools
     environment.systemPackages = with pkgs; [
       # dev tools

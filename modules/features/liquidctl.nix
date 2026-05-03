@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.liquidctl-flkr = {pkgs, ...}: {
+  flake.nixosModules.flkr-liquidctl = {pkgs, ...}: {
     systemd.services.aio-startup = let
       device = "Corsair iCUE H100i Elite RGB";
     in {
