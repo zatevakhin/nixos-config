@@ -1,0 +1,37 @@
+{...}: {
+  flake.nixosModules.nixos-base = {pkgs, ...}: {
+    nix = {
+      # NOTE: Use one (programs.nh.clean.enable or nix.gc.automatic) to avoid conflict.
+      gc = {
+        automatic = true;
+        dates = "monthly";
+        options = "--delete-older-than 30d";
+      };
+
+      optimise = {
+        automatic = true;
+        dates = ["monthly"];
+      };
+
+      settings = {
+        experimental-features = ["nix-command" "flakes"];
+        trusted-users = ["@wheel"];
+      };
+    };
+
+    programs.nh.enable = true;
+
+    programs.nix-ld = {
+      enable = true;
+      package = pkgs.nix-ld;
+    };
+
+    nixpkgs.config = {
+      allowUnfree = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      alejandra
+    ];
+  };
+}
