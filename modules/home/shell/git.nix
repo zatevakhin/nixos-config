@@ -10,9 +10,6 @@
         pull = {
           rebase = true;
         };
-
-        commit.gpgsign = true;
-        gpg.format = "ssh";
       };
     };
   };

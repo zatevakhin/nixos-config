@@ -10,6 +10,7 @@
       direnv
       bun
       uv
+      gh
     ];
   };
 }

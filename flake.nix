@@ -48,7 +48,15 @@
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+    # MCPs
+    searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
     # home-manager-next = {
     #   url = "github:nix-community/home-manager";
@@ -69,8 +77,6 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     #
-    # # MCPs
-    # searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
     # # Tools
     # beads = {
