@@ -11,7 +11,11 @@
       enable = true;
       defaultEditor = true;
       # NOTE: https://github.com/nix-community/nixvim/issues/1784#issuecomment-2597937850
-      nixpkgs.useGlobalPackages = false;
+      nixpkgs = {
+        useGlobalPackages = false;
+        hostPlatform = pkgs-unstable.stdenv.hostPlatform.system;
+        buildPlatform = pkgs-unstable.stdenv.buildPlatform.system;
+      };
 
       extraPlugins = with pkgs-unstable.vimPlugins; [
         iron-nvim

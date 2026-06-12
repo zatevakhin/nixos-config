@@ -41,30 +41,28 @@
         source-han-mono
         source-han-serif
         source-han-code-jp
-        xorg.fontalias
-        xorg.fontmiscmisc
-        xorg.fontcursormisc
+        fontalias
+        fontmiscmisc
+        fontcursormisc
       ];
     };
 
     # NOTE: (06-12-2025): In NixOS 25.11, the system-fonts build fails because both font-misc-misc and font-cursor-misc install an identical conflicting fonts.dir file in /share/fonts/X11/misc/.
     nixpkgs.overlays = [
       (self: super: {
-        xorg = super.xorg.overrideScope (xself: xsuper: {
-          fontmiscmisc = xsuper.fontmiscmisc.overrideAttrs (old: {
-            postInstall =
-              (old.postInstall or "")
-              + ''
-                rm -f $out/share/fonts/X11/misc/fonts.dir
-              '';
-          });
-          fontcursormisc = xsuper.fontcursormisc.overrideAttrs (old: {
-            postInstall =
-              (old.postInstall or "")
-              + ''
-                rm -f $out/share/fonts/X11/misc/fonts.dir
-              '';
-          });
+        fontmiscmisc = super.fontmiscmisc.overrideAttrs (old: {
+          postInstall =
+            (old.postInstall or "")
+            + ''
+              rm -f $out/share/fonts/X11/misc/fonts.dir
+            '';
+        });
+        fontcursormisc = super.fontcursormisc.overrideAttrs (old: {
+          postInstall =
+            (old.postInstall or "")
+            + ''
+              rm -f $out/share/fonts/X11/misc/fonts.dir
+            '';
         });
       })
     ];
