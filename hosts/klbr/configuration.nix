@@ -27,7 +27,6 @@
       "org.signal.Signal"
       "chat.simplex.simplex"
       "com.obsproject.Studio"
-      "io.github.woelper.Oculante"
       "app.grayjay.Grayjay"
       "org.onlyoffice.desktopeditors"
       "com.valvesoftware.SteamLink"

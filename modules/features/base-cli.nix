@@ -89,6 +89,12 @@
       zip
       unzip
       p7zip
+
+      # ghostty terminfo
+      ghostty.terminfo
     ];
+
+    # NOTE: In addition to `ghostty.terminfo`
+    environment.enableAllTerminfo = true;
   };
 }

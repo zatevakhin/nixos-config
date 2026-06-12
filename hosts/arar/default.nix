@@ -3,13 +3,13 @@
   inputs,
   ...
 }: {
-  flake.nixosConfigurations.sapr = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.arar = inputs.nixpkgs.lib.nixosSystem {
     specialArgs = {
       inherit inputs;
       username = "zatevakhin";
-      hostname = "sapr";
+      hostname = "arar";
       pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "x86_64-linux";
+        system = "aarch64-linux";
         config.allowUnfree = true;
       };
     };
@@ -17,10 +17,10 @@
     modules = [
       self.nixosModules.base
       self.nixosModules.nixos-base
-      self.nixosModules.sapr-configuration
-      self.nixosModules.sapr-hardware
-      self.nixosModules.sapr-modules
-      self.nixosModules.sapr-containers
+      self.nixosModules.arar-configuration
+      self.nixosModules.arar-hardware
+      # self.nixosModules.arar-modules
+      # self.nixosModules.arar-containers
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops

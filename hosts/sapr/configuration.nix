@@ -34,6 +34,7 @@
     # </docker>
 
     # <networking>
+    networking.hostName = hostname;
     networking.firewall.enable = lib.mkForce false;
     # </networking>
 

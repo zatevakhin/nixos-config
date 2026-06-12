@@ -7,6 +7,7 @@
       rnote
 
       nmap
+      sqlite
       yt-dlp
     ];
   };

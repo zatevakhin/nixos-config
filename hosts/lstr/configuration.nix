@@ -42,6 +42,9 @@
       "app.grayjay.Grayjay"
       "org.onlyoffice.desktopeditors"
       "com.valvesoftware.SteamLink"
+      "org.gajim.Gajim"
+      "org.kde.krita"
+      "at.vintagestory.VintageStory"
     ];
 
     # <sops>
