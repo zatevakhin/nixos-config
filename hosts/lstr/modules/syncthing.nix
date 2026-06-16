@@ -21,6 +21,13 @@
       owner = username;
     };
 
+    sops.secrets.syncthing_gui_password = {
+      sopsFile = ../../../secrets/${hostname}/syncthing.yaml;
+      format = "yaml";
+      key = "syncthing/gui/password";
+      owner = username;
+    };
+
     services = {
       syncthing = {
         enable = true;
@@ -29,14 +36,15 @@
         user = username;
         dataDir = "/home/${username}/Documents";
         configDir = "/home/${username}/.config/syncthing";
+        guiPasswordFile = config.sops.secrets.syncthing_gui_password.path;
 
         overrideDevices = true;
         overrideFolders = true;
 
         settings = {
           gui = {
-            user = syncthing.gui.user;
-            password = syncthing.gui.password;
+            user = "admin";
+            theme = "black";
           };
 
           options = {

@@ -29,7 +29,7 @@
     ];
 
     # NOTE: Using this kernel because of issue with built in display.
-    boot.kernelPackages = pkgs.linuxPackages_6_12;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"

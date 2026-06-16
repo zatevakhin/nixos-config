@@ -31,6 +31,7 @@
 
     # <kernel>
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+    boot.initrd.systemd.tpm2.enable = false;
     # </kernel>
 
     nixpkgs.config.allowUnfree = true;
