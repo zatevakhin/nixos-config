@@ -34,7 +34,14 @@
     boot.initrd.systemd.tpm2.enable = false;
     # </kernel>
 
+    # <networking>
+    networking.hostName = hostname;
+    networking.firewall.enable = lib.mkForce false;
+    # </networking>
+
+    # <nix>
     nixpkgs.config.allowUnfree = true;
+    # </nix>
 
     # Set time zone.
     time.timeZone = "Europe/Lisbon";

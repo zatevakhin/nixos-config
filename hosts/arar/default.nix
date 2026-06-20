@@ -19,8 +19,8 @@
       self.nixosModules.nixos-base
       self.nixosModules.arar-configuration
       self.nixosModules.arar-hardware
-      # self.nixosModules.arar-modules
-      # self.nixosModules.arar-containers
+      self.nixosModules.arar-modules
+      self.nixosModules.arar-containers
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
