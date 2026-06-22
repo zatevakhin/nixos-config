@@ -88,30 +88,37 @@
               {
                 domain = "router.lan";
                 answer = "192.168.1.1";
+                enabled = true;
               }
               {
                 domain = "aeon.lan"; # Floating IP for AdGuard, Traefik, Step-CA and Glance.
                 answer = "192.168.1.100";
+                enabled = true;
               }
               {
                 domain = "mnhr.lan";
                 answer = "192.168.1.10";
+                enabled = true;
               }
               {
                 domain = "sapr.lan";
                 answer = "192.168.1.11";
+                enabled = true;
               }
               {
                 domain = "arar.lan";
                 answer = "192.168.1.12";
+                enabled = true;
               }
               {
                 domain = "flkr.lan";
                 answer = "192.168.1.105";
+                enabled = true;
               }
               {
                 domain = "lstr.lan";
                 answer = "192.168.1.229";
+                enabled = true;
               }
               # </machines>
             ]
@@ -120,6 +127,7 @@
             (map (service: {
                 domain = "${service}.${HOME_DOMAIN}";
                 answer = "aeon.lan";
+                enabled = true;
               }) [
                 "adguard"
                 "step-ca"
@@ -131,6 +139,7 @@
             (map (service: {
                 domain = "${service}.${HOME_DOMAIN}";
                 answer = "mnhr.lan";
+                enabled = true;
               }) [
                 "wg"
                 "vw"
@@ -169,6 +178,7 @@
             (map (service: {
                 domain = "${service}.${HOME_DOMAIN}";
                 answer = "sapr.lan";
+                enabled = true;
               }) [
                 "jellyfin"
                 "traefik-sapr"
@@ -178,6 +188,7 @@
             (map (service: {
                 domain = "${service}.${HOME_DOMAIN}";
                 answer = "arar.lan";
+                enabled = true;
               }) [
                 "books"
                 "paperless"
