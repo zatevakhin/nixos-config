@@ -22,6 +22,16 @@
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = username;
 
+    # Keyring
+    services.gnome.gnome-keyring.enable = true;
+    # PAM integration for keyring (critical)
+    security.pam.services = {
+      gdm.enableGnomeKeyring = true;
+      gdm-password.enableGnomeKeyring = true;
+      login.enableGnomeKeyring = true;
+      gdm-autologin.enableGnomeKeyring = true;
+    };
+
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
       QT_QPA_PLATFORM = "wayland";
