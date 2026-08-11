@@ -18,6 +18,7 @@
       # High-Availability Services
       self.nixosModules.ha-adguard
       self.nixosModules.ha-glance
+      self.nixosModules.ha-step-ca
     ];
 
     # <sops>
