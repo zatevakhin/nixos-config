@@ -74,8 +74,9 @@
                       };
                       "/swap" = {
                         mountpoint = "/.swapvol";
+                        mountOptions = ["noatime" "nodatacow"];
                         swap = {
-                          swapfile.size = "20M";
+                          swapfile.size = "64G";
                         };
                       };
                     };
@@ -98,8 +99,20 @@
 
     environment.systemPackages = with pkgs; [cryptsetup sbctl];
 
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    boot = {
+      loader.systemd-boot.enable = true;
+      loader.efi.canTouchEfiVariables = true;
+
+      resumeDevice = "/dev/mapper/crypted";
+
+      initrd.systemd.enable = true;
+
+      kernelParams = [
+        "resume=/dev/mapper/crypted"
+        "resume_offset=476953248"
+      ];
+    };
+
     boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid"];
     boot.initrd.kernelModules = [];
     boot.kernelModules = ["kvm-amd" "uvcvideo"];

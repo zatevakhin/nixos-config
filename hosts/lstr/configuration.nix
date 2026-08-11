@@ -29,7 +29,7 @@
     ];
 
     # NOTE: Using this kernel because of issue with built in display.
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_6_12;
 
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"
@@ -46,6 +46,19 @@
       "org.kde.krita"
       "at.vintagestory.VintageStory"
     ];
+
+    # <laptop-hibernation>
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if ((action.id == "org.freedesktop.login1.hibernate" ||
+               action.id == "org.freedesktop.login1.hibernate-multiple-sessions" ||
+               action.id == "org.freedesktop.login1.suspend-then-hibernate") &&
+              subject.isInGroup("wheel")) {
+              return polkit.Result.YES;
+          }
+      });
+    '';
+    # </laptop-hibernation>
 
     # <sops>
     sops.defaultSopsFormat = "yaml";
