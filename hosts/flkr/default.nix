@@ -25,6 +25,7 @@
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
+      inputs.searxng-mcp.nixosModules.searxng-mcp
     ];
   };
 }
