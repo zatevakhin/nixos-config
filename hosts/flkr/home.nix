@@ -5,6 +5,7 @@
 }: {
   flake.nixosModules.flkr-home = {
     pkgs-unstable,
+    hostname,
     username,
     pkgs,
     lib,
@@ -18,10 +19,11 @@
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
-      extraSpecialArgs = {inherit inputs username pkgs-unstable;};
+      extraSpecialArgs = {inherit inputs username hostname pkgs-unstable;};
       sharedModules = [
         self.homeModules.gnome
         self.homeModules.copyq
+        self.homeModules.shell
         self.homeModules.ghostty
 
         inputs.sops-nix.homeManagerModules.sops
