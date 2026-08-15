@@ -15,6 +15,7 @@
       self.nixosModules.development
       self.nixosModules.desktop
       self.nixosModules.nvidia
+      self.nixosModules.nixvim
       self.nixosModules.tmux
       self.nixosModules.qemu
     ];

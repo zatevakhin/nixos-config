@@ -24,6 +24,7 @@
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
+      inputs.nixvim.nixosModules.nixvim
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.searxng-mcp.nixosModules.searxng-mcp
     ];
