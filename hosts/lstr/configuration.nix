@@ -45,6 +45,7 @@
       "org.gajim.Gajim"
       "org.kde.krita"
       "at.vintagestory.VintageStory"
+      "io.github.maniacx.BudsLink"
     ];
 
     # <laptop-hibernation>
