@@ -7,6 +7,8 @@ secrets/lstr/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 secrets/lstr/user.nix filter=git-agecrypt diff=git-agecrypt
 secrets/lstr/wg.nix filter=git-agecrypt diff=git-agecrypt
 
+secrets/klbr/user.nix filter=git-agecrypt diff=git-agecrypt
+
 secrets/arar/devices.nix filter=git-agecrypt diff=git-agecrypt
 secrets/arar/syncthing.nix filter=git-agecrypt diff=git-agecrypt
 

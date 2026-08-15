@@ -6,6 +6,7 @@
   flake.nixosModules.klbr-home = {
     pkgs-unstable,
     username,
+    hostname,
     pkgs,
     lib,
     ...
@@ -18,9 +19,10 @@
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
-      extraSpecialArgs = {inherit inputs username pkgs-unstable;};
+      extraSpecialArgs = {inherit inputs username hostname pkgs-unstable;};
       sharedModules = [
         self.homeModules.gnome
+        self.homeModules.shell
         self.homeModules.ghostty
 
         inputs.sops-nix.homeManagerModules.sops

@@ -19,11 +19,13 @@
       self.nixosModules.nixos-base
       self.nixosModules.klbr-configuration
       self.nixosModules.klbr-hardware
+      self.nixosModules.klbr-modules
       self.nixosModules.klbr-home
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
+      inputs.searxng-mcp.nixosModules.searxng-mcp
     ];
   };
 }
