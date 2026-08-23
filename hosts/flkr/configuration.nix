@@ -8,7 +8,6 @@
     ...
   }: {
     imports = [
-      self.nixosModules.kernel-latest
       self.nixosModules.homeworld-certificate
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
@@ -19,8 +18,8 @@
       self.nixosModules.tmux
       self.nixosModules.qemu
     ];
-    # NOTE: Using this kernel because latest does not support Nvidia 565.77 driver.
-    # boot.kernelPackages = pkgs.linuxPackages_6_12;
+    # NOTE: Using this kernel because latest does not support latest Nvidia driver yet.
+    boot.kernelPackages = pkgs.linuxPackages_7_1;
 
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"
