@@ -1,6 +1,9 @@
 {...}: {
   flake.nixosModules.nixos-base = {pkgs, ...}: {
     nix = {
+      # Use Lix instead of Nix
+      package = pkgs.lixPackageSets.stable.lix;
+
       # NOTE: Use one (programs.nh.clean.enable or nix.gc.automatic) to avoid conflict.
       gc = {
         automatic = true;
