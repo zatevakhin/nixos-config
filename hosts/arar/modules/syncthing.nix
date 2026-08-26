@@ -33,9 +33,7 @@
         user = username;
         dataDir = "/mnt/storage/syncthing/";
         guiAddress = "0.0.0.0:8384";
-        extraFlags = [
-          "--no-default-folder"
-        ];
+        extraFlags = [];
 
         overrideDevices = true;
         overrideFolders = true;
