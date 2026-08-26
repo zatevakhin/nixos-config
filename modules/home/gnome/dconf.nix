@@ -40,8 +40,7 @@
 
       "org/gnome/desktop/wm/preferences" = {
         button-layout = ":minimize,maximize,close";
-        # Activate windows on hover
-        focus-mode = "sloppy";
+        focus-mode = "click";
       };
 
       "org/gnome/desktop/input-sources" = {
