@@ -46,6 +46,7 @@
       "org.kde.krita"
       "at.vintagestory.VintageStory"
       "io.github.maniacx.BudsLink"
+      "org.gnome.gitlab.somas.Apostrophe"
     ];
 
     # <laptop-hibernation>
