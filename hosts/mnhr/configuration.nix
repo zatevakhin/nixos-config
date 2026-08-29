@@ -8,17 +8,36 @@
     ...
   }: {
     imports = [
-      self.nixosModules.kernel-latest
       self.nixosModules.homeworld-certificate
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
+      self.nixosModules.jellyseerr
       self.nixosModules.docker
       self.nixosModules.tmux
       self.nixosModules.tor
       # High-Availability Services
       self.nixosModules.ha-adguard
       self.nixosModules.ha-glance
+      self.nixosModules.ha-step-ca
     ];
+
+    # <kernel>
+    boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
+      structuredExtraConfig = with pkgs.lib.kernel; {
+        NOVA_CORE = pkgs.lib.mkForce unset;
+        DRM_NOVA = pkgs.lib.mkForce unset;
+      };
+
+      argsOverride = rec {
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+          sha256 = "sha256-XzBPDEU9h6x2Ugc1naT1pzOTnRWV7yWPGAkZT6GNuns=";
+        };
+        version = "6.16.11";
+        modDirVersion = "6.16.11";
+      };
+    });
+    # </kernel>
 
     # <nix>
     nix.package = lib.mkForce pkgs.nix;
@@ -35,11 +54,13 @@
     # </sops>
 
     # <docker>
-    virtualisation.docker.storageDriver = "btrfs";
+    virtualisation.docker.storageDriver = lib.mkForce null;
     # </docker>
 
     # <networking>
     networking.firewall.enable = lib.mkForce false;
+    networking.hostName = hostname;
+    networking.hostId = "906df12d";
     # </networking>
 
     nixpkgs.config.allowUnfree = true;
@@ -100,6 +121,7 @@
       owner = config.systemd.services.tor.serviceConfig.User;
     };
 
+    # <ssh-over-tor>
     services.tor.relay.onionServices = {
       ssh = {
         version = 3;
@@ -115,6 +137,7 @@
         ];
       };
     };
+    # </ssh-over-tor>
     # </openssh>
 
     # This value determines the NixOS release from which the default
@@ -123,6 +146,6 @@
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "25.05"; # Did you read the comment?
+    system.stateVersion = "24.11"; # Did you read the comment?
   };
 }

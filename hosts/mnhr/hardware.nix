@@ -237,6 +237,8 @@
     # Added MergerFS package
     environment.systemPackages = with pkgs; [cryptsetup zfs zfstools];
 
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
     boot.initrd.availableKernelModules = ["nvme" "usbhid"];
     boot.initrd.kernelModules = [];
     boot.kernelModules = [];
@@ -244,6 +246,7 @@
 
     boot.supportedFilesystems.zfs = true;
     boot.zfs.package = pkgs.zfs;
+    boot.zfs.forceImportRoot = false;
 
     services.zfs.autoScrub = {
       enable = true;

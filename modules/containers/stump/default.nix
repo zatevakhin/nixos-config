@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.container-audiobookshelf = {
+  flake.nixosModules.container-stump = {
     config,
     lib,
     pkgs,
@@ -7,15 +7,15 @@
     ...
   }:
     with lib; let
-      cfg = config.services.audiobookshelf-compose;
+      cfg = config.services.stump-compose;
     in {
-      options.services.audiobookshelf-compose = {
-        enable = mkEnableOption "Audiobookshelf Docker Compose service";
+      options.services.stump-compose = {
+        enable = mkEnableOption "Stump Docker Compose service";
 
         domain = mkOption {
           type = types.str;
-          default = "abs.homeworld.lan";
-          description = "Domain name for the Audiobookshelf service";
+          default = "stump.homeworld.lan";
+          description = "Domain name for the Stump service";
         };
 
         compose_file = mkOption {
@@ -66,7 +66,7 @@
           }
         ];
 
-        systemd.services.audiobookshelf-compose = {
+        systemd.services.stump-compose = {
           environment = {
             INTERNAL_DOMAIN_NAME = cfg.domain;
           };

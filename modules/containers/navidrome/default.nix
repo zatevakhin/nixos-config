@@ -1,13 +1,13 @@
 {...}: {
-  flake.nixosModules.container-vaultwarden = {
-    lib,
-    pkgs,
-    config,
+  flake.nixosModules.container-navidrome = {
     hostname,
+    config,
+    pkgs,
+    lib,
     ...
   }: let
     TLD = "homeworld.lan";
-    SERVICE = "vw";
+    SERVICE = "navidrome";
   in {
     services.adguardhome.settings.filtering.rewrites = lib.mkIf config.services.adguardhome.enable [
       {
@@ -21,28 +21,10 @@
         enabled = true;
       }
     ];
-    sops.secrets.vaultwarden-admin-token = {
-      sopsFile = ../../../secrets/${hostname}/vaultwarden.yaml;
-      format = "yaml";
-      key = "admin/token";
-    };
 
-    sops.templates."vaultwarden.env".content = ''
-      ADMIN_TOKEN=${config.sops.placeholder.vaultwarden-admin-token}
-    '';
-
-    systemd.services.vaultwarden-compose = {
-      serviceConfig = {
-        EnvironmentFile = config.sops.templates."vaultwarden.env".path;
-      };
-
+    systemd.services.navidrome-compose = {
       environment = {
-        SIGNUPS_ALLOWED = "false";
-        ENABLE_WEBSOCKET = "true";
-        INVITATIONS_ALLOWED = "false";
-        ICON_SERVICE = "duckduckgo";
         INTERNAL_DOMAIN_NAME = "${SERVICE}.${TLD}";
-        VAULTWARDEN_DATA_LOCATION = "/storage/.services/vaultwarden/data";
       };
 
       serviceConfig = {

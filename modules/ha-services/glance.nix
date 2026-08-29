@@ -257,19 +257,9 @@
                         title = "Productivity & Communication";
                         sites = [
                           {
-                            title = "SearxNG";
-                            url = "https://searxng.homeworld.lan";
-                            icon = "/assets/svg/searxng.svg";
-                          }
-                          {
                             title = "Vaultwarden";
                             url = "https://vw.homeworld.lan";
                             icon = "/assets/svg/vaultwarden.svg";
-                          }
-                          {
-                            title = "OpenWebUI";
-                            url = "https://owu.homeworld.lan";
-                            icon = "/assets/png/open-webui.png";
                           }
                           {
                             title = "Forgejo";
@@ -280,11 +270,6 @@
                             title = "Linkding";
                             url = "https://linkding.homeworld.lan";
                             icon = "/assets/svg/linkding.svg";
-                          }
-                          {
-                            title = "Cinny Web";
-                            url = "https://cinny.homeworld.lan";
-                            icon = "/assets/svg/cinny.svg";
                           }
                         ];
                       }
@@ -334,26 +319,6 @@
                             title = "Wireguard UI";
                             url = "https://wg.homeworld.lan";
                             icon = "/assets/svg/wireguard.svg";
-                          }
-                          {
-                            title = "NodeRed";
-                            url = "https://nodered.homeworld.lan";
-                            icon = "/assets/svg/node-red.svg";
-                          }
-                          {
-                            title = "Grafana";
-                            url = "https://grafana.homeworld.lan";
-                            icon = "/assets/svg/grafana.svg";
-                          }
-                          {
-                            title = "Influxdb";
-                            url = "https://influxdb.homeworld.lan";
-                            icon = "/assets/svg/influxdb.svg";
-                          }
-                          {
-                            title = "MinIO";
-                            url = "https://console-minio.homeworld.lan";
-                            icon = "/assets/svg/minio-light.svg";
                           }
                           {
                             title = "Vodafone Router";

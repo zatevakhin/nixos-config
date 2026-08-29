@@ -9,7 +9,7 @@
       username = "zatevakhin";
       hostname = "mnhr";
       pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "x86_64-linux";
+        system = "aarch64-linux";
         config.allowUnfree = true;
       };
     };

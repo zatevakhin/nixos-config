@@ -62,6 +62,7 @@
           {
             domain = cfg.domain;
             answer = "${hostname}.lan";
+            enabled = true;
           }
         ];
 

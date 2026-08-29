@@ -12,6 +12,7 @@
       {
         domain = domain;
         answer = "${hostname}.lan";
+        enabled = true;
       }
     ];
 
