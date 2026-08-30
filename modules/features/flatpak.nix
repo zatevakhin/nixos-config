@@ -7,15 +7,21 @@
       enable = true;
       onCalendar = "weekly";
     };
+    services.flatpak.packages = [
+      "org.freedesktop.Platform.Icontheme.Adwaita"
+    ];
 
     services.flatpak.overrides = {
       global = {
         Environment = {
           # Fix un-themed cursor in some Wayland apps
           XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
-          # Force correct theme for some GTK apps
-          GTK_THEME = "Adwaita:dark";
         };
+
+        Context.filesystems = [
+          "xdg-data/icons:ro"
+          "/run/current-system/sw/share/icons:ro"
+        ];
       };
     };
   };

@@ -28,7 +28,7 @@
         color-scheme = "prefer-dark";
         clock-show-weekday = true;
         clock-format = "24h";
-        icon-theme = "Papirus-Dark";
+        icon-theme = "Adwaita";
         enable-hot-corners = false;
         clock-show-seconds = true;
         accent-color = "blue";

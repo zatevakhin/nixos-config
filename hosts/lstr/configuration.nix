@@ -47,6 +47,7 @@
       "at.vintagestory.VintageStory"
       "io.github.maniacx.BudsLink"
       "org.gnome.gitlab.somas.Apostrophe"
+      "io.m51.Gelly"
     ];
 
     # <laptop-hibernation>
