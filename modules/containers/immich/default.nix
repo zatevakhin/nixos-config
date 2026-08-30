@@ -17,7 +17,7 @@
     systemd.services.immich-compose = {
       environment = {
         INTERNAL_DOMAIN_NAME = domain;
-        IMMICH_VERSION = "release";
+        IMMICH_VERSION = "v3.1.0";
         IMMICH_HOST = "0.0.0.0";
         DB_PASSWORD = "postgres";
         TZ = "Europe/Lisbon";
