@@ -1,5 +1,6 @@
 # INFO: Generate machine key using command below.
 # nix run nixpkgs#ssh-to-age -- ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+# nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
 stores:
   yaml:
     indent: 2
@@ -9,11 +10,10 @@ keys:
   - &lstr_machine age1fv4y2fnykau0xv6vaw57aw5cskyua26v2h63y6gvqjf530fc35fq9t6dp9
   - &klbr_machine age1425z3trmzjp0f5kh4vdueevdhrd5zrzl6tvrztpelx377hctyvasvr8pn0
   - &arar_machine age1cg4emjqm42wjll4sh03pasxp7ga658xx5tfqc90jsycg37t66aysg5dgw6
-  - &falke_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
+  - &flkr_machine age1p0el9phnfxnjnaa9mgqtru4ke30vcae7vlzffmre2czf4r5w54rqwm8f0z
   - &mnhr_machine age1ustkwg4dht8hydkev74cdvp765aundsggutq66ndm5nmckuddqnqlcrv7v
   - &sapr_machine age1jsh9t5wfjv9extwpmwcwmv9gwdyw3z69lu67es2ttcl7mr58zdlsdpe7ju
   - &stcr_machine age1fjalfd7re6v27pfuxxxmg5cfvc2xavctmake59r293k80acvea2sdf086j
-  - &eulr_machine age17r8y3a9y0v6zcxzcstg3ypnq4skzc205umvsk63yrhuzw8z4zayqqeatcw
 creation_rules:
   - path_regex: secrets/dflt/[^/]+\.(yaml)$
     key_groups:
@@ -39,7 +39,7 @@ creation_rules:
     key_groups:
       - age:
           - *default_ssh
-          - *falke_machine
+          - *flkr_machine
   - path_regex: secrets/mnhr/[^/]+\.(yaml)$
     key_groups:
       - age:
@@ -55,8 +55,3 @@ creation_rules:
       - age:
           - *default_ssh
           - *stcr_machine
-  - path_regex: secrets/eulr/[^/]+\.(yaml)$
-    key_groups:
-      - age:
-          - *default_ssh
-          - *eulr_machine
