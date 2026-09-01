@@ -24,6 +24,7 @@
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
+      inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ];
   };
 }

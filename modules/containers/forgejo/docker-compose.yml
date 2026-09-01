@@ -8,12 +8,11 @@ services:
       - USER_GID=100
     restart: no
     volumes:
-      - forgejo-data:/data
+      - /storage/.services/forgejo/data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       - traefik.enable=true
-      - traefik.docker.network=proxy
       # HTTPS Router Configuration
       - traefik.http.routers.forgejo.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.forgejo.tls=true
@@ -21,14 +20,3 @@ services:
       - traefik.http.routers.forgejo.tls.certresolver=stepca
       # Service Configuration
       - traefik.http.services.forgejo.loadbalancer.server.port=3000
-
-    dns_search: proxy
-    networks:
-      proxy:
-
-networks:
-  proxy:
-    external: true
-
-volumes:
-  forgejo-data: {}

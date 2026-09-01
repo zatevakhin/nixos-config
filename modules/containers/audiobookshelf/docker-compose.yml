@@ -10,16 +10,15 @@ services:
       # and the path to the right of the colon is where the data is
       # available to ABS in Docker.
       # You can change these media directories or add as many as you want
-      - audiobookshelf-audiobooks:/audiobooks
-      - audiobookshelf-podcasts:/podcasts
+      - /storage/.services/audiobookshelf/audiobooks:/audiobooks
+      - /storage/.services/audiobookshelf/podcasts:/podcasts
       # The metadata directory can be stored anywhere on your computer
-      - audiobookshelf-metadata:/metadata
+      - /storage/.services/audiobookshelf/metadata:/metadata
       # The config directory needs to be on the same physical machine
       # you are running ABS on
-      - audiobookshelf-config:/config
+      - /storage/.services/audiobookshelf/config:/config
     labels:
       - traefik.enable=true
-      - traefik.docker.network=proxy
       - traefik.http.routers.abs.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
       - traefik.http.routers.abs.tls=true
       - traefik.http.routers.abs.entrypoints=websecure
@@ -33,22 +32,8 @@ services:
       - traefik.http.routers.abs.middlewares=abs-websocket
 
     restart: no
-
-    dns_search: proxy
-    networks:
-      proxy:
     # You can use the following environment variable to run the ABS
     # docker container as a specific user. You will need to change
     # the UID and GID to the correct values for your user.
     #environment:
-    #  - user=1000:1000
-
-volumes:
-  audiobookshelf-audiobooks: {}
-  audiobookshelf-podcasts: {}
-  audiobookshelf-metadata: {}
-  audiobookshelf-config: {}
-
-networks:
-  proxy:
-    external: true
+    #  - user=1000:100

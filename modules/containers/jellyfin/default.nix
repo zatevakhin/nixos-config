@@ -1,13 +1,52 @@
 {...}: {
-  flake.nixosModules.container-jellyfin = {pkgs, ...}: let
-    domain = "jellyfin.homeworld.lan";
+  flake.nixosModules.container-jellyfin = {
+    hostname,
+    config,
+    pkgs,
+    lib,
+    ...
+  }: let
+    TLD = "homeworld.lan";
+    SERVICE = "jellyfin";
   in {
+    assertions = [
+      {
+        assertion = config.virtualisation.docker.enable;
+        message = "container-jellyfin requires virtualisation.docker.enable";
+      }
+      {
+        assertion = config.services.adguardhome.enable;
+        message = "container-jellyfin requires services.adguardhome.enable";
+      }
+    ];
+
+    services.adguardhome.settings.filtering.rewrites = [
+      {
+        domain = "${SERVICE}.${TLD}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${SERVICE}-${hostname}.${TLD}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+    ];
+
     systemd.services.jellyfin-compose = {
       environment = {
-        INTERNAL_DOMAIN_NAME = domain;
+        INTERNAL_DOMAIN_NAME = "${SERVICE}.${TLD}";
       };
 
-      script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
+        ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
+        StandardOutput = "journal";
+        Restart = "on-failure";
+        RestartSec = 5;
+        StartLimitBurst = 3;
+      };
 
       wantedBy = ["multi-user.target"];
       after = ["docker.service" "docker.socket" "traefik.service"];

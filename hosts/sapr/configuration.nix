@@ -8,7 +8,6 @@
     ...
   }: {
     imports = [
-      self.nixosModules.kernel-latest
       self.nixosModules.homeworld-certificate
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
@@ -21,6 +20,11 @@
       self.nixosModules.ha-step-ca
     ];
 
+    # <kernel>
+    # NOTE: Using stable LTS for NAS.
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
+    # </kernel>
+
     # <sops>
     sops.defaultSopsFormat = "yaml";
     sops.defaultSopsFile = ../../secrets/${hostname}/default.yaml;
@@ -31,12 +35,13 @@
     # </sops>
 
     # <docker>
-    virtualisation.docker.storageDriver = "btrfs";
+    virtualisation.docker.storageDriver = "overlay2";
     # </docker>
 
     # <networking>
-    networking.hostName = hostname;
     networking.firewall.enable = lib.mkForce false;
+    networking.hostName = hostname;
+    networking.hostId = "0cc774d4";
     # </networking>
 
     nixpkgs.config.allowUnfree = true;

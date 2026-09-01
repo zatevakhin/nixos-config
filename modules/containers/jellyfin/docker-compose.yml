@@ -24,10 +24,6 @@ services:
       - traefik.http.services.jellyfin-service.loadbalancer.server.port=8096
 
     volumes:
-      - jellyfin-config:/config
-      - /mnt/nfs/media/:/media
-    restart: unless-stopped
-
-volumes:
-  jellyfin-config:
-
+      - /storage/.services/jellyfin/config:/config
+      - /storage/media/library:/media
+    restart: no

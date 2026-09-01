@@ -19,6 +19,11 @@
       };
     };
 
+    hardware.raspberry-pi.firmware = {
+      enable = true; # stage firmware + DTB + config.txt onto /boot/firmware
+      uboot.enable = true; # default path: U-Boot + generic-extlinux-compatible
+    };
+
     environment.etc.crypttab.text = ''
       ${devices.fs.luks.archive-a.name} UUID=${devices.fs.luks.archive-a.uuid} /root/btrfs-${devices.fs.luks.archive-a.uuid}.keyfile luks
       ${devices.fs.luks.archive-b.name} UUID=${devices.fs.luks.archive-b.uuid} /root/btrfs-${devices.fs.luks.archive-b.uuid}.keyfile luks

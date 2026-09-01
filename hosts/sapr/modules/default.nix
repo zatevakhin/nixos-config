@@ -7,8 +7,7 @@
     imports = [
       self.nixosModules."${hostname}-keepalived"
       self.nixosModules."${hostname}-traefik"
-      self.nixosModules."${hostname}-step-ca"
-      self.nixosModules."${hostname}-nfs"
+      # self.nixosModules."${hostname}-nfs"
     ];
   };
 }

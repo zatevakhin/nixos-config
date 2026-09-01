@@ -7,77 +7,26 @@
     lib,
     ...
   }: let
-    devices = import ../../secrets/${hostname}/devices.nix;
-  in {
-    imports = [
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+    nvmeDisks = ["nvme0" "nvme1" "nvme2" "nvme3" "nvme4" "nvme5"];
 
-    disko.devices = {
-      disk = {
-        main = {
-          type = "disk";
-          device = "/dev/mmcblk0";
-          content = {
-            type = "gpt";
-            partitions = {
-              ESP = {
-                size = "1024M";
-                type = "EF00";
-                content = {
-                  type = "filesystem";
-                  format = "vfat";
-                  mountpoint = "/boot";
-                  mountOptions = [
-                    "defaults"
-                  ];
-                };
+    mkNvme = name: {
+      type = "disk";
+      device = "/dev/${name}n1";
+      content = {
+        type = "gpt";
+        partitions = {
+          zfs = {
+            size = "100%";
+            content = {
+              type = "luks";
+              name = "crypt${name}";
+              settings = {
+                allowDiscards = true;
+                keyFile = "/root/nvme.keyfile";
               };
-              root = {
-                size = "100%";
-                content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/";
-                  mountOptions = [
-                    "noatime"
-                  ];
-                };
-              };
-            };
-          };
-        };
-        storage = {
-          type = "disk";
-          device = "/dev/nvme0n1";
-          content = {
-            type = "gpt";
-            partitions = {
-              data = {
-                size = "100%";
-                content = {
-                  type = "luks";
-                  name = "cryptnvme0";
-                  settings = {
-                    allowDiscards = true;
-                    keyFile = "/root/nvme.keyfile";
-                  };
-                  content = {
-                    type = "btrfs";
-                    extraArgs = ["-L" "nixos" "-f"];
-                    mountOptions = ["compress=zstd" "noatime"];
-                    subvolumes = {
-                      "/log" = {
-                        mountOptions = ["compress=zstd"];
-                        mountpoint = "/var/log";
-                      };
-                      "/docker" = {
-                        mountOptions = ["compress=zstd"];
-                        mountpoint = "/var/lib/docker";
-                      };
-                    };
-                  };
-                };
+              content = {
+                type = "zfs";
+                pool = "storage";
               };
             };
           };
@@ -85,12 +34,117 @@
       };
     };
 
+    zfsDataset = mountpoint: {
+      type = "zfs_fs";
+      inherit mountpoint;
+      options = {
+        mountpoint = "legacy";
+        compression = "lz4";
+        atime = "off";
+        xattr = "sa";
+        acltype = "posixacl";
+      };
+    };
+  in {
+    imports = [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+    disko.devices = {
+      disk =
+        {
+          main = {
+            type = "disk";
+            device = "/dev/mmcblk0";
+            content = {
+              type = "gpt";
+              partitions = {
+                ESP = {
+                  size = "1024M";
+                  type = "EF00";
+                  content = {
+                    type = "filesystem";
+                    format = "vfat";
+                    mountpoint = "/boot";
+                    mountOptions = [
+                      "defaults"
+                    ];
+                  };
+                };
+                root = {
+                  size = "100%";
+                  content = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                    mountOptions = [
+                      "noatime"
+                    ];
+                  };
+                };
+              };
+            };
+          };
+        }
+        // lib.genAttrs nvmeDisks mkNvme;
+
+      zpool = {
+        storage = {
+          type = "zpool";
+          mode = "raidz2";
+          mountpoint = "/storage";
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          rootFsOptions = {
+            mountpoint = "legacy";
+            compression = "lz4";
+            atime = "off";
+            xattr = "sa";
+            acltype = "posixacl";
+            dnodesize = "auto";
+          };
+          datasets = {
+            media = zfsDataset "/storage/media";
+            downloads = zfsDataset "/storage/downloads";
+            backups = zfsDataset "/storage/backups";
+            syncthing = zfsDataset "/storage/syncthing";
+            docker = zfsDataset "/var/lib/docker";
+            services = zfsDataset "/storage/.services";
+          };
+        };
+      };
+    };
+
+    # Ensure encrypted devices are mounted at boot
+    boot.initrd.luks.devices = lib.listToAttrs (map (name: {
+        name = "crypt${name}";
+        value = {
+          device = "/dev/disk/by-partlabel/disk-${name}-zfs";
+          keyFile = "/root/nvme.keyfile";
+          allowDiscards = true;
+        };
+      })
+      nvmeDisks);
+
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage" "sd_mod"];
+    boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod"];
     boot.initrd.kernelModules = ["mmc_block" "sdhci" "sdhci-pci"];
     boot.kernelModules = ["kvm-intel"];
     boot.extraModulePackages = [];
+
+    # <zfs>
+    boot.supportedFilesystems.zfs = true;
+    boot.zfs.package = pkgs.zfs;
+    boot.zfs.forceImportRoot = false;
+
+    services.zfs.autoScrub = {
+      enable = true;
+      interval = "monthly";
+    };
+    # </zfs>
 
     boot.initrd.secrets = {
       "/root/nvme.keyfile" = "/root/nvme.keyfile";

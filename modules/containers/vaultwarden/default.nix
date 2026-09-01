@@ -1,15 +1,26 @@
 {...}: {
   flake.nixosModules.container-vaultwarden = {
-    lib,
-    pkgs,
-    config,
     hostname,
+    config,
+    pkgs,
+    lib,
     ...
   }: let
     TLD = "homeworld.lan";
     SERVICE = "vw";
   in {
-    services.adguardhome.settings.filtering.rewrites = lib.mkIf config.services.adguardhome.enable [
+    assertions = [
+      {
+        assertion = config.virtualisation.docker.enable;
+        message = "container-vaultwarden requires virtualisation.docker.enable";
+      }
+      {
+        assertion = config.services.adguardhome.enable;
+        message = "container-vaultwarden requires services.adguardhome.enable";
+      }
+    ];
+
+    services.adguardhome.settings.filtering.rewrites = [
       {
         domain = "${SERVICE}.${TLD}";
         answer = "${hostname}.lan";
@@ -21,6 +32,7 @@
         enabled = true;
       }
     ];
+
     sops.secrets.vaultwarden-admin-token = {
       sopsFile = ../../../secrets/${hostname}/vaultwarden.yaml;
       format = "yaml";
@@ -32,10 +44,6 @@
     '';
 
     systemd.services.vaultwarden-compose = {
-      serviceConfig = {
-        EnvironmentFile = config.sops.templates."vaultwarden.env".path;
-      };
-
       environment = {
         SIGNUPS_ALLOWED = "false";
         ENABLE_WEBSOCKET = "true";
@@ -49,10 +57,10 @@
         Type = "simple";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
-        StandardOutput = "syslog";
+        EnvironmentFile = config.sops.templates."vaultwarden.env".path;
+        StandardOutput = "journal";
         Restart = "on-failure";
         RestartSec = 5;
-        StartLimitIntervalSec = 60;
         StartLimitBurst = 3;
       };
 

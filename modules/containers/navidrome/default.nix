@@ -9,7 +9,18 @@
     TLD = "homeworld.lan";
     SERVICE = "navidrome";
   in {
-    services.adguardhome.settings.filtering.rewrites = lib.mkIf config.services.adguardhome.enable [
+    assertions = [
+      {
+        assertion = config.virtualisation.docker.enable;
+        message = "container-navidrome requires virtualisation.docker.enable";
+      }
+      {
+        assertion = config.services.adguardhome.enable;
+        message = "container-navidrome requires services.adguardhome.enable";
+      }
+    ];
+
+    services.adguardhome.settings.filtering.rewrites = [
       {
         domain = "${SERVICE}.${TLD}";
         answer = "${hostname}.lan";
@@ -31,10 +42,9 @@
         Type = "simple";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} up";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
-        StandardOutput = "syslog";
+        StandardOutput = "journal";
         Restart = "on-failure";
         RestartSec = 5;
-        StartLimitIntervalSec = 60;
         StartLimitBurst = 3;
       };
 

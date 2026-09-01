@@ -303,6 +303,11 @@
                             url = "https://navidrome.homeworld.lan";
                             icon = "/assets/svg/navidrome.svg";
                           }
+                          {
+                            title = "Immich";
+                            url = "https://immich.homeworld.lan";
+                            icon = "/assets/svg/immich.svg";
+                          }
                         ];
                       }
                       {

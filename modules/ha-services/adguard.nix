@@ -141,28 +141,26 @@
                 answer = "mnhr.lan";
                 enabled = true;
               }) [
+                "syncthing-mnhr"
+                "traefik-mnhr"
+              ])
+            ++
+            # Machine: SAPR
+            (map (service: {
+                domain = "${service}.${HOME_DOMAIN}";
+                answer = "sapr.lan";
+                enabled = true;
+              }) [
                 "wg"
                 "vw"
                 "abs"
-                "owu"
-                "ntfy"
-                "cinny"
-                "ollama"
-                "immich"
                 "stump"
-                "searxng"
-                "comfyui"
+                "immich"
                 "forgejo"
-                "nodered"
                 "linkding"
-                "syncthing-mnhr"
-                "grafana"
-                "influxdb"
-                "forgejo"
-                "minio"
-                "console-minio"
-                "traefik-mnhr"
+                "jellyfin"
                 "navidrome"
+                "traefik-sapr"
                 # *arr
                 "radarr"
                 "sonarr"
@@ -172,16 +170,6 @@
                 "prowlarr"
                 "jellyseerr"
                 "qbittorrent"
-              ])
-            ++
-            # Machine: SAPR
-            (map (service: {
-                domain = "${service}.${HOME_DOMAIN}";
-                answer = "sapr.lan";
-                enabled = true;
-              }) [
-                "jellyfin"
-                "traefik-sapr"
               ])
             ++
             # Machine: ARAR
