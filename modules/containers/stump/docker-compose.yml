@@ -10,23 +10,15 @@ services:
       - stump-data:/data
       - stump-config:/config
     restart: no
-    dns_search: proxy
-    networks:
-      proxy:
     labels:
-     - traefik.enable=true
-     - traefik.docker.network=proxy
-      # HTTPS Router Configuration
-     - traefik.http.routers.stump.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
-     - traefik.http.routers.stump.tls=true
-     - traefik.http.routers.stump.entrypoints=websecure
-     - traefik.http.routers.stump.tls.certresolver=stepca
-      # Service Configuration
-     - traefik.http.services.stump.loadbalancer.server.port=10801
-
-networks:
-  proxy:
-    external: true
+      - traefik.enable=true
+        # HTTPS Router Configuration
+      - traefik.http.routers.stump.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.stump.tls=true
+      - traefik.http.routers.stump.entrypoints=websecure
+      - traefik.http.routers.stump.tls.certresolver=stepca
+        # Service Configuration
+      - traefik.http.services.stump.loadbalancer.server.port=10801
 
 volumes:
   stump-data:

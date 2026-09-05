@@ -14,6 +14,8 @@
       self.nixosModules.docker
       self.nixosModules.tmux
       self.nixosModules.tor
+      # Services
+      self.nixosModules.stump
       # High-Availability Services
       self.nixosModules.ha-adguard
       self.nixosModules.ha-glance
