@@ -10,7 +10,7 @@
       settings = {
         General = {
           Enable = "Control,Gateway,Headset,Media,Sink,Socket,Source";
-          ControllerMode = "bredr";
+          ControllerMode = "dual";
           Experimental = true;
         };
       };
