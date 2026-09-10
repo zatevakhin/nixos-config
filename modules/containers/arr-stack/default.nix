@@ -6,15 +6,33 @@
     ...
   }: let
     domain = "homeworld.lan";
+    seerr_domain = "seerr.${domain}";
     radarr_domain = "radarr.${domain}";
     sonarr_domain = "sonarr.${domain}";
     bazarr_domain = "bazarr.${domain}";
     lidarr_domain = "lidarr.${domain}";
     readarr_domain = "readarr.${domain}";
     prowlarr_domain = "prowlarr.${domain}";
+    jellyfin_domain = "jellyfin.${domain}";
     qbittorrent_domain = "qbittorrent.${domain}";
   in {
+    assertions = [
+      {
+        assertion = config.virtualisation.docker.enable;
+        message = "container-arr-stack requires virtualisation.docker.enable";
+      }
+      {
+        assertion = config.services.adguardhome.enable;
+        message = "container-arr-stack requires services.adguardhome.enable";
+      }
+    ];
+
     services.adguardhome.settings.filtering.rewrites = [
+      {
+        domain = "${seerr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
       {
         domain = "${radarr_domain}";
         answer = "${hostname}.lan";
@@ -46,6 +64,11 @@
         enabled = true;
       }
       {
+        domain = "${jellyfin_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
         domain = "${qbittorrent_domain}";
         answer = "${hostname}.lan";
         enabled = true;
@@ -66,12 +89,14 @@
 
     systemd.services.arr-stack-compose = {
       environment = {
+        SEERR_DOMAIN_NAME = seerr_domain;
         RADARR_DOMAIN_NAME = radarr_domain;
         SONARR_DOMAIN_NAME = sonarr_domain;
         BAZARR_DOMAIN_NAME = bazarr_domain;
         LIDARR_DOMAIN_NAME = lidarr_domain;
         READARR_DOMAIN_NAME = readarr_domain;
         PROWLARR_DOMAIN_NAME = prowlarr_domain;
+        JELLYFIN_DOMAIN_NAME = jellyfin_domain;
         QBITTORRENT_DOMAIN_NAME = qbittorrent_domain;
       };
 

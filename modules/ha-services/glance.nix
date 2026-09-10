@@ -230,19 +230,14 @@
                             icon = "/assets/svg/lidarr.svg";
                           }
                           {
-                            title = "Readarr";
-                            url = "https://readarr.homeworld.lan";
-                            icon = "/assets/svg/readarr.svg";
-                          }
-                          {
                             title = "Prowlarr";
                             url = "https://prowlarr.homeworld.lan";
                             icon = "/assets/svg/prowlarr.svg";
                           }
                           {
-                            title = "Jellyseerr";
-                            url = "https://jellyseerr.homeworld.lan";
-                            icon = "/assets/svg/jellyseerr.svg";
+                            title = "Seerr";
+                            url = "https://seerr.homeworld.lan";
+                            icon = "/assets/svg/seerr.svg";
                           }
                           {
                             title = "qBittorrent";

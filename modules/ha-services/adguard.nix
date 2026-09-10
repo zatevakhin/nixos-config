@@ -162,13 +162,13 @@
                 "navidrome"
                 "traefik-sapr"
                 # *arr
+                "seerr"
                 "radarr"
                 "sonarr"
                 "bazarr"
                 "lidarr"
                 "readarr"
                 "prowlarr"
-                "jellyseerr"
                 "qbittorrent"
               ])
             ++

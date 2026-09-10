@@ -10,8 +10,8 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "homarr-labs";
     repo = "dashboard-icons";
-    rev = "9c59ee602f74b9848434813f5870cd0bab23d117";
-    hash = "sha256-PLcaGQqphMTlSzcOaNrRNtOpXmk1BnCJqBjWSNcSbXo=";
+    rev = "d84d00eef4b14084963d5996397b76f9fe22f0c7";
+    hash = "sha256-E28L0w19cKvuLsz86gLpUOFtnsqx8/K8dMtg3ph7ehk=";
   };
 
   installPhase = ''
