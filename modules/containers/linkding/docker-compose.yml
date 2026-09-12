@@ -1,0 +1,20 @@
+---
+services:
+  linkding:
+    image: sissbruecker/linkding:latest
+    restart: no
+    container_name: linkding
+    volumes:
+      - /storage/.services/linkding/data:/etc/linkding/data
+    labels:
+      - traefik.enable=true
+      # HTTPS Router Configuration
+      - traefik.http.routers.linkding.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.linkding.tls=true
+      - traefik.http.routers.linkding.entrypoints=websecure
+      - traefik.http.routers.linkding.tls.certresolver=stepca
+      # Service Configuration
+      - traefik.http.services.linkding.loadbalancer.server.port=9090
+    environment:
+      - LD_SUPERUSER_NAME
+      - LD_SUPERUSER_PASSWORD

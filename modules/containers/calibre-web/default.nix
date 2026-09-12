@@ -1,0 +1,10 @@
+{...}: {
+  flake.nixosModules.container-calibre-web = {pkgs, ...}: {
+    systemd.services.calibre-web-compose = {
+      script = "${pkgs.docker-compose}/bin/docker-compose -f ${./docker-compose.yml} up";
+
+      wantedBy = ["multi-user.target"];
+      after = ["docker.service" "docker.socket" "traefik-compose.service"];
+    };
+  };
+}

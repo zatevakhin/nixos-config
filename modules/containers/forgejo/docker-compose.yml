@@ -1,0 +1,22 @@
+---
+services:
+  server:
+    image: codeberg.org/forgejo/forgejo:12
+    container_name: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=100
+    restart: no
+    volumes:
+      - /storage/.services/forgejo/data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - traefik.enable=true
+      # HTTPS Router Configuration
+      - traefik.http.routers.forgejo.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.forgejo.tls=true
+      - traefik.http.routers.forgejo.entrypoints=websecure
+      - traefik.http.routers.forgejo.tls.certresolver=stepca
+      # Service Configuration
+      - traefik.http.services.forgejo.loadbalancer.server.port=3000

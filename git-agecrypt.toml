@@ -8,6 +8,8 @@
 "secrets/lstr/user.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 "secrets/lstr/syncthing.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 
+"secrets/klbr/user.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
+
 "secrets/flkr/devices.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 "secrets/flkr/user.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 "secrets/flkr/wg.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
@@ -19,8 +21,6 @@
 "secrets/mnhr/syncthing.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 
 "secrets/stcr/wg.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
-
-"secrets/eulr/ssh.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 
 "secrets/iso/iso.nix" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]
 "secrets/iso/hs_ed25519_secret_key" = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8jr2hIBya3nwI++mqfs8MnJqXmHSQVPZUp9nhyVI1"]

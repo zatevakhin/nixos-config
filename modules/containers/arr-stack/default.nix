@@ -1,0 +1,116 @@
+{...}: {
+  flake.nixosModules.container-arr-stack = {
+    pkgs,
+    config,
+    hostname,
+    ...
+  }: let
+    domain = "homeworld.lan";
+    seerr_domain = "seerr.${domain}";
+    radarr_domain = "radarr.${domain}";
+    sonarr_domain = "sonarr.${domain}";
+    bazarr_domain = "bazarr.${domain}";
+    lidarr_domain = "lidarr.${domain}";
+    readarr_domain = "readarr.${domain}";
+    prowlarr_domain = "prowlarr.${domain}";
+    jellyfin_domain = "jellyfin.${domain}";
+    qbittorrent_domain = "qbittorrent.${domain}";
+  in {
+    assertions = [
+      {
+        assertion = config.virtualisation.docker.enable;
+        message = "container-arr-stack requires virtualisation.docker.enable";
+      }
+      {
+        assertion = config.services.adguardhome.enable;
+        message = "container-arr-stack requires services.adguardhome.enable";
+      }
+    ];
+
+    services.adguardhome.settings.filtering.rewrites = [
+      {
+        domain = "${seerr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${radarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${sonarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${bazarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${lidarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${readarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${prowlarr_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${jellyfin_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+      {
+        domain = "${qbittorrent_domain}";
+        answer = "${hostname}.lan";
+        enabled = true;
+      }
+    ];
+
+    sops.secrets.proton-vpn-private-key = {
+      sopsFile = ../../../secrets/${hostname}/proton-vpn.yaml;
+      format = "yaml";
+      key = "private-key";
+    };
+
+    sops.templates.arr-stack-env-creds = {
+      content = ''
+        WIREGUARD_PRIVATE_KEY=${config.sops.placeholder.proton-vpn-private-key}
+      '';
+    };
+
+    systemd.services.arr-stack-compose = {
+      environment = {
+        SEERR_DOMAIN_NAME = seerr_domain;
+        RADARR_DOMAIN_NAME = radarr_domain;
+        SONARR_DOMAIN_NAME = sonarr_domain;
+        BAZARR_DOMAIN_NAME = bazarr_domain;
+        LIDARR_DOMAIN_NAME = lidarr_domain;
+        READARR_DOMAIN_NAME = readarr_domain;
+        PROWLARR_DOMAIN_NAME = prowlarr_domain;
+        JELLYFIN_DOMAIN_NAME = jellyfin_domain;
+        QBITTORRENT_DOMAIN_NAME = qbittorrent_domain;
+      };
+
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.docker-compose}/bin/docker-compose --env-file ${config.sops.templates.arr-stack-env-creds.path} --file ${./docker-compose.yml} up";
+        ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${./docker-compose.yml} stop";
+        Restart = "on-failure";
+        RestartSec = 5;
+        StartLimitBurst = 3;
+      };
+
+      wantedBy = ["multi-user.target"];
+      after = ["docker.service" "docker.socket" "traefik.service"];
+    };
+  };
+}
