@@ -6,13 +6,27 @@
     pkgs,
     lib,
     ...
-  }: {
+  }: let
+    omnigraph = pkgs.callPackage ../../flakes/omnigraph/package.nix {};
+  in {
     imports = [
       self.nixosModules.homeworld-certificate
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
       self.nixosModules.docker
       self.nixosModules.tmux
+      self.nixosModules.oo7
+      # omnigraph
+      ../../flakes/omnigraph/module.nix
+    ];
+
+    environment.systemPackages = with pkgs; [
+      omnigraph.omnigraph-cli
+      whisper-cpp
+      fastfetch
+      direnv
+      ffmpeg
+      gh
     ];
 
     # <sops>
@@ -22,7 +36,19 @@
     sops.secrets."user/password/hashed" = {};
     sops.secrets."user/password/hashed".neededForUsers = true;
     sops.secrets.ssh-authorized-key-lstr.key = "ssh/authorized/lstr";
+    sops.secrets.oo7-keyring-password = {
+      sopsFile = ../../secrets/${hostname}/oo7.yaml;
+      key = "oo7_keyring_password";
+      mode = "0400";
+      owner = username;
+    };
     # </sops>
+
+    # Headless Secret Service (org.freedesktop.secrets) for System3 keyring access.
+    services.oo7Secrets = {
+      enable = true;
+      passwordFile = config.sops.secrets.oo7-keyring-password.path;
+    };
 
     # <docker>
     virtualisation.docker = {
@@ -31,6 +57,30 @@
     };
     hardware.nvidia-container-toolkit.enable = true;
     # </docker>
+
+    # <llama.cpp>
+    services.llama-cpp = {
+      enable = true;
+      port = 3333;
+      extraFlags = [
+        "--embeddings"
+      ];
+      modelsPreset = {
+        "Qwen3-Embedding-0.6B-Q8_0.gguf" = {
+          hf-repo = "Qwen/Qwen3-Embedding-0.6B-GGUF";
+          hf-file = "Qwen3-Embedding-0.6B-Q8_0.gguf";
+          alias = "qwen/qwen3-embedding-0.6b-q8";
+          fit = "on";
+        };
+        "embeddinggemma-300M-Q8_0.gguf" = {
+          hf-repo = "unsloth/embeddinggemma-300m-GGUF";
+          hf-file = "embeddinggemma-300M-Q8_0.gguf";
+          alias = "unsloth/embeddinggemma-300m-q8";
+          fit = "on";
+        };
+      };
+    };
+    # </llama.cpp>
 
     # <networking>
     networking.firewall.enable = lib.mkForce false;
