@@ -7,6 +7,7 @@
       self.nixosModules.container-arr-stack
       self.nixosModules.container-linkding
       self.nixosModules.container-forgejo
+      self.nixosModules.container-wg-easy
       self.nixosModules.container-immich
     ];
   };

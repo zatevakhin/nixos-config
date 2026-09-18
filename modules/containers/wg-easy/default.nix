@@ -1,11 +1,12 @@
 {...}: {
   flake.nixosModules.container-wg-easy = {
+    lib,
     pkgs,
     hostname,
     ...
   }: let
     domain = "wg.homeworld.lan";
-    lan_interface = "enP4p65s0";
+    lan_interface = "enp1s0";
     wg_easy_interface = "br-wg-easy";
   in {
     services.adguardhome.settings.filtering.rewrites = [
@@ -21,7 +22,9 @@
     };
 
     boot.kernelModules = [
-      "iptable_nat"
+      "wireguard"
+      "nf_tables"
+      "nft_masq"
     ];
 
     # Static route: WG network lives behind the container at 10.10.0.2
@@ -35,17 +38,17 @@
 
     networking.firewall = {
       enable = true;
+      allowedUDPPorts = [51820];
 
-      # Extra iptables commands executed when the firewall is (re)loaded
-      extraCommands = ''
-        ${pkgs.iptables}/bin/iptables -F DOCKER-USER || true
-        ${pkgs.iptables}/bin/iptables -I DOCKER-USER 1 -i ${lan_interface} -o ${wg_easy_interface} -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -I DOCKER-USER 1 -i ${wg_easy_interface} -o ${lan_interface} -j ACCEPT
+      extraForwardRules = ''
+        iifname "${lan_interface}" oifname "${wg_easy_interface}" accept
+        iifname "${wg_easy_interface}" oifname "${lan_interface}" accept
+        ip saddr 10.8.0.0/24 accept
+        ip daddr 10.8.0.0/24 accept
       '';
 
-      # Optional: clean up on firewall stop
-      extraStopCommands = ''
-        ${pkgs.iptables}/bin/iptables -F DOCKER-USER || true
+      extraReversePathFilterRules = ''
+        ip saddr 10.8.0.0/24 accept
       '';
     };
 

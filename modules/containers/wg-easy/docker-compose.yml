@@ -6,8 +6,10 @@ services:
     environment:
       - INSECURE=true
       - DISABLE_IPV6=true
+      - WG_POST_UP=nft add table inet wg_table; nft add chain inet wg_table postrouting { type nat hook postrouting priority 100 \; }; nft add rule inet wg_table postrouting ip saddr {{ipv4Cidr}} oifname eth0 masquerade; nft add chain inet wg_table forward { type filter hook forward priority 0 \; policy accept \; }; nft add rule inet wg_table forward iifname wg0 accept; nft add rule inet wg_table forward oifname wg0 accept
+      - WG_POST_DOWN=nft delete table inet wg_table || true
     volumes:
-      - wg-easy-config:/etc/wireguard
+      - /storage/.services/wg-easy/config:/etc/wireguard
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"
@@ -31,9 +33,6 @@ services:
     networks:
       wg:
         ipv4_address: 10.10.0.2
-
-volumes:
-  wg-easy-config:
 
 networks:
   wg:

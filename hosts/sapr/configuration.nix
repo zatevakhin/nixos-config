@@ -15,7 +15,7 @@
       self.nixosModules.tmux
       self.nixosModules.tor
       # Services
-      self.nixosModules.stump
+      # self.nixosModules.stump
       # High-Availability Services
       self.nixosModules.ha-adguard
       self.nixosModules.ha-glance
@@ -41,7 +41,7 @@
     # </docker>
 
     # <networking>
-    networking.firewall.enable = lib.mkForce false;
+    networking.firewall.enable = true;
     networking.hostName = hostname;
     networking.hostId = "0cc774d4";
     # </networking>
