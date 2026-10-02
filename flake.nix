@@ -60,6 +60,8 @@
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
+    nixpkgs-otelite.url = "github:NixOS/nixpkgs/pull/557742/head";
+
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
