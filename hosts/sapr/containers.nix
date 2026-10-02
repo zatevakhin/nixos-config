@@ -10,5 +10,7 @@
       self.nixosModules.container-wg-easy
       self.nixosModules.container-immich
     ];
+
+    services.forgejo-compose.sshPort = 2222;
   };
 }
