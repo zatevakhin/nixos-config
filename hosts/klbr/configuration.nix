@@ -16,6 +16,7 @@
       self.nixosModules.desktop
       self.nixosModules.docker
       self.nixosModules.adb
+      self.nixosModules.laptop
       self.nixosModules.tmux
       self.nixosModules.tor
     ];
