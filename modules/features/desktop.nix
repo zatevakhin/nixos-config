@@ -12,6 +12,7 @@
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.gnome
+      self.nixosModules.gnupg
       self.nixosModules.audio
     ];
   };
