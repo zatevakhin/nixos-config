@@ -1,71 +1,65 @@
 {...}: {
   flake.nixosModules.flkr-hardware = {
     modulesPath,
-    hostname,
     config,
     pkgs,
     lib,
     ...
-  }: let
-    devices = import ../../secrets/${hostname}/devices.nix;
-  in {
+  }: {
     imports = [
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    boot.initrd.luks.devices."${devices.fs.luks.root.name}".device = "/dev/disk/by-uuid/${devices.fs.luks.root.uuid}";
-
-    fileSystems."/" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=root"];
-    };
-
-    fileSystems."/.swapvol" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["defaults" "subvol=swap"];
-    };
-
-    fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/${devices.fs.boot.uuid}";
-      fsType = "vfat";
-    };
-
-    fileSystems."/home" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=home"];
-    };
-
-    fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=nix"];
-    };
-
-    fileSystems."/projects" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=projects"];
-    };
-
-    fileSystems."/var/lib/docker" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=var/lib/docker"];
-    };
-
-    fileSystems."/var/lib/libvirt" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=var/lib/libvirt"];
-    };
-
-    fileSystems."/var/log" = {
-      device = "/dev/disk/by-uuid/${devices.fs.open.root.uuid}";
-      fsType = "btrfs";
-      options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=var/log"];
+    # Match the existing partition labels and subvolumes; no repartitioning needed.
+    # Never run disko's formatting/install scripts against the populated disk.
+    disko = {
+      enableConfig = true;
+      devices.disk.main = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              label = "disk-vdb-ESP";
+              size = "2048M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = ["defaults"];
+              };
+            };
+            luks = {
+              label = "disk-vdb-luks";
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted";
+                settings.allowDiscards = true;
+                content = {
+                  type = "btrfs";
+                  subvolumes =
+                    lib.genAttrs ["/root" "/home" "/nix" "/projects" "/var/lib/docker" "/var/lib/libvirt" "/var/log"] (subvolume: {
+                      mountpoint =
+                        if subvolume == "/root"
+                        then "/"
+                        else subvolume;
+                      mountOptions = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd"];
+                    })
+                    // {
+                      "/swap" = {
+                        mountpoint = "/.swapvol";
+                        mountOptions = ["defaults"];
+                      };
+                    };
+                };
+              };
+            };
+          };
+        };
+      };
     };
 
     swapDevices = [];
