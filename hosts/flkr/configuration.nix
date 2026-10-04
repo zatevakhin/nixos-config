@@ -18,8 +18,8 @@
       self.nixosModules.tmux
       self.nixosModules.qemu
     ];
-    # NOTE: Using this kernel because latest does not support latest Nvidia driver yet.
-    boot.kernelPackages = pkgs.linuxPackages_7_1;
+    # NVIDIA 595.71.05 fails to build against 7.2; use the newest supported LTS.
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
 
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"
