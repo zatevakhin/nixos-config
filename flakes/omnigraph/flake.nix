@@ -27,10 +27,7 @@
         nixosModules.omnigraph = import ./module.nix;
       };
 
-      perSystem = {
-        pkgs,
-        ...
-      }: let
+      perSystem = {pkgs, ...}: let
         omnigraph = pkgs.callPackage ./package.nix {};
       in {
         packages = {
