@@ -3,9 +3,28 @@
     config,
     username,
     hostname,
+    inputs,
+    lib,
     ...
   }: let
-    syncthing = import ../../../secrets/${hostname}/syncthing.nix;
+    st = lib.importTOML "${inputs.notsecrets}/syncthing.toml";
+
+    shares = {
+      private = {
+        path = "/home/${username}/Documents/Private";
+        devices = ["arar" "mnhr"];
+      };
+
+      obsidian = {
+        path = "/home/${username}/Documents/Obsidian";
+        devices = ["arar" "mnhr"];
+      };
+
+      books = {
+        path = "/home/${username}/Documents/Books";
+        devices = ["arar" "mnhr"];
+      };
+    };
   in {
     sops.secrets.syncthing_private_key = {
       sopsFile = ../../../secrets/${hostname}/syncthing.yaml;
@@ -52,28 +71,14 @@
             crashReportingEnabled = false;
           };
 
-          devices = syncthing.devices;
-
-          folders = {
-            "${syncthing.folders.obsidian.id}" = {
-              label = "Ivan's Obsidian";
-              id = syncthing.folders.obsidian.id;
-              path = "/home/${username}/Documents/Obsidian";
-              devices = [syncthing.device.arar syncthing.device.mnhr];
-            };
-
-            "${syncthing.folders.private.id}" = {
-              label = "Ivan's Private";
-              path = "/home/${username}/Documents/Private";
-              devices = [syncthing.device.arar syncthing.device.mnhr];
-            };
-
-            "${syncthing.folders.books.id}" = {
-              label = "Ivan's Books";
-              path = "/home/${username}/Documents/Books";
-              devices = [syncthing.device.arar syncthing.device.mnhr];
-            };
-          };
+          devices = lib.filterAttrs (name: _: lib.elem name (lib.concatLists (lib.mapAttrsToList (_: s: s.devices) shares))) st.devices;
+          folders = lib.mapAttrs (name: s:
+            {
+              inherit (s) path devices;
+              inherit (st.folders.${name}) id label;
+            }
+            // (removeAttrs s ["path" "devices"]))
+          shares;
         };
       };
     };

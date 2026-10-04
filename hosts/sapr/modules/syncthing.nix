@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.arar-syncthing = {
+  flake.nixosModules.sapr-syncthing = {
     config,
     username,
     hostname,
@@ -11,8 +11,8 @@
 
     shares = {
       private = {
-        devices = ["mnhr" "lstr" "nothing"];
-        path = "/mnt/storage/syncthing/ivan/private/";
+        devices = ["arar"];
+        path = "/storage/syncthing/ivan/private/";
         versioning = {
           type = "trashcan";
           params.cleanoutDays = "1000";
@@ -20,8 +20,8 @@
       };
 
       obsidian = {
-        devices = ["mnhr" "lstr"];
-        path = "/mnt/storage/syncthing/ivan/obsidian/";
+        devices = ["arar"];
+        path = "/storage/syncthing/ivan/obsidian/";
         versioning = {
           type = "trashcan";
           params.cleanoutDays = "1000";
@@ -29,13 +29,13 @@
       };
 
       books = {
-        devices = ["mnhr" "lstr" "nothing"];
-        path = "/mnt/storage/syncthing/ivan/books/";
+        devices = ["arar"];
+        path = "/storage/syncthing/ivan/books/";
       };
 
       anzh-obsidian = {
-        devices = ["mnhr" "framework"];
-        path = "/mnt/storage/syncthing/anzh/obsidian/";
+        devices = ["arar"];
+        path = "/storage/syncthing/anzh/obsidian/";
         versioning = {
           type = "trashcan";
           params.cleanoutDays = "1000";
@@ -43,8 +43,8 @@
       };
 
       anzh-passwords = {
-        devices = ["mnhr" "framework"];
-        path = "/mnt/storage/syncthing/anzh/passwords/";
+        devices = ["arar"];
+        path = "/storage/syncthing/anzh/passwords/";
         versioning = {
           type = "trashcan";
           params.cleanoutDays = "1000";
@@ -84,8 +84,8 @@
         cert = config.sops.secrets.syncthing_public_key.path;
         key = config.sops.secrets.syncthing_private_key.path;
         user = username;
-        dataDir = "/mnt/storage/syncthing/";
-        configDir = "/mnt/storage/syncthing/.config/";
+        dataDir = "/storage/syncthing/";
+        configDir = "/storage/syncthing/.config/";
         guiPasswordFile = config.sops.secrets.syncthing_gui_password.path;
 
         overrideDevices = true;

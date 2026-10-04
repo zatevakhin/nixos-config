@@ -2,10 +2,11 @@
   flake.nixosModules.lstr-dnsmasq = {
     hostname,
     config,
+    inputs,
     lib,
     ...
   }: let
-    wg = import ../../../secrets/${hostname}/wg.nix;
+    work = lib.importTOML "${inputs.notsecrets}/work/wg.toml";
   in {
     services.resolved.enable = lib.mkIf (!config.services.dnsmasq.enable) true;
 
@@ -21,7 +22,7 @@
       settings = {
         listen-address = "127.0.0.1";
         server =
-          (map (domain: "/${domain}/192.168.128.254") wg.work.search)
+          (map (domain: "/${domain}/${work.peer.dns}") work.peer.search)
           ++ [
             "/lan/192.168.1.100"
             "192.168.1.100"

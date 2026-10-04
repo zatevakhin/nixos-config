@@ -1,28 +1,29 @@
 {...}: {
   flake.homeModules.git = {
     hostname,
+    inputs,
     lib,
     ...
   }: let
-    me = import ../../../secrets/${hostname}/user.nix;
     isWorkDir = "pwd | grep -q '^/projects/work\\(/\\|$\\)'";
+    notsecrets = lib.importTOML "${inputs.notsecrets}/default.toml";
   in {
     programs.git = {
       settings = {
         commit.gpgsign = true;
         gpg.format = "ssh";
 
-        user.name = "Ivan Zatevakhin";
-        user.email = me.personal.email;
+        user.name = "${notsecrets.names.pseudo.name} ${notsecrets.names.pseudo.lastname}";
+        user.email = notsecrets.emails.personal;
         user.signingkey = "~/.ssh/zatevakhin-personal.github.pub";
       };
       includes = [
         {
           condition = "gitdir:/projects/work/";
 
-          contents.user.name = me.work.name;
-          contents.user.email = me.work.email;
-          contents.user.signingkey = "~/.ssh/${me.work.key}";
+          contents.user.name = "${notsecrets.names.real.name} ${notsecrets.names.real.lastname}";
+          contents.user.email = notsecrets.emails.work;
+          contents.user.signingkey = "~/.ssh/nc.gitlab_ed25519.pub";
         }
       ];
     };
@@ -34,7 +35,7 @@
         # === WORK KEY ===
         "github-work" = lib.hm.dag.entryBefore ["github-personal"] {
           match = ''host github.com exec "${isWorkDir}"'';
-          identityFile = "~/.ssh/${me.work.key}";
+          identityFile = "~/.ssh/nc.gitlab_ed25519.pub";
           identitiesOnly = true;
           user = "git";
         };

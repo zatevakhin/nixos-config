@@ -343,6 +343,22 @@
         "type": "github"
       }
     },
+    "notsecrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791068945,
+        "narHash": "sha256-9Yarp6jRpnQLvFNBaRDiQI7cMjLE210Nlsi3Z3jJTbM=",
+        "ref": "refs/heads/main",
+        "rev": "aa3d0c4430dec4a0cac6ff1ac36f7dab2b0aaf9b",
+        "revCount": 9,
+        "type": "git",
+        "url": "ssh://git@forgejo.homeworld.lan:2222/zatevakhin/nixos-notsecrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@forgejo.homeworld.lan:2222/zatevakhin/nixos-notsecrets.git"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -356,6 +372,7 @@
         "nixpkgs-otelite": "nixpkgs-otelite",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
+        "notsecrets": "notsecrets",
         "searxng-mcp": "searxng-mcp",
         "sops-nix": "sops-nix",
         "sops-nix-unstable": "sops-nix-unstable",

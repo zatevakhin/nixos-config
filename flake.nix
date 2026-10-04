@@ -65,6 +65,11 @@
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
+    notsecrets = {
+      url = "git+ssh://git@forgejo.homeworld.lan:2222/zatevakhin/nixos-notsecrets.git";
+      flake = false;
+    };
+
     # home-manager-next = {
     #   url = "github:nix-community/home-manager";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";

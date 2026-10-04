@@ -1,11 +1,12 @@
 {...}: {
   flake.nixosModules.arar-hardware = {
     lib,
+    inputs,
     hostname,
     modulesPath,
     ...
   }: let
-    devices = import ../../secrets/${hostname}/devices.nix;
+    devices = (lib.importTOML "${inputs.notsecrets}/default.toml").devices.${hostname};
   in {
     imports = [
       (modulesPath + "/installer/scan/not-detected.nix")
@@ -25,8 +26,8 @@
     };
 
     environment.etc.crypttab.text = ''
-      ${devices.fs.luks.archive-a.name} UUID=${devices.fs.luks.archive-a.uuid} /root/btrfs-${devices.fs.luks.archive-a.uuid}.keyfile luks
-      ${devices.fs.luks.archive-b.name} UUID=${devices.fs.luks.archive-b.uuid} /root/btrfs-${devices.fs.luks.archive-b.uuid}.keyfile luks
+      ${devices.luks.archive-a.name} UUID=${devices.luks.archive-a.uuid} /root/btrfs-${devices.luks.archive-a.uuid}.keyfile luks
+      ${devices.luks.archive-b.name} UUID=${devices.luks.archive-b.uuid} /root/btrfs-${devices.luks.archive-b.uuid}.keyfile luks
     '';
 
     boot.initrd.kernelModules = [];
@@ -40,22 +41,22 @@
       };
 
       "/var/lib/docker" = {
-        device = "/dev/disk/by-uuid/${devices.fs.open.storage.uuid}";
+        device = "/dev/disk/by-uuid/${devices.open.storage.uuid}";
         fsType = "btrfs";
         options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=@docker"];
       };
       "/mnt/storage/downloads" = {
-        device = "/dev/disk/by-uuid/${devices.fs.open.storage.uuid}";
+        device = "/dev/disk/by-uuid/${devices.open.storage.uuid}";
         fsType = "btrfs";
         options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=@downloads"];
       };
       "/mnt/storage/books" = {
-        device = "/dev/disk/by-uuid/${devices.fs.open.storage.uuid}";
+        device = "/dev/disk/by-uuid/${devices.open.storage.uuid}";
         fsType = "btrfs";
         options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=@books"];
       };
       "/mnt/storage/syncthing" = {
-        device = "/dev/disk/by-uuid/${devices.fs.open.storage.uuid}";
+        device = "/dev/disk/by-uuid/${devices.open.storage.uuid}";
         fsType = "btrfs";
         options = ["rw" "relatime" "ssd" "space_cache=v2" "compress=zstd" "subvol=@syncthing"];
       };

@@ -10,6 +10,7 @@
     ...
   }: let
     otelitePkgs = import inputs.nixpkgs-otelite {inherit (pkgs) system;};
+    nonsecrets = lib.importTOML "${inputs.notsecrets}/default.toml";
   in {
     imports = [
       self.nixosModules.homeworld-certificate
@@ -119,6 +120,11 @@
       extraGroups = [
         "wheel"
         "dialout"
+      ];
+
+      openssh.authorizedKeys.keys = [
+        nonsecrets.authorized_keys.klbr
+        nonsecrets.authorized_keys.ntgh
       ];
     };
 
