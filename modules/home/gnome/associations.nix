@@ -13,7 +13,7 @@
       associations.added = {
         "x-scheme-handler/http" = ["app.zen_browser.zen.desktop"];
         "x-scheme-handler/https" = ["app.zen_browser.zen.desktop"];
-        "application/pdf" = ["org.gnome.Evince.desktop"];
+        "application/pdf" = ["org.gnome.Papers.desktop"];
         "application/json" = ["nvim.desktop"];
         "text/markdown" = ["nvim.desktop"];
         "text/plain" = ["nvim.desktop"];
@@ -33,13 +33,13 @@
         "image/svg+xml" = ["org.gnome.Loupe.desktop"];
         "image/svg+xml-compressed" = ["org.gnome.Loupe.desktop"];
 
-        "video/x-matroska" = ["mpv.desktop"];
-        "video/mp4" = ["mpv.desktop"];
-        "video/webm" = ["mpv.desktop"];
-        "video/quicktime" = ["mpv.desktop"];
-        "audio/ogg" = ["mpv.desktop"];
-        "audio/flac" = ["mpv.desktop"];
-        "audio/x-wav" = ["mpv.desktop"];
+        "video/x-matroska" = ["org.gnome.Showtime.desktop"];
+        "video/mp4" = ["org.gnome.Showtime.desktop"];
+        "video/webm" = ["org.gnome.Showtime.desktop"];
+        "video/quicktime" = ["org.gnome.Showtime.desktop"];
+        "audio/ogg" = ["org.gnome.Decibels.desktop"];
+        "audio/flac" = ["org.gnome.Decibels.desktop"];
+        "audio/x-wav" = ["org.gnome.Decibels.desktop"];
       };
     };
   };
