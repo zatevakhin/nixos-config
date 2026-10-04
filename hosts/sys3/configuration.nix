@@ -14,6 +14,7 @@
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
       self.nixosModules.docker
+      self.nixosModules.wireshark
       self.nixosModules.tmux
       self.nixosModules.oo7
       # omnigraph

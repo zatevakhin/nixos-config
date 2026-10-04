@@ -21,6 +21,7 @@
       self.nixosModules.languagetool
       self.nixosModules.development
       self.nixosModules.nix-index
+      self.nixosModules.wireshark
       self.nixosModules.desktop
       self.nixosModules.docker
       self.nixosModules.laptop
