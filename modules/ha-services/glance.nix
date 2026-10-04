@@ -8,7 +8,7 @@
   }: let
     dashboard-icons = pkgs.callPackage ../../packages/dashboard-icons {};
     GLANCE_HTTP_PORT = 8001;
-    HIGH_AVAILABILITY_HOSTS = ["arar" "mnhr" "sapr"];
+    HIGH_AVAILABILITY_HOSTS = ["arar" "sapr"];
   in {
     networking.firewall.allowedTCPPorts = [GLANCE_HTTP_PORT];
     services.glance = {
@@ -198,8 +198,8 @@
                             icon = "/assets/svg/syncthing.svg";
                           }
                           {
-                            title = "Syncthing (MNHR)";
-                            url = "https://syncthing-mnhr.homeworld.lan";
+                            title = "Syncthing (SAPR)";
+                            url = "https://syncthing-sapr.homeworld.lan";
                             icon = "/assets/svg/syncthing.svg";
                           }
                         ];

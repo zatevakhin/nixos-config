@@ -160,6 +160,7 @@
                 "linkding"
                 "jellyfin"
                 "navidrome"
+                "syncthing-sapr"
                 "traefik-sapr"
                 # *arr
                 "seerr"
