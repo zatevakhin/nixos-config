@@ -3,16 +3,20 @@
     hostname,
     username,
     config,
+    inputs,
     pkgs,
     lib,
     ...
-  }: {
+  }: let
+    nonsecrets = lib.importTOML "${inputs.notsecrets}/default.toml";
+  in {
     imports = [
       self.nixosModules.homeworld-certificate
       self.nixosModules.firewall-defaults
       self.nixosModules.openssh-defaults
       self.nixosModules.development
       self.nixosModules.desktop
+      self.nixosModules.docker
       self.nixosModules.nvidia
       self.nixosModules.nixvim
       self.nixosModules.tmux
@@ -93,6 +97,7 @@
     sops.templates."ssh-authorized-keys-for-${username}" = {
       content = ''
         ${config.sops.placeholder.ssh-authorized-key-lstr}
+        ${nonsecrets.authorized_keys.klbr}
       '';
       owner = username; # NOTE: or ${username} will not be able to enter trough ssh.
     };
