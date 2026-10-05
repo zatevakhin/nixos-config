@@ -6,17 +6,17 @@
   gcc-unwrapped,
   symlinkJoin,
 }: let
-  version = "0.10.0";
+  version = "0.12.0";
 
   release =
     {
       x86_64-linux = {
         arch = "x86_64";
-        hash = "sha256-wl4rtTWIh+ZOM9MTU3DoDqIVpUYI33I9l9nKxnt/nj4=";
+        hash = "sha256-7w4HcsmnTqiXm7RZ0vW47QDb0fLgbMcO7ZEGm6h8kYk=";
       };
       aarch64-linux = {
         arch = "arm64";
-        hash = "sha256-3TrAkSOmiIJFTbfmidpMMGxBZ3gmI3CY3052sPc9jV4=";
+        hash = "sha256-L1TNnXUg8QqbSwx+iXT6LVF1yHFw8Ul0nUceliUOGmc=";
       };
     }.${
       stdenv.hostPlatform.system
