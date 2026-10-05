@@ -16,7 +16,7 @@
         formatter = pkgs.alejandra;
 
         devShells.default = pkgs.mkShell {
-          packages = [pkgs.git pkgs.git-agecrypt];
+          packages = [pkgs.git pkgs.git-agecrypt pkgs.just pkgs.alejandra];
           shellHook = ''
             repo=$(git rev-parse --show-toplevel 2>/dev/null || true)
             if [[ -n $repo ]]; then

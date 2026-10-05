@@ -19,12 +19,14 @@ jobs:
       - name: formatting
         run: |
           rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
-          nix run "github:nixos/nixpkgs/${rev}#alejandra" -- --check .
+          nix shell "github:nixos/nixpkgs/${rev}#just" "github:nixos/nixpkgs/${rev}#alejandra" -c just fmt-check
 
   secrets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - uses: extractions/setup-just@v3
+
       - name: secrets
-        run: bash ci/check-secrets.sh
+        run: just check-secrets

@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 root=$(git rev-parse --show-toplevel)
-exec bash "$root/ci/check-secrets.sh" index
+cd "$root"
+if ! command -v just >/dev/null 2>&1; then
+  echo "just not found; enter nix develop" >&2
+  exit 1
+fi
+exec just pre-commit

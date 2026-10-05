@@ -125,4 +125,4 @@ sudo cat /run/tor/onion/ssh/hostname
 
 SOPS rules and age recipients are in `.sops.yaml`. Host secrets live under `secrets/<host>/`. Do not commit decrypted keys or `extra-files/`.
 
-Installer identity files are git-agecrypt. `nix develop` sets `core.hooksPath` to `.githooks`, so the pre-commit check runs after that. `nix shell` does not run the shell hook. The hook and CI reject unencrypted agecrypt paths, plaintext private keys, and non-SOPS files under `secrets/`.
+Installer identity files are git-agecrypt. `nix develop` sets `core.hooksPath` to `.githooks`, so the pre-commit check runs after that. `nix shell` does not run the shell hook. The hook runs `just pre-commit`; CI runs `just ci`. Both reject unencrypted agecrypt paths, plaintext private keys, and non-SOPS files under `secrets/`.
