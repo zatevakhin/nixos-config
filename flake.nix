@@ -11,7 +11,7 @@
 
         inputs.home-manager.flakeModules.home-manager
       ];
-      systems = ["x86_64-linux" "aarch64-linux"];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
 
@@ -56,6 +56,13 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";

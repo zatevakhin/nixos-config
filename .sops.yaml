@@ -15,6 +15,7 @@ keys:
   - &sapr_machine age1jsh9t5wfjv9extwpmwcwmv9gwdyw3z69lu67es2ttcl7mr58zdlsdpe7ju
   - &stcr_machine age1fjalfd7re6v27pfuxxxmg5cfvc2xavctmake59r293k80acvea2sdf086j
   - &sys3_machine age1u20wtv3pkczwhcj4dqjtd5pfgc5fsl8xv5vcae0n77u55nc053rq2h52ve
+  - &eulr_machine age1x8nn8yvgs2xvr7u7dnqnlrq7h05dvshqsy447c3j2aqek4rk3dqsuprskn
 creation_rules:
   - path_regex: secrets/dflt/[^/]+\.(yaml)$
     key_groups:
@@ -61,3 +62,8 @@ creation_rules:
       - age:
           - *default_ssh
           - *sys3_machine
+  - path_regex: secrets/eulr/[^/]+\.(yaml)$
+    key_groups:
+      - age:
+          - *default_ssh
+          - *eulr_machine

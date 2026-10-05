@@ -1,6 +1,6 @@
 # nixos-config
 
-NixOS flake for this fleet. `flake-parts` loads `hosts/` and `modules/` through `import-tree`.
+NixOS and nix-darwin flake for this fleet. `flake-parts` loads `hosts/` and `modules/` through `import-tree`.
 
 Evaluation needs SSH access to the private `notsecrets` input. A Git flake only sees tracked files, so `git add` new files before building. Staging is enough; a commit is not required.
 
@@ -26,6 +26,7 @@ flake.nix
 | `sapr` | `zatevakhin` | `x86_64-linux` |
 | `stcr` | `zatevakhin` | `x86_64-linux` |
 | `sys3` | `aya` | `aarch64-linux` |
+| `eulr` | `ivan` | `aarch64-darwin` |
 | `iso` | — | installer image |
 
 ## Format
@@ -40,6 +41,8 @@ nix fmt -- path/to/file.nix
 
 ## Deploy
 
+### NixOS
+
 From the repository root:
 
 ```sh
@@ -49,6 +52,30 @@ nixos-rebuild switch --target-host root@HOST --build-host root@BUILD_HOST --flak
 ```
 
 `build` does not activate. `test` activates without changing the boot default. Do not run parallel rebuilds that share one `result` symlink.
+
+### Darwin (`eulr`)
+
+Run on the Mac. Attr is `darwinConfigurations.eulr`; `nixos-rebuild` will not work.
+
+First activation:
+
+```sh
+nix run nix-darwin -- switch --flake .#eulr
+```
+
+After that:
+
+```sh
+darwin-rebuild switch --flake .#eulr
+```
+
+Linux cannot build `aarch64-darwin`. Remote deploy is SSH onto the Mac and switch there:
+
+```sh
+ssh ivan@eulr 'cd /path/to/nixos-config && git pull && darwin-rebuild switch --flake .#eulr'
+```
+
+First time on that machine, use `nix run nix-darwin -- switch --flake .#eulr` instead of `darwin-rebuild`.
 
 ## Install
 
