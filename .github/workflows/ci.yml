@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  check:
+  formatting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +20,11 @@ jobs:
         run: |
           rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
           nix run "github:nixos/nixpkgs/${rev}#alejandra" -- --check .
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: agecrypt
         run: bash ci/check-agecrypt.sh
