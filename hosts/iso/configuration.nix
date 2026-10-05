@@ -1,48 +1,59 @@
-{pkgs, ...}: let
-  iso = import ./secrets/iso.nix;
-in {
-  environment.systemPackages = with pkgs; [
-    nixos-install-tools
-    fastfetch
-    neovim
-    parted
-    sops
-    htop
-    git
-  ];
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.iso-configuration = {
+    pkgs,
+    lib,
+    ...
+  }: let
+    nonsecrets = lib.importTOML "${inputs.notsecrets}/default.toml";
+    authorizedKeys = with nonsecrets.authorized_keys; [klbr ntgh];
+  in {
+    imports = [self.nixosModules.openssh-defaults];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  systemd.services.sshd.wantedBy = pkgs.lib.mkForce ["multi-user.target"];
+    nixpkgs.hostPlatform = "x86_64-linux";
+    networking.hostName = "homeworld-installer";
+    nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  users.users.root.openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.lstr];
-  users.users.nixos = {
-    openssh.authorizedKeys.keys = [iso.ssh.authorized_keys.lstr];
-  };
+    environment.systemPackages = with pkgs; [
+      nixos-install-tools
+      fastfetch
+      neovim
+      parted
+      sops
+      htop
+      git
+    ];
 
-  environment.etc."ssh-host-ed25519" = {
-    source = ./secrets/ssh_host_ed25519_key;
-    target = "ssh/ssh_host_ed25519_key";
-  };
-  environment.etc."ssh-host-ed25519-pub" = {
-    source = ./secrets/ssh_host_ed25519_public_key.pub;
-    target = "ssh/ssh_host_ed25519_key.pub";
-  };
+    # The live image allows console access, but SSH is public-key only.
+    services.openssh.settings = {
+      PermitRootLogin = lib.mkForce "prohibit-password";
+      PasswordAuthentication = lib.mkForce false;
+      KbdInteractiveAuthentication = lib.mkForce false;
+    };
+    users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
+    users.users.nixos.openssh.authorizedKeys.keys = authorizedKeys;
 
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-  };
+    # Fixed installer identity, decrypted by git-agecrypt before building.
+    environment.etc."ssh/ssh_host_ed25519_key" = {
+      source = ../../secrets/iso/ssh_host_ed25519_key;
+      mode = "0600";
+    };
+    environment.etc."ssh/ssh_host_ed25519_key.pub".source = ../../secrets/iso/ssh_host_ed25519_public_key.pub;
+    services.openssh.hostKeys = lib.mkForce [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
 
-  services.tor = {
-    enable = true;
-    relay.onionServices = {
-      ssh = {
+    services.tor = {
+      enable = true;
+      relay.onionServices.ssh = {
         version = 3;
-        secretKey = builtins.path {
-          name = "ssh-service";
-          path = ./secrets/hs_ed25519_secret_key;
-        };
-
+        secretKey = ../../secrets/iso/hs_ed25519_secret_key;
         map = [
           {
             port = 22;
@@ -54,5 +65,7 @@ in {
         ];
       };
     };
+
+    system.stateVersion = "26.05";
   };
 }

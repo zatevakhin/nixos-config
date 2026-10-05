@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v31.11.1
+
+      - name: formatting
+        run: |
+          rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
+          nix run "github:nixos/nixpkgs/${rev}#alejandra" -- --check .
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: secrets
+        run: bash ci/check-secrets.sh

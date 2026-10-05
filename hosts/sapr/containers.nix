@@ -1,0 +1,16 @@
+{self, ...}: {
+  flake.nixosModules.sapr-containers = {...}: {
+    imports = [
+      self.nixosModules.container-audiobookshelf
+      self.nixosModules.container-vaultwarden
+      self.nixosModules.container-navidrome
+      self.nixosModules.container-arr-stack
+      self.nixosModules.container-linkding
+      self.nixosModules.container-forgejo
+      self.nixosModules.container-wg-easy
+      self.nixosModules.container-immich
+    ];
+
+    services.forgejo-compose.sshPort = 2222;
+  };
+}

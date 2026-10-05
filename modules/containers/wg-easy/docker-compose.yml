@@ -1,0 +1,45 @@
+---
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:15
+    container_name: wg-easy
+    environment:
+      - INSECURE=true
+      - DISABLE_IPV6=true
+      - WG_POST_UP=nft add table inet wg_table; nft add chain inet wg_table postrouting { type nat hook postrouting priority 100 \; }; nft add rule inet wg_table postrouting ip saddr {{ipv4Cidr}} oifname eth0 masquerade; nft add chain inet wg_table forward { type filter hook forward priority 0 \; policy accept \; }; nft add rule inet wg_table forward iifname wg0 accept; nft add rule inet wg_table forward oifname wg0 accept
+      - WG_POST_DOWN=nft delete table inet wg_table || true
+    volumes:
+      - /storage/.services/wg-easy/config:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: no
+    labels:
+      - traefik.enable=true
+      # HTTPS Router Configuration
+      - traefik.http.routers.wg.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.wg.tls=true
+      - traefik.http.routers.wg.entrypoints=websecure
+      - traefik.http.routers.wg.tls.certresolver=stepca
+        # Service Configuration
+      - traefik.http.services.wg.loadbalancer.server.port=51821
+
+    networks:
+      wg:
+        ipv4_address: 10.10.0.2
+
+networks:
+  wg:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-wg-easy
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/24

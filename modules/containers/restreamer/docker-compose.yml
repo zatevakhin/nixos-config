@@ -1,0 +1,27 @@
+---
+services:
+  restreamer:
+    image: datarhei/restreamer:latest
+    container_name: restreamer
+    privileged: true
+    restart: no
+    volumes:
+      - "/storage/.services/restreamer/config:/core/config"
+      - "/storage/.services/restreamer/data:/core/data"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.restreamer.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.restreamer.entrypoints=web
+      - traefik.http.routers.restreamer.service=restreamer-service
+      - traefik.http.routers.restreamer-https.rule=Host(`${INTERNAL_DOMAIN_NAME}`)
+      - traefik.http.routers.restreamer-https.tls=true
+      - traefik.http.routers.restreamer-https.entrypoints=websecure
+      - traefik.http.routers.restreamer-https.tls.certresolver=stepca
+      - traefik.http.routers.restreamer-https.service=restreamer-service
+      - traefik.http.services.restreamer-service.loadbalancer.server.port=8080
+    networks:
+      proxy:
+
+networks:
+  proxy:
+    external: true
