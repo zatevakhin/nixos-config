@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nixos-base = {...}: {
+  flake.nixosModules.sudo = {...}: {
     security = {
       sudo.enable = false;
       sudo-rs = {

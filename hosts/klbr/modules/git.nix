@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.git = {
+  flake.homeModules.klbr-git = {
     hostname,
     inputs,
     lib,

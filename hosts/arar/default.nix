@@ -2,28 +2,18 @@
   self,
   inputs,
   ...
-}: {
-  flake.nixosConfigurations.arar = inputs.nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      inherit inputs;
-      username = "zatevakhin";
-      hostname = "arar";
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "aarch64-linux";
-        config.allowUnfree = true;
-      };
-    };
-
+}: let
+  hostname = "arar";
+in {
+  flake.nixosConfigurations.${hostname} = self.lib.mkHost {
+    inherit hostname;
+    username = "zatevakhin";
+    system = "aarch64-linux";
     modules = [
-      self.nixosModules.base
-      self.nixosModules.nixos-base
-      self.nixosModules.arar-configuration
-      self.nixosModules.arar-hardware
-      self.nixosModules.arar-modules
-      self.nixosModules.arar-containers
-
-      inputs.disko.nixosModules.disko
-      inputs.sops-nix.nixosModules.sops
+      self.nixosModules."${hostname}-configuration"
+      self.nixosModules."${hostname}-hardware"
+      self.nixosModules."${hostname}-modules"
+      self.nixosModules."${hostname}-containers"
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ];
   };

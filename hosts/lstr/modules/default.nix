@@ -9,6 +9,7 @@
       self.nixosModules."${hostname}-syncthing"
       self.nixosModules."${hostname}-wireguard"
       self.nixosModules."${hostname}-dnsmasq"
+      self.nixosModules."${hostname}-nvidia"
     ];
   };
 }

@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nixos-base = {pkgs, ...}: {
+  flake.nixosModules.nix = {pkgs, ...}: {
     nix = {
       # Use Lix instead of Nix
       package = pkgs.lixPackageSets.stable.lix;

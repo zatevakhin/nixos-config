@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nixos-base = {...}: {
+  flake.nixosModules.i18n = {...}: {
     i18n.defaultLocale = "en_US.UTF-8";
     i18n.supportedLocales = ["en_US.UTF-8/UTF-8"];
 

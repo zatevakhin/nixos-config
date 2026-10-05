@@ -1,10 +1,12 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.nixvim = {
     lib,
     pkgs-unstable,
     ...
   }: {
-    # NOTE: Disable default neovim because it is enabled in `base.nix`
+    imports = [inputs.nixvim.nixosModules.nixvim];
+
+    # NOTE: Disable default neovim because it is enabled in `base-cli.nix`
     programs.neovim.enable = lib.mkForce false;
 
     programs.nixvim = {

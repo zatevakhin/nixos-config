@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.nixosModules.search-mcp = {
     config,
     pkgs,
@@ -7,6 +11,7 @@
   }: {
     imports = [
       self.nixosModules.searxng
+      inputs.searxng-mcp.nixosModules.searxng-mcp
     ];
 
     services.searxng-mcp = {

@@ -2,29 +2,20 @@
   self,
   inputs,
   ...
-}: {
-  flake.nixosConfigurations.sys3 = inputs.nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      inherit inputs;
-      username = "aya";
-      hostname = "sys3";
-
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "aarch64-linux";
-        config.allowUnfree = true;
-        config.cudaSupport = true;
-        config.cudaCapabilities = ["8.7"];
-      };
+}: let
+  hostname = "sys3";
+in {
+  flake.nixosConfigurations.${hostname} = self.lib.mkHost {
+    inherit hostname;
+    username = "aya";
+    system = "aarch64-linux";
+    pkgsUnstableConfig = {
+      cudaSupport = true;
+      cudaCapabilities = ["8.7"];
     };
-
     modules = [
-      self.nixosModules.base
-      self.nixosModules.nixos-base
-      self.nixosModules.sys3-configuration
-      self.nixosModules.sys3-hardware
-
-      inputs.disko.nixosModules.disko
-      inputs.sops-nix.nixosModules.sops
+      self.nixosModules."${hostname}-configuration"
+      self.nixosModules."${hostname}-hardware"
       inputs.jetpack.nixosModules.default
     ];
   };

@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.git = {
+  flake.homeModules.lstr-git = {
     hostname,
     inputs,
     lib,

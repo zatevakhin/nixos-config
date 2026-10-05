@@ -52,11 +52,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix-unstable = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -71,8 +66,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
-
     nixpkgs-otelite.url = "github:NixOS/nixpkgs/pull/557742/head";
 
     # MCPs
@@ -82,98 +75,5 @@
       url = "git+ssh://git@forgejo.homeworld.lan:2222/zatevakhin/nixos-notsecrets.git";
       flake = false;
     };
-
-    # home-manager-next = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-    #
-    # nixvim = {
-    #   url = "github:nix-community/nixvim";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-
-    # nix-flatpak = {
-    #   url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
-    # };
-    #
-    # stylix = {
-    #   url = "github:danth/stylix/release-25.11";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    #
-
-    # # Tools
-    # beads = {
-    #   url = "github:steveyegge/beads?ref=v0.49.1";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
-
-  # outputs = inputs @ {
-  #   self,
-  #   nixpkgs,
-  #   nixpkgs-unstable,
-  #   flake-parts,
-  #   ...
-  # }:
-  #   flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
-  #     username = "ivan";
-  #
-  #     x86Linux = "x86_64-linux";
-  #     armLinux = "aarch64-linux";
-  #
-  #     pkgsUnstableFor = system:
-  #       import nixpkgs-unstable {
-  #         inherit system;
-  #         config.allowUnfree = true;
-  #       };
-  #   in {
-  #     systems = [x86Linux armLinux];
-  #
-  #     flake = {
-  #       /*
-  #       * Installation Instructions:
-  #       *
-  #       * 1. NixOS Installation (using nixos-anywhere for most systems):
-  #       *    - Generate an ISO image if needed:
-  #       *      nix build .#nixosConfigurations.iso.config.system.build.isoImage
-  #       *    - Boot from the generated ISO.
-  #       *    - Prepare extra files with generated SSH keys for the target machine in 'extra-files' directory.
-  #       *    - Run nixos-anywhere for remote installation:
-  #       *      nix run github:nix-community/nixos-anywhere -- --flake .#<machine-id> --target-host root@<machine-ip> --extra-files extra-files
-  #       *
-  #       * 2. NixOS Installation (using disko for specific devices like mnhr):
-  #       *    - Ensure all necessary tools are present in your shell:
-  #       *      nix shell -- nixpkgs#{coreutils-full,dosfstools,f2fs-tools,fscrypt-experimental,gptfdisk,nixos-install-tools,util-linux,neovim}
-  #       *    - Install on the chosen device (e.g., for 'mnhr' on '/dev/mmcblk0'):
-  #       *      nix run 'github:nix-community/disko#disko-install' -- --flake .#mnhr --disk main /dev/mmcblk0
-  #       *
-  #       * 3. SSH Options (might be needed when working with long hostnames):
-  #       *    - export NIX_SSHOPTS="-o ControlPath=~/.ssh/cm-%r@%h:%p -o ControlMaster=auto -o ControlPersist=10m"
-  #       */
-  #
-  #       nixosConfigurations.klbr = nixpkgs.lib.nixosSystem {
-  #         system = x86Linux;
-  #         specialArgs = {
-  #           inherit inputs username;
-  #           pkgs-unstable = pkgsUnstableFor x86Linux;
-  #           system = x86Linux;
-  #           hostname = "klbr";
-  #         };
-  #
-  #         modules = [
-  #           ./hosts/klbr/configuration.nix
-  #
-  #           inputs.disko.nixosModules.disko
-  #           inputs.sops-nix.nixosModules.sops
-  #           inputs.nixvim.nixosModules.nixvim
-  #           inputs.stylix.nixosModules.stylix
-  #           inputs.home-manager.nixosModules.default
-  #           inputs.nix-flatpak.nixosModules.nix-flatpak
-  #           inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
-  #         ];
-  #       };
-  #     };
-  #   });
 }

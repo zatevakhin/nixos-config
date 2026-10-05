@@ -1,32 +1,15 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosConfigurations.flkr = inputs.nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      inherit inputs;
-      username = "ivan";
-      hostname = "flkr";
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-    };
-
+{self, ...}: let
+  hostname = "flkr";
+in {
+  flake.nixosConfigurations.${hostname} = self.lib.mkHost {
+    inherit hostname;
+    username = "ivan";
+    system = "x86_64-linux";
     modules = [
-      self.nixosModules.base
-      self.nixosModules.nixos-base
-      self.nixosModules.flkr-configuration
-      self.nixosModules.flkr-hardware
-      self.nixosModules.flkr-home
-      self.nixosModules.flkr-liquidctl
-
-      inputs.disko.nixosModules.disko
-      inputs.sops-nix.nixosModules.sops
-      inputs.nixvim.nixosModules.nixvim
-      inputs.nix-flatpak.nixosModules.nix-flatpak
-      inputs.searxng-mcp.nixosModules.searxng-mcp
+      self.nixosModules."${hostname}-configuration"
+      self.nixosModules."${hostname}-hardware"
+      self.nixosModules."${hostname}-home"
+      self.nixosModules."${hostname}-liquidctl"
     ];
   };
 }

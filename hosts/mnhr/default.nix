@@ -1,29 +1,15 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosConfigurations.mnhr = inputs.nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      inherit inputs;
-      username = "zatevakhin";
-      hostname = "mnhr";
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = "aarch64-linux";
-        config.allowUnfree = true;
-      };
-    };
-
+{self, ...}: let
+  hostname = "mnhr";
+in {
+  flake.nixosConfigurations.${hostname} = self.lib.mkHost {
+    inherit hostname;
+    username = "zatevakhin";
+    system = "aarch64-linux";
     modules = [
-      self.nixosModules.base
-      self.nixosModules.nixos-base
-      self.nixosModules.mnhr-configuration
-      self.nixosModules.mnhr-hardware
-      self.nixosModules.mnhr-modules
-      self.nixosModules.mnhr-containers
-
-      inputs.disko.nixosModules.disko
-      inputs.sops-nix.nixosModules.sops
+      self.nixosModules."${hostname}-configuration"
+      self.nixosModules."${hostname}-hardware"
+      self.nixosModules."${hostname}-modules"
+      self.nixosModules."${hostname}-containers"
     ];
   };
 }

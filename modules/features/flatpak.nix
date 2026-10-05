@@ -1,5 +1,7 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.flatpak = {...}: {
+    imports = [inputs.nix-flatpak.nixosModules.nix-flatpak];
+
     services.flatpak.enable = true;
     services.flatpak.update.onActivation = true;
     services.flatpak.uninstallUnmanaged = true;

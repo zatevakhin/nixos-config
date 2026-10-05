@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.git = {
+  flake.homeModules.flkr-git = {
     hostname,
     inputs,
     lib,

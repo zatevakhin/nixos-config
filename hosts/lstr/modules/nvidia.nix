@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nvidia = {...}: {
+  flake.nixosModules.lstr-nvidia = {...}: {
     services.xserver.videoDrivers = [
       "amdgpu"
       "nvidia"
