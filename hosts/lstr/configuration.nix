@@ -9,7 +9,6 @@
     lib,
     ...
   }: let
-    otelitePkgs = import inputs.nixpkgs-otelite {inherit (pkgs) system;};
     nonsecrets = lib.importTOML "${inputs.notsecrets}/default.toml";
   in {
     imports = [
@@ -31,21 +30,6 @@
       self.nixosModules.qemu
       self.nixosModules.adb
       self.nixosModules.tor
-      "${inputs.nixpkgs-otelite}/nixos/modules/services/monitoring/otelite.nix"
-    ];
-
-    services.otelite = {
-      enable = true;
-      package = otelitePkgs.otelite;
-      address = "0.0.0.0";
-      port = 3000;
-      otlpGrpcPort = 4317;
-      otlpHttpPort = 4318;
-      retentionDays = 90;
-      openFirewall = true;
-    };
-    environment.systemPackages = [
-      otelitePkgs.otelite
     ];
 
     # NOTE: Using this kernel because of issue with built in display.
