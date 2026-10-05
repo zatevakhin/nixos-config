@@ -14,6 +14,16 @@
       systems = ["x86_64-linux" "aarch64-linux"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
+
+        devShells.default = pkgs.mkShell {
+          packages = [pkgs.git pkgs.git-agecrypt];
+          shellHook = ''
+            repo=$(git rev-parse --show-toplevel 2>/dev/null || true)
+            if [[ -n $repo ]]; then
+              git -C "$repo" config core.hooksPath .githooks
+            fi
+          '';
+        };
       };
     };
 

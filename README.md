@@ -30,7 +30,7 @@ flake.nix
 
 ## Format
 
-Alejandra is the flake formatter. There is no dev shell.
+Alejandra is the flake formatter.
 
 ```sh
 nix fmt -- path/to/file.nix
@@ -97,3 +97,5 @@ sudo cat /run/tor/onion/ssh/hostname
 ## Secrets
 
 SOPS rules and age recipients are in `.sops.yaml`. Host secrets live under `secrets/<host>/`. Do not commit decrypted keys or `extra-files/`.
+
+Installer identity files are git-agecrypt. `nix develop` sets `core.hooksPath` to `.githooks`, so the pre-commit check runs after that. `nix shell` does not run the shell hook.
