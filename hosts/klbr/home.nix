@@ -4,6 +4,7 @@
     extraSharedModules = hostname: [
       self.homeModules.gnome
       self.homeModules."${hostname}-git"
+      self.homeModules.copyq
       self.homeModules.shell
       self.homeModules.ghostty
     ];

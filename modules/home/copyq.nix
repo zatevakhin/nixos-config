@@ -1,6 +1,10 @@
 {...}: {
-  flake.homeModules.copyq = {...}: {
-    services.copyq.enable = true;
+  flake.homeModules.copyq = {pkgs-unstable, ...}: {
+    services.copyq = {
+      enable = true;
+      # 26.05 is 13.0.0; wait for nixpkgs#569918 (16.0.0 -> 17.0.0).
+      package = pkgs-unstable.copyq;
+    };
 
     home.file.".config/copyq/copyq.conf".text = ''
       [Options]
