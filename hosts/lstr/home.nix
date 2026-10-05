@@ -23,6 +23,7 @@
       extraSpecialArgs = {inherit inputs username hostname pkgs-unstable;};
       sharedModules = [
         self.homeModules.gnome
+        self.homeModules.lstr-touchpad
         self.homeModules.copyq
         self.homeModules.shell
         self.homeModules.ghostty

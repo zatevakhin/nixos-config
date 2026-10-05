@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.gnome = {pkgs, ...}: let
+  flake.homeModules.lstr-touchpad = {pkgs, ...}: let
     binding-name = "touchpad-toggle";
     touchpad-toggle = pkgs.writeShellScriptBin "${binding-name}" ''
       gsettings set org.gnome.desktop.peripherals.touchpad send-events $(gsettings get org.gnome.desktop.peripherals.touchpad send-events | grep -q "enabled" && echo "disabled" || echo "enabled")
