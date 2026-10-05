@@ -26,5 +26,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: agecrypt
-        run: bash ci/check-agecrypt.sh
+      - name: secrets
+        run: bash ci/check-secrets.sh
