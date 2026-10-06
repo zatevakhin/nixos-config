@@ -78,6 +78,16 @@
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
+    # Revisions nano was already running. Do not float these.
+    system3 = {
+      url = "git+ssh://git@github.com/zatevakhin/system3?rev=344483d3967f69f2c1a8bb74823da8208d880241";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    system3-omnigraph = {
+      url = "git+ssh://git@github.com/zatevakhin/system3-omngraph?rev=84081d3251fa0574962fdebb1257a5559380786e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     notsecrets = {
       url = "git+ssh://git@forgejo.homeworld.lan:2222/zatevakhin/nixos-notsecrets.git";
       flake = false;

@@ -22,7 +22,8 @@ flake.nix
 | `flkr` | `ivan` | `x86_64-linux` |
 | `klbr` | `ivan` | `x86_64-linux` |
 | `lstr` | `ivan` | `x86_64-linux` |
-| `mnhr` | `zatevakhin` | `aarch64-linux` |
+| `mnhr` | `zatevakhin` | `aarch64-linux`, temporarily disabled as unused |
+| `nano` | `aya` | `aarch64-linux` |
 | `sapr` | `zatevakhin` | `x86_64-linux` |
 | `stcr` | `zatevakhin` | `x86_64-linux` |
 | `sys3` | `aya` | `aarch64-linux` |
