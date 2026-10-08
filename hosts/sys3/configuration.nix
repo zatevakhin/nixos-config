@@ -5,6 +5,7 @@
     config,
     pkgs,
     lib,
+    inputs,
     ...
   }: let
     omnigraph = pkgs.callPackage ../../flakes/omnigraph/package.nix {};
@@ -17,6 +18,7 @@
       self.nixosModules.wireshark
       self.nixosModules.tmux
       self.nixosModules.oo7
+      inputs.system3-latest.nixosModules.default
       # omnigraph
       ../../flakes/omnigraph/module.nix
     ];
@@ -49,6 +51,56 @@
     services.oo7Secrets = {
       enable = true;
       passwordFile = config.sops.secrets.oo7-keyring-password.path;
+    };
+
+    # User service so it can reach aya's Secret Service. Providers are OCI
+    # images only; API keys stay in the keyring, not in this store path.
+    services.system3.userService = {
+      enable = true;
+      user = username;
+      linger = true;
+      checkSecretStore = true;
+      openGraphUiFirewall = true;
+      openRemoteStagesFirewall = true;
+      settings = {
+        logging.stderr = true;
+        querymt = {
+          update_models_registry = true;
+          providers = [
+            {
+              name = "openai";
+              path = "oci://ghcr.io/querymt/openai:latest";
+            }
+            {
+              name = "anthropic";
+              path = "oci://ghcr.io/querymt/anthropic:latest";
+            }
+            {
+              name = "xai";
+              path = "oci://ghcr.io/querymt/xai:latest";
+            }
+            {
+              name = "zai";
+              path = "oci://ghcr.io/querymt/zai:latest";
+            }
+            {
+              name = "codex";
+              path = "oci://ghcr.io/querymt/codex:latest";
+            }
+          ];
+        };
+        graph_ui = {
+          enabled = true;
+          host = "0.0.0.0";
+          port = 8088;
+        };
+        remote_stages = {
+          enabled = true;
+          host_name = hostname;
+          listen = "/ip4/0.0.0.0/tcp/39100";
+          identity_file = "data://remote-stage-identity.key";
+        };
+      };
     };
 
     # <docker>
@@ -106,7 +158,8 @@
       extraGroups = ["wheel" "video" "docker"];
     };
 
-    security.sudo.extraRules = [
+    # mkHost disables security.sudo. This is the sudo-rs form of the existing rule.
+    security.sudo-rs.extraRules = [
       {
         users = [username];
         commands = [

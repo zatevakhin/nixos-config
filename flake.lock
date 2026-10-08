@@ -121,6 +121,27 @@
         "type": "github"
       }
     },
+    "flake-parts_4": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "system3-latest",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790898470,
+        "narHash": "sha256-zTwuwezD0w3hpga6a6P8emidzAZFyWqlNeRBlpWOOl8=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "024633cd702b10285db5cb19b40ad48d2399ba60",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -484,6 +505,7 @@
         "searxng-mcp": "searxng-mcp",
         "sops-nix": "sops-nix",
         "system3": "system3",
+        "system3-latest": "system3-latest",
         "system3-omnigraph": "system3-omnigraph"
       }
     },
@@ -524,6 +546,27 @@
       }
     },
     "rust-overlay_3": {
+      "inputs": {
+        "nixpkgs": [
+          "system3-latest",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781580018,
+        "narHash": "sha256-BlTedbM77FmesD2ZqR73vhFy+y77UrhefV7IYw1pDsk=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8bceba21a1ebea535c27c4dc723a0d5a4db9e386",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_4": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
       },
@@ -603,13 +646,36 @@
         "url": "ssh://git@github.com/zatevakhin/system3"
       }
     },
+    "system3-latest": {
+      "inputs": {
+        "flake-parts": "flake-parts_4",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay_3"
+      },
+      "locked": {
+        "lastModified": 1791453839,
+        "narHash": "sha256-+cgRl36dV3SZlrxoVD6rTOxQUl87+Z3cu1Hby3J39Xc=",
+        "ref": "refs/heads/main",
+        "rev": "38edf939de53cb54a5169a43fa9b484166d1d4c7",
+        "revCount": 404,
+        "type": "git",
+        "url": "ssh://git@github.com/zatevakhin/system3"
+      },
+      "original": {
+        "rev": "38edf939de53cb54a5169a43fa9b484166d1d4c7",
+        "type": "git",
+        "url": "ssh://git@github.com/zatevakhin/system3"
+      }
+    },
     "system3-omnigraph": {
       "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay_3"
+        "rust-overlay": "rust-overlay_4"
       },
       "locked": {
         "lastModified": 1786226104,
