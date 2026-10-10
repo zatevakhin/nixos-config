@@ -75,6 +75,11 @@
 
     nixpkgs-otelite.url = "github:NixOS/nixpkgs/pull/557742/head";
 
+    voxtype = {
+      url = "github:peteonrails/voxtype/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
