@@ -75,12 +75,22 @@
 
     nixpkgs-otelite.url = "github:NixOS/nixpkgs/pull/557742/head";
 
+    voxtype = {
+      url = "github:peteonrails/voxtype/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
     # Revisions nano was already running. Do not float these.
     system3 = {
       url = "git+ssh://git@github.com/zatevakhin/system3?rev=344483d3967f69f2c1a8bb74823da8208d880241";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Current main for sys3. Do not point nano at this.
+    system3-latest = {
+      url = "git+ssh://git@github.com/zatevakhin/system3?rev=38edf939de53cb54a5169a43fa9b484166d1d4c7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     system3-omnigraph = {
