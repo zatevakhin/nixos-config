@@ -90,11 +90,15 @@
     };
     # Current main for sys3. Do not point nano at this.
     system3-latest = {
-      url = "git+ssh://git@github.com/zatevakhin/system3?rev=38edf939de53cb54a5169a43fa9b484166d1d4c7";
+      url = "git+ssh://git@github.com/zatevakhin/system3?rev=d37dad018d7d0abef731db82a20a1a3ee2801d5c";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     system3-omnigraph = {
       url = "git+ssh://git@github.com/zatevakhin/system3-omngraph?rev=84081d3251fa0574962fdebb1257a5559380786e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    system3-omnigraph-latest = {
+      url = "git+ssh://git@github.com/zatevakhin/system3-omngraph?ref=refs/pull/1/head&rev=5307d16087e9c3cb4bba8fa006f9dcaed17ce1eb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

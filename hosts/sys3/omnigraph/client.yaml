@@ -1,0 +1,28 @@
+# Aya's client bindings. Schemas and stored queries remain server-owned.
+operator:
+  actor: aya
+
+defaults:
+  server: memory
+  default_graph: simple
+  output: json
+
+servers:
+  memory:
+    url: http://127.0.0.1:18080
+
+profiles:
+  memory-simple:
+    server: memory
+    default_graph: simple
+
+aliases:
+  # Scope arguments are full path keys; filters are case-sensitive.
+  mem-recall: { server: memory, graph: simple, query: recall, args: [scope, q], format: json }
+  mem-recall-in-run: { server: memory, graph: simple, query: recall_in_run, args: [scope, run, q], format: json }
+  mem-list: { server: memory, graph: simple, query: memories_of, args: [key], format: json }
+  mem-scopes: { server: memory, graph: simple, query: scopes_matching, args: [prefix, substring], format: json }
+  mem-matching: { server: memory, graph: simple, query: memories_matching, args: [prefix, substring], format: json }
+  mem-recall-matching: { server: memory, graph: simple, query: recall_matching, args: [prefix, substring, q], format: json }
+
+  # For writes, use omnigraph mutate <function> --params '<JSON>'; aliases are read-only.

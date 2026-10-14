@@ -196,6 +196,24 @@
         "type": "github"
       }
     },
+    "flake-utils_4": {
+      "inputs": {
+        "systems": "systems_5"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -466,6 +484,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1744536153,
+        "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -525,6 +559,7 @@
         "system3": "system3",
         "system3-latest": "system3-latest",
         "system3-omnigraph": "system3-omnigraph",
+        "system3-omnigraph-latest": "system3-omnigraph-latest",
         "voxtype": "voxtype"
       }
     },
@@ -588,6 +623,24 @@
     "rust-overlay_4": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1784091390,
+        "narHash": "sha256-aILAwrBQPhKldL98N8lmsbfst3OPtbMM4vT2VXn40/Y=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a7887636a3959168bd1ba7ef24a8a70b168dcb56",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_5": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "lastModified": 1784091390,
@@ -674,16 +727,15 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1791453839,
-        "narHash": "sha256-+cgRl36dV3SZlrxoVD6rTOxQUl87+Z3cu1Hby3J39Xc=",
-        "ref": "refs/heads/main",
-        "rev": "38edf939de53cb54a5169a43fa9b484166d1d4c7",
-        "revCount": 404,
+        "lastModified": 1791583425,
+        "narHash": "sha256-OdB4LfD0EGtN2j5YCumVEJQvyA5xW5QTSC20etVp22Y=",
+        "rev": "d37dad018d7d0abef731db82a20a1a3ee2801d5c",
+        "revCount": 405,
         "type": "git",
         "url": "ssh://git@github.com/zatevakhin/system3"
       },
       "original": {
-        "rev": "38edf939de53cb54a5169a43fa9b484166d1d4c7",
+        "rev": "d37dad018d7d0abef731db82a20a1a3ee2801d5c",
         "type": "git",
         "url": "ssh://git@github.com/zatevakhin/system3"
       }
@@ -706,6 +758,30 @@
       },
       "original": {
         "rev": "84081d3251fa0574962fdebb1257a5559380786e",
+        "type": "git",
+        "url": "ssh://git@github.com/zatevakhin/system3-omngraph"
+      }
+    },
+    "system3-omnigraph-latest": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay_5"
+      },
+      "locked": {
+        "lastModified": 1791745210,
+        "narHash": "sha256-5evZ13mStiIgNhFK910QhKB/RSgNdCdeiKvfXwEMX20=",
+        "ref": "refs/pull/1/head",
+        "rev": "5307d16087e9c3cb4bba8fa006f9dcaed17ce1eb",
+        "revCount": 13,
+        "type": "git",
+        "url": "ssh://git@github.com/zatevakhin/system3-omngraph"
+      },
+      "original": {
+        "ref": "refs/pull/1/head",
+        "rev": "5307d16087e9c3cb4bba8fa006f9dcaed17ce1eb",
         "type": "git",
         "url": "ssh://git@github.com/zatevakhin/system3-omngraph"
       }
@@ -772,9 +848,24 @@
         "type": "github"
       }
     },
+    "systems_5": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "voxtype": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_4",
         "nixpkgs": [
           "nixpkgs-unstable"
         ]

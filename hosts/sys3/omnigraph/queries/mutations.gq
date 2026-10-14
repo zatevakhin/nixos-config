@@ -1,0 +1,60 @@
+query upsert_scope($key: String)
+  @description("Create or reuse a scope with a checked, slash-separated path key.") {
+  insert Scope { key: $key }
+}
+
+// Every invocation creates a new memory; do not blindly retry an uncertain write.
+query create_memory($text: String, $created_at: DateTime)
+  @description("Create a fact with an Omnigraph-generated ID, storing its text and creation time for later scope and entity linking.") {
+  insert Memory {
+    text: $text,
+    created_at: $created_at
+  }
+}
+
+query update_memory($memory_id: String, $text: String)
+  @description("Correct the text of an existing fact by generated ID without changing its creation time, scopes, or entity links.") {
+  update Memory set { text: $text } where @id = $memory_id
+}
+
+query upsert_entity($name: String, $kind: String)
+  @description("Create or update a shared entity keyed by name, storing its kind without changing its identity or existing memory links.") {
+  insert Entity { name: $name, kind: $kind }
+}
+
+// Scope has a single String key, so its logical ID is the full scope path.
+// Attach operations are strict: an existing pair fails the uniqueness constraint.
+query attach_memory_scope($memory_id: String, $scope_key: String)
+  @description("Link an existing memory to an existing scope path. A duplicate link is rejected.") {
+  insert InScope { from: $memory_id, to: $scope_key }
+}
+
+query detach_memory_scope($memory_id: String, $scope_key: String)
+  @description("Remove one scope link without deleting the memory or any other scope links.") {
+  delete InScope where @src = $memory_id and @dst = $scope_key
+}
+
+query attach_memory_entity($memory_id: String, $name: String)
+  @description("Link an existing memory to an existing entity keyed by name. A duplicate link is rejected.") {
+  insert About { from: $memory_id, to: $name }
+}
+
+query detach_memory_entity($memory_id: String, $name: String)
+  @description("Remove one entity link without deleting the memory or the shared entity.") {
+  delete About where @src = $memory_id and @dst = $name
+}
+
+query delete_memory($memory_id: String)
+  @description("Delete a fact by generated ID and its incident links across all scopes; keep scope and entity nodes.") {
+  delete Memory where @id = $memory_id
+}
+
+query delete_scope($key: String)
+  @description("Delete an exact scope and its incident links; keep memories and child scope paths.") {
+  delete Scope where key = $key
+}
+
+query delete_entity($name: String)
+  @description("Delete a shared entity and its incident links across all scopes; keep linked memories.") {
+  delete Entity where name = $name
+}

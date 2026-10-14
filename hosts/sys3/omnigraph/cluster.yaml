@@ -1,0 +1,8 @@
+version: 1
+metadata:
+  name: default
+storage: s3://omnigraph/clusters/default
+graphs:
+  simple:
+    schema: schema.pg
+    queries: queries/

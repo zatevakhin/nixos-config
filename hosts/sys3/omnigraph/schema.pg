@@ -1,0 +1,26 @@
+node Scope {
+  key: String @key
+  @check(key, "^[a-z0-9][a-z0-9_-]{0,63}(/[a-z0-9][a-z0-9_-]{0,63}){0,4}$")
+}
+
+node Memory {
+  text: String @index
+  created_at: DateTime
+  embedding: Vector(768)? @embed("text")
+  // One extracted fact. Linked to one or more scopes.
+}
+
+node Entity {
+  name: String
+  kind: String
+  embedding: Vector(768)? @embed("name")
+  @key(name)
+}
+
+edge InScope: Memory -> Scope {
+  @unique(@src, @dst)
+}
+
+edge About: Memory -> Entity {
+  @unique(@src, @dst)
+}

@@ -37,7 +37,7 @@
     # User service so it can reach aya's Secret Service. Sandbox exceptions
     # below are intentional: the runtime sudo's nixos-rebuild.
     services.system3.userService = {
-      enable = true;
+      enable = false;
       user = username;
       linger = true;
       checkSecretStore = true;
@@ -97,7 +97,8 @@
       };
     };
 
-    systemd.user.services.system3.serviceConfig = {
+    systemd.user.services.system3.enable = config.services.system3.userService.enable;
+    systemd.user.services.system3.serviceConfig = lib.mkIf config.services.system3.userService.enable {
       WorkingDirectory = lib.mkForce "/home/${username}/workspace";
       NoNewPrivileges = lib.mkForce false;
     };
@@ -108,7 +109,7 @@
 
     # Omnigraph itself stays on docker-compose (:18080). This is only the mesh worker.
     services.system3-omnigraph-worker = {
-      enable = true;
+      enable = false;
       hostName = "${hostname}-omnigraph";
       listen = "/ip4/0.0.0.0/tcp/39120";
       package = inputs.system3-omnigraph.packages.${pkgs.system}.system3-stage-omnigraph;

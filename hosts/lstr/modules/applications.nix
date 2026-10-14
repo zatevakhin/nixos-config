@@ -8,6 +8,7 @@
 
       nmap
       sqlite
+      (pkgs.callPackage ../../../flakes/omnigraph/package.nix {}).omnigraph-cli
       yt-dlp
     ];
   };

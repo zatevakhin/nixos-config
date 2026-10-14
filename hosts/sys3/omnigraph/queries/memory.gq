@@ -1,0 +1,78 @@
+query recall($scope: String, $q: String)
+  @description("Recall up to eight full-text matching facts from an exact scope, ranked by BM25 relevance.") {
+  match {
+    $m: Memory
+    search($m.text, $q)
+    $s: Scope { key: $scope }
+    $m inScope $s
+  }
+  return { $m.@id as memory_id, $m.text, $m.created_at }
+  order { bm25($m.text, $q) desc }
+  limit 8
+}
+
+query recall_in_run($scope: String, $run: String, $q: String)
+  @description("Recall up to eight full-text matching facts linked to both an exact scope and run, ranked by BM25 relevance.") {
+  match {
+    $m: Memory
+    search($m.text, $q)
+    $u: Scope { key: $scope }
+    $r: Scope { key: $run }
+    $m inScope $u
+    $m inScope $r
+  }
+  return { $m.@id as memory_id, $m.text }
+  order { bm25($m.text, $q) desc }
+  limit 8
+}
+
+query memories_of($key: String)
+  @description("List facts linked to an exact scope key, ordered newest first.") {
+  match {
+    $s: Scope { key: $key }
+    $m inScope $s
+  }
+  return { $m.@id as memory_id, $m.text, $m.created_at }
+  order { $m.created_at desc }
+}
+
+// Filters are case-sensitive and apply together to one full scope key.
+// Pass an empty string to skip either filter.
+query scopes_matching($prefix: String, $substring: String)
+  @description("List scope keys matching a case-sensitive prefix and substring; empty filters match all.") {
+  match {
+    $s: Scope
+    $s.key starts_with $prefix and $s.key contains $substring
+  }
+  return { $s.key as scope_key }
+  order { $s.key asc }
+}
+
+// exists avoids duplicate facts when several of their scopes match.
+query memories_matching($prefix: String, $substring: String)
+  @description("List unique facts from scopes matching both path filters, ordered newest first.") {
+  match {
+    $m: Memory
+    exists {
+      $m inScope $s
+      $s.key starts_with $prefix and $s.key contains $substring
+    }
+  }
+  return { $m.@id as memory_id, $m.text, $m.created_at }
+  order { $m.created_at desc }
+}
+
+query recall_matching($prefix: String, $substring: String, $q: String)
+  @description("Recall up to eight unique full-text matching facts from scopes matching both path filters, ranked by BM25 relevance.") {
+  match {
+    $m: Memory
+    search($m.text, $q)
+    exists {
+      $m inScope $s
+      $s.key starts_with $prefix and $s.key contains $substring
+    }
+  }
+  return { $m.@id as memory_id, $m.text, $m.created_at }
+  order { bm25($m.text, $q) desc }
+  limit 8
+}
