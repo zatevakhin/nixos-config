@@ -27,6 +27,7 @@
       "io.github.tdesktop_x64.TDesktop"
       "md.obsidian.Obsidian"
       "org.signal.Signal"
+      "org.gajim.Gajim"
       "chat.simplex.simplex"
       "com.obsproject.Studio"
       "app.grayjay.Grayjay"
