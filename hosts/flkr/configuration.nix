@@ -5,6 +5,7 @@
     config,
     inputs,
     pkgs,
+    pkgs-unstable,
     lib,
     ...
   }: let
@@ -25,6 +26,8 @@
     ];
     # NVIDIA 595.71.05 fails to build against 7.2; use the newest supported LTS.
     boot.kernelPackages = pkgs.linuxPackages_6_18;
+
+    environment.systemPackages = [pkgs-unstable.glab];
 
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"
