@@ -30,7 +30,17 @@
       self.nixosModules.qemu
       self.nixosModules.adb
       self.nixosModules.tor
+      self.nixosModules.voxtype
     ];
+
+    programs.voxtype.package = inputs.voxtype.packages.${pkgs.stdenv.hostPlatform.system}.vulkan;
+    home-manager.users.${username} = {
+      programs.voxtype.model.name = "large-v3-turbo";
+      # Filter Vulkan to the discrete GPU rather than the integrated Radeon.
+      systemd.user.services.voxtype.Service.Environment = [
+        "VOXTYPE_VULKAN_DEVICE=nvidia"
+      ];
+    };
 
     # NOTE: Using this kernel because of issue with built in display.
     boot.kernelPackages = pkgs.linuxPackages_6_12;

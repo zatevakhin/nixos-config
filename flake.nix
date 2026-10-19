@@ -75,6 +75,11 @@
 
     nixpkgs-otelite.url = "github:NixOS/nixpkgs/pull/557742/head";
 
+    voxtype = {
+      url = "github:peteonrails/voxtype/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # MCPs
     searxng-mcp.url = "github:zatevakhin/searxng-mcp";
 
@@ -83,8 +88,17 @@
       url = "git+ssh://git@github.com/zatevakhin/system3?rev=344483d3967f69f2c1a8bb74823da8208d880241";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Current main for sys3. Do not point nano at this.
+    system3-latest = {
+      url = "git+ssh://git@github.com/zatevakhin/system3?rev=d37dad018d7d0abef731db82a20a1a3ee2801d5c";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     system3-omnigraph = {
       url = "git+ssh://git@github.com/zatevakhin/system3-omngraph?rev=84081d3251fa0574962fdebb1257a5559380786e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    system3-omnigraph-latest = {
+      url = "git+ssh://git@github.com/zatevakhin/system3-omngraph?ref=refs/pull/1/head&rev=5307d16087e9c3cb4bba8fa006f9dcaed17ce1eb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

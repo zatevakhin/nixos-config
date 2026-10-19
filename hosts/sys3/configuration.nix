@@ -5,6 +5,7 @@
     config,
     pkgs,
     lib,
+    inputs,
     ...
   }: let
     omnigraph = pkgs.callPackage ../../flakes/omnigraph/package.nix {};
@@ -17,8 +18,13 @@
       self.nixosModules.wireshark
       self.nixosModules.tmux
       self.nixosModules.oo7
-      # omnigraph
-      ../../flakes/omnigraph/module.nix
+      self.nixosModules.system3-secrets
+      self.nixosModules.system3-omnigraph-worker
+      self.nixosModules.search-mcp
+      self.nixosModules.rustfs
+      inputs.system3-latest.nixosModules.default
+      self.nixosModules.omnigraph
+      self.nixosModules.llama-cpp
     ];
 
     environment.systemPackages = with pkgs; [
@@ -51,6 +57,151 @@
       passwordFile = config.sops.secrets.oo7-keyring-password.path;
     };
 
+    services.system3.sopsSecrets = {
+      enable = true;
+      sopsFile = ../../secrets/${hostname}/system3.yaml;
+      secrets = {
+        "llm/zai" = "llm/zai";
+        "im/telegram/token" = "im/telegram/token";
+        "xmpp/account-password" = "im/xmpp/account-password";
+      };
+    };
+
+    sops.secrets.rustfs-environment = {
+      sopsFile = ../../secrets/${hostname}/rustfs.yaml;
+      key = "environment";
+      mode = "0400";
+      restartUnits = ["rustfs.service" "rustfs-init.service" "omnigraph.service"];
+    };
+    services.rustfs = {
+      enable = true;
+      environmentFile = config.sops.secrets.rustfs-environment.path;
+      settings = {
+        RUSTFS_ADDRESS = "127.0.0.1:9000";
+        RUSTFS_CONSOLE_ADDRESS = "127.0.0.1:19001";
+        RUSTFS_VOLUMES = "/var/lib/rustfs/data";
+      };
+      provisioning = {
+        endpoint = "http://127.0.0.1:9000";
+        buckets = ["omnigraph"];
+      };
+    };
+
+    services.omnigraph = {
+      enable = true;
+      cluster = "s3://omnigraph/clusters/default";
+      bindAddress = "0.0.0.0";
+      port = 18080;
+      openFirewall = true;
+      environmentFiles = [config.sops.secrets.rustfs-environment.path];
+      environmentAliases = {
+        AWS_ACCESS_KEY_ID = "RUSTFS_ACCESS_KEY";
+        AWS_SECRET_ACCESS_KEY = "RUSTFS_SECRET_KEY";
+      };
+      environment = {
+        AWS_REGION = "us-east-1";
+        AWS_ENDPOINT_URL_S3 = "http://127.0.0.1:9000";
+        AWS_ALLOW_HTTP = "true";
+        AWS_S3_FORCE_PATH_STYLE = "true";
+        AWS_EC2_METADATA_DISABLED = "true";
+      };
+      bootstrap = {
+        enable = true;
+        configDirectory = ./omnigraph;
+        actor = "sys3";
+      };
+      # The API is intentionally available on the LAN without authentication.
+      extraArgs = ["--require-all-graphs" "--unauthenticated"];
+    };
+    systemd.services.omnigraph = {
+      requires = ["rustfs-init.service"];
+      after = ["rustfs-init.service"];
+    };
+    services.system3-omnigraph-worker = {
+      enable = true;
+      hostName = "${hostname}-omnigraph";
+      listen = "/ip4/0.0.0.0/tcp/39120";
+    };
+    systemd.services.system3-omnigraph-worker = {
+      requires = ["omnigraph.service"];
+      after = ["omnigraph.service"];
+    };
+    environment.etc."omnigraph/client.yaml".source = ./omnigraph/client.yaml;
+    systemd.tmpfiles.rules = let
+      user = config.users.users.${username};
+    in [
+      "d ${user.home}/.omnigraph 0700 ${username} ${user.group} -"
+      "L+ ${user.home}/.omnigraph/config.yaml - ${username} ${user.group} - /etc/omnigraph/client.yaml"
+    ];
+
+    # The optional browser backend ships an x86-only V8 archive; sys3 is ARM64.
+    services.searxng-mcp.packageFeatures = [];
+
+    # User service so it can reach aya's Secret Service. Providers are OCI
+    # images only; API keys stay in the keyring, not in this store path.
+    services.system3.userService = {
+      enable = true;
+      package = inputs.system3-latest.packages.${pkgs.stdenv.hostPlatform.system}.system3.overrideAttrs (old: {
+        cargoBuildFeatures = (old.cargoBuildFeatures or []) ++ ["builtin-xmpp"];
+      });
+      user = username;
+      linger = true;
+      checkSecretStore = true;
+      openGraphUiFirewall = true;
+      openRemoteStagesFirewall = true;
+      settings = {
+        logging.stderr = true;
+        querymt = {
+          update_models_registry = true;
+          providers = [
+            {
+              name = "openai";
+              path = "oci://ghcr.io/querymt/openai:latest";
+            }
+            {
+              name = "anthropic";
+              path = "oci://ghcr.io/querymt/anthropic:latest";
+            }
+            {
+              name = "xai";
+              path = "oci://ghcr.io/querymt/xai:latest";
+            }
+            {
+              name = "zai";
+              path = "oci://ghcr.io/querymt/zai:latest";
+            }
+            {
+              name = "codex";
+              path = "oci://ghcr.io/querymt/codex:latest";
+            }
+          ];
+        };
+        graph_ui = {
+          enabled = true;
+          host = "0.0.0.0";
+          port = 8088;
+        };
+        remote_stages = {
+          enabled = true;
+          host_name = hostname;
+          listen = "/ip4/0.0.0.0/tcp/39100";
+          identity_file = "data://remote-stage-identity.key";
+        };
+        pipelines = [
+          {
+            id = "orchestrator";
+            path = "data://pipelines/orchestrator.toml";
+            autorun = true;
+          }
+          {
+            id = "memory";
+            path = "data://pipelines/memory.toml";
+            autorun = true;
+          }
+        ];
+      };
+    };
+
     # <docker>
     virtualisation.docker = {
       enable = true;
@@ -62,7 +213,9 @@
     # <llama.cpp>
     services.llama-cpp = {
       enable = true;
+      host = "0.0.0.0";
       port = 3333;
+      openFirewall = true;
       extraFlags = [
         "--embeddings"
       ];
@@ -77,6 +230,19 @@
           hf-repo = "unsloth/embeddinggemma-300m-GGUF";
           hf-file = "embeddinggemma-300M-Q8_0.gguf";
           alias = "unsloth/embeddinggemma-300m-q8";
+          fit = "on";
+        };
+        "embeddinggemma-2-BF16.gguf" = {
+          hf-repo = "ggml-org/embeddinggemma-2-GGUF";
+          hf-file = "embeddinggemma-2-BF16.gguf";
+          alias = "ggml-org/embeddinggemma-2-bf16";
+          mmproj-auto = "off";
+          pooling = "mean";
+          ctx-size = 8192;
+          batch-size = 8192;
+          ubatch-size = 8192;
+          parallel = 1;
+          gpu-layers = "all";
           fit = "on";
         };
       };
@@ -106,7 +272,8 @@
       extraGroups = ["wheel" "video" "docker"];
     };
 
-    security.sudo.extraRules = [
+    # mkHost disables security.sudo. This is the sudo-rs form of the existing rule.
+    security.sudo-rs.extraRules = [
       {
         users = [username];
         commands = [
