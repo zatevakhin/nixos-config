@@ -29,6 +29,13 @@
 
     environment.systemPackages = [pkgs-unstable.glab];
 
+    # SSH logins do not inherit GNOME's SSH_AUTH_SOCK; prefer its loaded GCR agent.
+    environment.extraInit = lib.mkAfter ''
+      if [ -n "''${XDG_RUNTIME_DIR:-}" ] && [ -S "$XDG_RUNTIME_DIR/gcr/ssh" ]; then
+        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+      fi
+    '';
+
     services.flatpak.packages = lib.mkIf config.services.flatpak.enable [
       "app.zen_browser.zen"
       "org.torproject.torbrowser-launcher"
