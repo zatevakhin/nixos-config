@@ -1,16 +1,17 @@
 # nixos-config
 
-NixOS and nix-darwin flake for this fleet. `flake-parts` loads `hosts/` and `modules/` through `import-tree`.
+One repository with a flake and independent input lock for each active host. Each host uses `flake-parts` and `import-tree` to load its own modules and the shared `modules/` tree. The root flake provides developer tooling, not deployable hosts.
 
-Evaluation needs SSH access to the private `notsecrets` input. A Git flake only sees tracked files, so `git add` new files before building. Staging is enough; a commit is not required.
+Hosts using the private `notsecrets` input need SSH access to it. A Git flake only sees tracked files, so `git add` new files before building. Staging is enough; a commit is not required.
 
 ## Layout
 
 ```
-hosts/<name>/   host entrypoint, configuration, hardware, host-only modules
+hosts/<name>/   host flake.nix + flake.lock, configuration, hardware, host-only modules
+lib/mk-host-flake.nix  shared flake-parts/import-tree entry point
 modules/        shared NixOS features, Home Manager, containers, services
 secrets/        SOPS files, plus git-agecrypt files for the installer
-flake.nix
+flake.nix       developer tooling only
 .sops.yaml
 ```
 
@@ -47,12 +48,14 @@ nix fmt -- path/to/file.nix
 From the repository root:
 
 ```sh
-sudo nixos-rebuild switch --flake .#HOST
-nixos-rebuild switch --target-host root@HOST --flake .#HOST
-nixos-rebuild switch --target-host root@HOST --build-host root@BUILD_HOST --flake .#HOST
+sudo nixos-rebuild switch --flake ./hosts/HOST#HOST
+nixos-rebuild switch --target-host root@HOST --flake ./hosts/HOST#HOST
+nixos-rebuild switch --target-host root@HOST --build-host root@BUILD_HOST --flake ./hosts/HOST#HOST
 ```
 
-`build` does not activate. `test` activates without changing the boot default. Do not run parallel rebuilds that share one `result` symlink.
+`build` does not activate. `test` activates without changing the boot default. Do not run parallel rebuilds that share one `result` symlink. For example, deploy FLKR with `nixos-rebuild switch --target-host root@flkr.lan --build-host root@flkr.lan --flake ./hosts/flkr#flkr`.
+
+Update only that host's stable pin with `nix flake update nixpkgs --flake ./hosts/HOST` (omit `nixpkgs` to update all of that host's inputs). Review and commit `hosts/HOST/flake.lock` before deploying; the other host locks do not change. Shared module edits can still affect multiple hosts.
 
 ### Darwin (`eulr`)
 
@@ -61,22 +64,22 @@ Run on the Mac. Attr is `darwinConfigurations.eulr`; `nixos-rebuild` will not wo
 First activation:
 
 ```sh
-nix run nix-darwin -- switch --flake .#eulr
+nix run nix-darwin -- switch --flake ./hosts/eulr#eulr
 ```
 
 After that:
 
 ```sh
-darwin-rebuild switch --flake .#eulr
+darwin-rebuild switch --flake ./hosts/eulr#eulr
 ```
 
 Linux cannot build `aarch64-darwin`. Remote deploy is SSH onto the Mac and switch there:
 
 ```sh
-ssh ivan@eulr 'cd /path/to/nixos-config && git pull && darwin-rebuild switch --flake .#eulr'
+ssh ivan@eulr 'cd /path/to/nixos-config && git pull && darwin-rebuild switch --flake ./hosts/eulr#eulr'
 ```
 
-First time on that machine, use `nix run nix-darwin -- switch --flake .#eulr` instead of `darwin-rebuild`.
+First time on that machine, use `nix run nix-darwin -- switch --flake ./hosts/eulr#eulr` instead of `darwin-rebuild`.
 
 ## Install
 
@@ -91,7 +94,7 @@ ssh-keygen -t ed25519 -N '' -f extra-files/HOST/etc/ssh/ssh_host_ed25519_key
 chmod 600 extra-files/HOST/etc/ssh/ssh_host_ed25519_key
 
 nix run github:nix-community/nixos-anywhere -- \
-  --flake .#HOST \
+  --flake ./hosts/HOST#HOST \
   --target-host root@TARGET \
   --extra-files extra-files/HOST
 ```
@@ -102,7 +105,7 @@ Local disko install, from a live system with this repo available:
 
 ```sh
 sudo nix run github:nix-community/disko#disko-install -- \
-  --flake .#HOST --disk main /dev/DISK
+  --flake ./hosts/HOST#HOST --disk main /dev/DISK
 ```
 
 `main` must match the disk name in that host's disko config. The host key and SOPS access still have to be in place before the installed system boots.
@@ -112,7 +115,7 @@ sudo nix run github:nix-community/disko#disko-install -- \
 Decrypt `secrets/iso/` with git-agecrypt before building. The image embeds that SSH host key and Tor onion identity. Do not publish the ISO or upload its closure to a public cache.
 
 ```sh
-nix build .#nixosConfigurations.iso.config.system.build.isoImage
+nix build ./hosts/iso#nixosConfigurations.iso.config.system.build.isoImage
 ls result/iso/
 ```
 
