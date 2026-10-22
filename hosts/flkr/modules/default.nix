@@ -5,6 +5,8 @@
     ...
   }: {
     imports = [
+      self.nixosModules."${hostname}-wireguard"
+      self.nixosModules."${hostname}-dnsmasq"
     ];
   };
 }

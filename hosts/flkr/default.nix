@@ -9,6 +9,7 @@ in {
       self.nixosModules."${hostname}-configuration"
       self.nixosModules."${hostname}-hardware"
       self.nixosModules."${hostname}-home"
+      self.nixosModules."${hostname}-modules"
       self.nixosModules."${hostname}-liquidctl"
     ];
   };
