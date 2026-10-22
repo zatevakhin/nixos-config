@@ -13,6 +13,7 @@
     sopsFile = ../../../secrets/${hostname}/wg.yaml;
 
     workName = endpoint: "work-${endpoint.name}";
+    workInterfaces = map workName work.endpoints;
     unitName = endpoint: "wg-quick-${workName endpoint}";
 
     # Keep encrypted fields out of the Nix store; dnsmasq handles split DNS.
@@ -35,6 +36,17 @@
       ${pkgs.coreutils}/bin/mv -f "$tmp" "$conf"
     '';
   in {
+    # Drop unsolicited work-VPN ingress before global or temporary port allowances.
+    networking.nftables.tables.work-ingress = {
+      family = "inet";
+      content = ''
+        chain input {
+          type filter hook input priority -10; policy accept;
+          iifname { ${concatStringsSep ", " (map builtins.toJSON workInterfaces)} } ct state != { established, related } drop
+        }
+      '';
+    };
+
     sops.secrets."wg/work/config" = {
       inherit sopsFile;
       key = "";

@@ -12,6 +12,7 @@
     work = lib.importTOML "${inputs.notsecrets}/work/wg.toml";
 
     sopsFile = ../../../secrets/${hostname}/wg.yaml;
+    workInterfaces = map (endpoint: "work-${endpoint.name}") work.endpoints;
 
     dnsLine = servers: search: let
       all = servers ++ search;
@@ -68,6 +69,17 @@
         };
       };
   in {
+    # Drop unsolicited work-VPN ingress before global or temporary port allowances.
+    networking.nftables.tables.work-ingress = {
+      family = "inet";
+      content = ''
+        chain input {
+          type filter hook input priority -10; policy accept;
+          iifname { ${concatStringsSep ", " (map builtins.toJSON workInterfaces)} } ct state != { established, related } drop
+        }
+      '';
+    };
+
     sops.secrets."wg/work/private_key" = {
       inherit sopsFile;
       key = "work/private_key";
